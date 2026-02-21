@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { Outlet } from 'react-router';
 
-import { Header } from '@/widgets';
-import { Sidebar } from '@/widgets/Sidebar/Sidebar';
+import { Header, Sidebar } from '@/widgets';
 
 const AppLayout = () => {
   const [sidebarWidth] = useState(256);
