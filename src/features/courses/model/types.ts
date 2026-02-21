@@ -1,0 +1,25 @@
+type TopicStatus = 'COMPLETED' | 'IN_PROGRESS' | 'NOT_STARTED';
+type CourseStatus =
+  | 'COMPLETED'
+  | 'IN_PROGRESS'
+  | 'NOT_STARTED'
+  | 'DRAFT'
+  | 'CANCELLED';
+
+export type Course = {
+  id: string;
+  title: string;
+  description?: string;
+  progress: number;
+  status: CourseStatus;
+  area?: string;
+  createdAt?: string;
+};
+
+export type Topic = {
+  id: string;
+  title: string;
+  minutes: number;
+  course: string;
+  status: TopicStatus;
+};
