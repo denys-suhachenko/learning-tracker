@@ -11,7 +11,10 @@ export const getColumns = (
     key: 'title',
     header: 'Name',
     render: (row) => (
-      <Link to="/courses" className="font-medium hover:text-gray-900">
+      <Link
+        to={`/courses/${row.id}`}
+        className="font-medium hover:text-gray-900"
+      >
         {row.title}
       </Link>
     ),

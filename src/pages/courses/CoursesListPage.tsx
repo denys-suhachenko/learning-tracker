@@ -1,7 +1,7 @@
 import CoursesTable from '@/features/courses/ui/CoursesTable';
 import { Button } from '@/shared/ui';
 
-const CoursesPage = () => {
+const CoursesListPage = () => {
   return (
     <>
       <div className="mb-8 flex items-center justify-between">
@@ -16,4 +16,4 @@ const CoursesPage = () => {
   );
 };
 
-export default CoursesPage;
+export default CoursesListPage;

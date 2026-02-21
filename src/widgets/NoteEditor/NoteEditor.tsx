@@ -9,7 +9,7 @@ type NoteEditor = {
   initialValue?: string;
 };
 
-const NoteEditor = ({ initialValue = '' }: NoteEditor) => {
+export const NoteEditor = ({ initialValue = '' }: NoteEditor) => {
   const [value, setValue] = useState(initialValue);
 
   return (
@@ -43,5 +43,3 @@ const NoteEditor = ({ initialValue = '' }: NoteEditor) => {
     </>
   );
 };
-
-export default NoteEditor;

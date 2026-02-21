@@ -2,7 +2,8 @@ import { createBrowserRouter } from 'react-router';
 
 import AppLayout from '@/app/layout/AppLayout';
 import {
-  CoursesPage,
+  CoursePage,
+  CoursesListPage,
   DashboardPage,
   KnowledgeBasePage,
   NotFoundPage,
@@ -19,7 +20,13 @@ export const router = createBrowserRouter([
       },
       {
         path: 'courses',
-        Component: CoursesPage,
+        children: [
+          { index: true, Component: CoursesListPage },
+          {
+            path: ':courseId',
+            Component: CoursePage,
+          },
+        ],
       },
       {
         path: 'knowledge-base',
