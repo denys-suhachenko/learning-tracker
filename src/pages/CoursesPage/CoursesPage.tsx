@@ -1,0 +1,19 @@
+import CoursesTable from '@/features/courses/ui/CoursesTable';
+import { Button } from '@/shared/ui';
+
+const CoursesPage = () => {
+  return (
+    <>
+      <div className="mb-8 flex items-center justify-between">
+        <div className="text-2xl leading-9 font-semibold text-gray-900">
+          Courses
+        </div>
+        <Button size="large">Create course</Button>
+      </div>
+
+      <CoursesTable />
+    </>
+  );
+};
+
+export default CoursesPage;
