@@ -1,21 +1,21 @@
 import { createBrowserRouter } from 'react-router';
 
+import AppLayout from '@/app/layout/AppLayout';
 import { DashboardPage, NotFoundPage } from '@/pages';
-
-import AppLayout from '@/app/layout/layout';
 
 export const router = createBrowserRouter([
   {
+    path: '/',
     Component: AppLayout,
     children: [
       {
         index: true,
         Component: DashboardPage,
       },
-      {
-        path: '*',
-        Component: NotFoundPage,
-      },
     ],
+  },
+  {
+    path: '*',
+    Component: NotFoundPage,
   },
 ]);
