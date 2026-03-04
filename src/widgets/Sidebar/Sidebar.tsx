@@ -21,7 +21,7 @@ export const Sidebar = ({
 
   return (
     <aside className="fixed inset-y-0 z-40 w-3xs bg-gray-900" style={{ width }}>
-      <div className="flex h-full flex-col border-r border-gray-400">
+      <div className="flex h-full flex-col">
         <a
           href="#"
           className="flex items-center gap-x-3 p-4 text-xl font-semibold tracking-wide text-gray-50 select-none"
