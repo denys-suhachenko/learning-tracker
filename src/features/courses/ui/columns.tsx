@@ -13,7 +13,7 @@ export const getColumns = (
     render: (row) => (
       <Link
         to={`/courses/${row.id}`}
-        className="font-medium hover:text-gray-900"
+        className="hover:text-900 font-medium hover:text-gray-900 dark:hover:text-white"
       >
         {row.title}
       </Link>
@@ -44,7 +44,7 @@ export const getColumns = (
     align: 'right',
     render: (row) => (
       <button
-        className="cursor-pointer text-sm font-medium text-gray-700 hover:text-gray-900"
+        className="cursor-pointer text-sm font-medium text-gray-700 hover:text-gray-900 dark:text-white/80 dark:hover:text-white"
         onClick={() => onRemove?.(row)}
       >
         Remove

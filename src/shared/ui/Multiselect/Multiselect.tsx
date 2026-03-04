@@ -8,6 +8,7 @@ type MultiselectProps<T extends { id: string | number; label: string }> = {
   placeholder?: string;
   width?: string | number;
   chipTemplate?: (chip: T) => ReactNode;
+  optionTemplate?: (option: T) => ReactNode;
   onChange: (val: T[]) => void;
 };
 
@@ -18,6 +19,7 @@ export const Multiselect = <T extends { id: string | number; label: string }>({
   placeholder = 'Please select',
   width = '100%',
   chipTemplate,
+  optionTemplate,
   onChange,
 }: MultiselectProps<T>) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -56,7 +58,7 @@ export const Multiselect = <T extends { id: string | number; label: string }>({
     <div ref={panelRef} className="relative" style={{ width }}>
       <button
         type="button"
-        className="min-h-9 w-full rounded-md bg-white px-3 py-1.5 text-left text-sm outline-1 -outline-offset-1 outline-gray-300"
+        className="min-h-9 w-full rounded-md bg-white px-3 py-1.5 text-left text-sm text-gray-900 outline-1 -outline-offset-1 outline-gray-300 dark:bg-gray-800 dark:text-white dark:outline-gray-700"
         onClick={() => setIsOpen((open) => !open)}
       >
         <div className="inline-flex flex-wrap items-center gap-2">
@@ -74,14 +76,14 @@ export const Multiselect = <T extends { id: string | number; label: string }>({
       </button>
 
       {isOpen && (
-        <ul className="absolute left-0 z-50 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-sm shadow-lg outline-1 outline-black/5">
+        <ul className="absolute left-0 z-50 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-sm shadow-lg outline-1 outline-black/5 dark:bg-gray-800 dark:outline-gray-700">
           {options.map((option) => (
             <li
               key={option.id}
-              className="flex items-center justify-between px-3 py-2 select-none hover:bg-gray-200"
+              className="flex items-center justify-between px-3 py-2 select-none hover:bg-gray-200 dark:hover:bg-gray-700"
               onClick={() => toggleOption(option)}
             >
-              {option.label}
+              {optionTemplate ? optionTemplate(option) : option.label}
               {selectedOptions.has(option.id) && (
                 <CheckIcon className="size-4" />
               )}

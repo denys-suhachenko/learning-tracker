@@ -28,6 +28,6 @@
   }
 
   body {
-    @apply bg-paper h-full text-gray-900;
+    @apply bg-paper h-full text-gray-900 dark:bg-gray-900 dark:text-white;
   }
 }

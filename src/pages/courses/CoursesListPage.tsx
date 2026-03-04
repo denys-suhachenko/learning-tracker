@@ -5,9 +5,7 @@ const CoursesListPage = () => {
   return (
     <>
       <div className="mb-8 flex items-center justify-between">
-        <div className="text-2xl leading-9 font-semibold text-gray-900">
-          Courses
-        </div>
+        <div className="text-2xl leading-9 font-semibold">Courses</div>
         <Button size="large">Create course</Button>
       </div>
 
