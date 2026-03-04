@@ -5,7 +5,7 @@ export const coursesList: Course[] = [
     id: '1',
     title: 'Classical mechanics',
     description: '',
-    progress: 12,
+    progress: 100,
     status: 'COMPLETED',
     area: 'Physics',
   },

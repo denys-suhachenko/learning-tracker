@@ -3,3 +3,4 @@ export { Button } from './Button/Button';
 export { Input } from './Input/Input';
 export { Progress } from './Progress/Progress';
 export { Table, type TableColumn } from './Table/Table';
+export { Multiselect } from './Multiselect/Multiselect';
