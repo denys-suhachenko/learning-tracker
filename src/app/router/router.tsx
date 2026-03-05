@@ -7,6 +7,7 @@ import {
   DashboardPage,
   KnowledgeBasePage,
   NotFoundPage,
+  PlannerPage,
 } from '@/pages';
 
 export const router = createBrowserRouter([
@@ -27,6 +28,10 @@ export const router = createBrowserRouter([
             Component: CoursePage,
           },
         ],
+      },
+      {
+        path: 'planner',
+        Component: PlannerPage,
       },
       {
         path: 'knowledge-base',
