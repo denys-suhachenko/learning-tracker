@@ -55,7 +55,7 @@ export const Multiselect = <T extends { id: string | number; label: string }>({
   }, []);
 
   return (
-    <div ref={panelRef} className="relative" style={{ width }}>
+    <div ref={panelRef} className="relative">
       <button
         type="button"
         className="min-h-9 w-full rounded-md bg-white px-3 py-1.5 text-left text-sm text-gray-900 outline-1 -outline-offset-1 outline-gray-300 dark:bg-gray-800 dark:text-white dark:outline-gray-700"
@@ -76,7 +76,10 @@ export const Multiselect = <T extends { id: string | number; label: string }>({
       </button>
 
       {isOpen && (
-        <ul className="absolute left-0 z-50 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-sm shadow-lg outline-1 outline-black/5 dark:bg-gray-800 dark:outline-gray-700">
+        <ul
+          className="absolute left-0 z-50 mt-2 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-sm shadow-lg outline-1 outline-black/5 dark:bg-gray-800 dark:outline-gray-700"
+          style={{ width }}
+        >
           {options.map((option) => (
             <li
               key={option.id}

@@ -1,7 +1,11 @@
 import { useMemo, useState } from 'react';
 
 import { Multiselect, Table } from '@/shared/ui';
-import { useAppSelector } from '@/app/store/hooks';
+import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
+
+import type { Course } from '../model/types';
+import { remove } from '../model/slice';
+import { selectCoursesList } from '../model/selectors';
 
 import { getColumns, CourseBadge } from './columns';
 
@@ -29,10 +33,18 @@ const StatusOptionItem = ({ option }: { option: StatusOption }) => {
 };
 
 const CoursesTable = () => {
-  const list = useAppSelector((state) => state.courses.list);
-  const [selectedStatuses, setSelectedStatuses] = useState<any>([]);
+  const [selectedStatuses, setSelectedStatuses] = useState<StatusOption[]>([]);
 
-  const columns = useMemo(() => getColumns(), []);
+  const list = useAppSelector((state) =>
+    selectCoursesList(state, selectedStatuses),
+  );
+  const dispatch = useAppDispatch();
+
+  const removeCourse = (course: Course) => {
+    dispatch(remove(course));
+  };
+
+  const columns = useMemo(() => getColumns(removeCourse), []);
 
   return (
     <div>
@@ -40,7 +52,7 @@ const CoursesTable = () => {
         <Multiselect
           value={selectedStatuses}
           options={statuses}
-          width={320}
+          width={220}
           label="Statuses"
           chipTemplate={(val) => <CourseBadge status={val.value} />}
           optionTemplate={(option) => <StatusOptionItem option={option} />}

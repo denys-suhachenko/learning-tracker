@@ -1,9 +1,8 @@
-type TopicStatus = 'COMPLETED' | 'IN_PROGRESS' | 'NOT_STARTED';
-type CourseStatus =
+export type TopicStatus = 'COMPLETED' | 'IN_PROGRESS' | 'NOT_STARTED';
+export type CourseStatus =
   | 'COMPLETED'
   | 'IN_PROGRESS'
   | 'NOT_STARTED'
-  | 'DRAFT'
   | 'CANCELLED';
 
 export type Course = {
