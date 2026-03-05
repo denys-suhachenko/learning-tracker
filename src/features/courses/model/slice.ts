@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 
 import type { Course } from './types';
 import { coursesList } from '../api/mock';
@@ -16,7 +16,12 @@ const initialState: CoursesState = {
 const coursesSlice = createSlice({
   name: 'courses',
   initialState,
-  reducers: {},
+  reducers: {
+    remove(state, action: PayloadAction<Course>) {
+      state.list = state.list.filter((item) => item.id !== action.payload.id);
+    },
+  },
 });
 
+export const { remove } = coursesSlice.actions;
 export default coursesSlice.reducer;

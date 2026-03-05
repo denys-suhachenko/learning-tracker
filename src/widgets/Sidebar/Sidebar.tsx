@@ -20,7 +20,10 @@ export const Sidebar = ({
     useSidebarResize({ value: width, onChange: onResize });
 
   return (
-    <aside className="fixed inset-y-0 z-40 w-3xs bg-gray-900" style={{ width }}>
+    <aside
+      className="fixed inset-y-0 z-40 w-3xs border-r border-gray-800 bg-gray-900 dark:bg-[oklab(0%_none_none/0.1)]"
+      style={{ width }}
+    >
       <div className="flex h-full flex-col">
         <a
           href="#"
