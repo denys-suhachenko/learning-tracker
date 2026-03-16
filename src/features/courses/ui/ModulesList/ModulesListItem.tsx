@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import { Link } from 'react-router';
 
-import { Badge, Button } from '@/shared/ui';
+import { Badge } from '@/shared/ui';
 
 import { type Module } from '../../model/types';
 import clsx from 'clsx';

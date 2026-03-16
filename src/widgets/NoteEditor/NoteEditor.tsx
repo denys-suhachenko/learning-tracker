@@ -60,7 +60,7 @@ export const NoteEditor = ({
     if (setToc) {
       setToc(toc);
     }
-  }, [toc]);
+  }, [toc, setToc]);
 
   return (
     <div className="h-full">
