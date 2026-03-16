@@ -47,7 +47,7 @@ export const Table = <T extends { id: number | string }>({
               <td
                 key={String(col.key)}
                 className={clsx(
-                  'px-3 py-4 text-sm whitespace-nowrap text-gray-500 dark:text-white/75',
+                  'px-3 py-4 text-sm text-gray-500 dark:text-white/75',
                   alignClass[col.align ?? 'left'],
                   'first:pl-6 last:pr-6',
                 )}

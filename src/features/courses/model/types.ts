@@ -1,24 +1,40 @@
-export type TopicStatus = 'COMPLETED' | 'IN_PROGRESS' | 'NOT_STARTED';
-export type CourseStatus =
-  | 'COMPLETED'
-  | 'IN_PROGRESS'
-  | 'NOT_STARTED'
-  | 'CANCELLED';
+export type CourseStatus = 'draft' | 'active';
+export type LessonStatus = 'planned' | 'in_progress' | 'completed';
+
+export type StudyArea = {
+  id: string;
+  name: string;
+  slug?: string;
+};
 
 export type Course = {
   id: string;
   title: string;
+  slug: string;
   description?: string;
-  progress: number;
+  study_area: StudyArea;
   status: CourseStatus;
-  area?: string;
-  createdAt?: string;
+  created_at: string;
+  updated_at: string;
+  modules: Module[];
 };
 
-export type Topic = {
+export type Module = {
   id: string;
+  course_id: string;
   title: string;
-  minutes: number;
-  course: string;
-  status: TopicStatus;
+  description?: string;
+  order: number;
+  lessons: Lesson[];
+};
+
+export type Lesson = {
+  id: string;
+  module: string;
+  title: string;
+  description?: string;
+  content?: string;
+  order: number;
+  estimated_minutes: number;
+  status: LessonStatus;
 };

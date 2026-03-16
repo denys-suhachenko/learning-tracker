@@ -6,6 +6,7 @@ import {
   CoursesListPage,
   DashboardPage,
   KnowledgeBasePage,
+  LessonPage,
   NotFoundPage,
   PlannerPage,
 } from '@/pages';
@@ -22,10 +23,17 @@ export const router = createBrowserRouter([
       {
         path: 'courses',
         children: [
-          { index: true, Component: CoursesListPage },
+          {
+            index: true,
+            Component: CoursesListPage,
+          },
           {
             path: ':courseId',
             Component: CoursePage,
+          },
+          {
+            path: ':courseId/lessons/:lessonId',
+            Component: LessonPage,
           },
         ],
       },
