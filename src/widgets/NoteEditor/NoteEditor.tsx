@@ -1,29 +1,29 @@
+import { useEffect, useRef, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
+import clsx from 'clsx';
 
 import './NodeEditor.css';
-import clsx from 'clsx';
-import { useEffect, useRef, useState } from 'react';
+
+type TocItem = {
+  text: string;
+  level: number;
+};
 
 type NoteEditorProps = {
   value?: string;
   autoFocus?: boolean;
   readOnly?: boolean;
   onChange?: (value: string) => void;
-  setToc?: (val: any) => any;
+  setToc?: (val: TocItem[]) => TocItem;
 };
 
 const useTableOfContents = (
   containerRef: React.RefObject<HTMLElement | null>,
   content: string,
 ) => {
-  const [toc, setToc] = useState<
-    {
-      text: string;
-      level: number;
-    }[]
-  >([]);
+  const [toc, setToc] = useState<TocItem[]>([]);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -60,7 +60,7 @@ export const NoteEditor = ({
     if (setToc) {
       setToc(toc);
     }
-  }, [toc]);
+  }, [toc, setToc]);
 
   return (
     <div className="h-full">

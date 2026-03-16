@@ -1,8 +1,4 @@
-import type { Topic } from '@/features/courses/model/types';
-
-type Day = 'Mon' | 'Tue' | 'Wed' | 'Thu' | 'Fri' | 'Sat' | 'Sun';
-
-export const topicsList: Topic[] = [
+export const topicsList = [
   {
     id: '2b1ec99e',
     title: 'React.memo pitfalls',
@@ -33,7 +29,7 @@ export const topicsList: Topic[] = [
   },
 ];
 
-export const topicsByDay: Record<Day, Topic[]> = {
+export const topicsByDay = {
   Mon: [
     {
       id: '2b1ec99e',

@@ -1,6 +1,7 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import { skipToken } from '@reduxjs/toolkit/query';
+import clsx from 'clsx';
 
 import { Button, Container, Header } from '@/shared/ui';
 import { NoteEditor } from '@/widgets';
@@ -8,12 +9,10 @@ import {
   useUpdateLessonMutation,
   useGetLessonQuery,
 } from '@/features/lessons/api/api';
-import clsx from 'clsx';
 
 const LessonPage = () => {
   const [isEditMode, setIsEditMode] = useState(false);
   const [content, setContent] = useState('');
-  const [toc, setToc] = useState<any>([]);
 
   const { lessonId } = useParams();
   const { data: lesson } = useGetLessonQuery(lessonId ?? skipToken);
@@ -91,7 +90,6 @@ const LessonPage = () => {
             readOnly={!isEditMode}
             autoFocus={isEditMode}
             onChange={(value) => setContent(value)}
-            setToc={setToc}
           />
 
           {!isEditMode && (

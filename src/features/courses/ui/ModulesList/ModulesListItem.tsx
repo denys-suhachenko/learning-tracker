@@ -1,11 +1,11 @@
 import { useRef, useState } from 'react';
 import { Link } from 'react-router';
-
-import { Badge, Button } from '@/shared/ui';
-
-import { type Module } from '../../model/types';
 import clsx from 'clsx';
 import { ChevronDownIcon } from '@heroicons/react/16/solid';
+
+import { Badge } from '@/shared/ui';
+
+import { type Module } from '../../model/types';
 
 type ModulesListitemProps = {
   module: Module;
