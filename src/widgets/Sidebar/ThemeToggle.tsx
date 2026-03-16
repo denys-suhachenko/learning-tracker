@@ -6,13 +6,19 @@ export const ThemeToggle = () => {
 
   return (
     <button
-      className="cursor-pointer text-gray-600 hover:text-gray-900 dark:text-white/70 dark:hover:text-white"
+      className="flex w-full cursor-pointer items-center gap-x-3 text-sm font-medium text-white/70 hover:text-white"
       onClick={toggleTheme}
     >
       {theme === 'light' ? (
-        <SunIcon className="size-6" />
+        <>
+          <SunIcon className="size-6" />
+          Light
+        </>
       ) : (
-        <MoonIcon className="size-6" />
+        <>
+          <MoonIcon className="size-6" />
+          Dark
+        </>
       )}
     </button>
   );

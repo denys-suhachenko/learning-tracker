@@ -1,26 +1,22 @@
 import { useMemo, useState } from 'react';
 
 import { Multiselect, Table } from '@/shared/ui';
-import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 
-import type { Course } from '../model/types';
-import { remove } from '../model/slice';
-import { selectCoursesList } from '../model/selectors';
+import type { CourseStatus } from '../../model/types';
+import { useGetCoursesQuery } from '../../api/api';
 
 import { getColumns, CourseBadge } from './columns';
 
 type StatusOption = {
   id: number;
   label: string;
-  value: 'COMPLETED' | 'IN_PROGRESS' | 'NOT_STARTED' | 'CANCELLED';
+  value: CourseStatus;
   color: string;
 };
 
 const statuses: StatusOption[] = [
-  { id: 1, label: 'Completed', value: 'COMPLETED', color: 'bg-green-400' },
-  { id: 2, label: 'In progress', value: 'IN_PROGRESS', color: 'bg-yellow-500' },
-  { id: 3, label: 'Not started', value: 'NOT_STARTED', color: 'bg-gray-400' },
-  { id: 4, label: 'Cancelled', value: 'CANCELLED', color: 'bg-red-400' },
+  { id: 1, label: 'Active', value: 'active', color: 'bg-green-400' },
+  { id: 3, label: 'Draft', value: 'draft', color: 'bg-gray-400' },
 ];
 
 const StatusOptionItem = ({ option }: { option: StatusOption }) => {
@@ -35,16 +31,9 @@ const StatusOptionItem = ({ option }: { option: StatusOption }) => {
 const CoursesTable = () => {
   const [selectedStatuses, setSelectedStatuses] = useState<StatusOption[]>([]);
 
-  const list = useAppSelector((state) =>
-    selectCoursesList(state, selectedStatuses),
-  );
-  const dispatch = useAppDispatch();
+  const { data: courses = [] } = useGetCoursesQuery();
 
-  const removeCourse = (course: Course) => {
-    dispatch(remove(course));
-  };
-
-  const columns = useMemo(() => getColumns(removeCourse), []);
+  const columns = useMemo(() => getColumns(), []);
 
   return (
     <div>
@@ -64,7 +53,7 @@ const CoursesTable = () => {
         </div>
       </div>
 
-      <Table columns={columns} rows={list} />
+      <Table columns={columns} rows={courses} />
     </div>
   );
 };

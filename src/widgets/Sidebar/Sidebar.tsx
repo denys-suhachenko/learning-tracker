@@ -4,6 +4,7 @@ import clsx from 'clsx';
 import useSidebarResize from './hooks/useSidebarResize';
 import { navItems } from './navItems';
 import { AcademicCapIcon, Cog6ToothIcon } from '@heroicons/react/24/outline';
+import { ThemeToggle } from './ThemeToggle';
 
 type SidebarProps = {
   width?: number;
@@ -21,7 +22,7 @@ export const Sidebar = ({
 
   return (
     <aside
-      className="fixed inset-y-0 z-40 w-3xs border-r border-gray-800 bg-gray-900 dark:bg-[oklab(0%_none_none/0.1)]"
+      className="fixed inset-y-0 z-40 w-3xs border-r border-gray-800 bg-gray-900 dark:bg-[oklab(0%_none_none/0.2)]"
       style={{ width }}
     >
       <div className="flex h-full flex-col">
@@ -51,7 +52,11 @@ export const Sidebar = ({
               </li>
             ))}
 
-            <li className="mt-auto">
+            <li className="mt-auto px-4 py-3">
+              <ThemeToggle />
+            </li>
+
+            <li>
               <NavLink
                 to="/sign-in"
                 className={({ isActive }) =>
