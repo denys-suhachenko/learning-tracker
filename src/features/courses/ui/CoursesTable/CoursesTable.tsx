@@ -6,6 +6,7 @@ import type { CourseStatus } from '../../model/types';
 import { useGetCoursesQuery, useRemoveCourseMutation } from '../../api/api';
 
 import { getColumns, CourseBadge } from './columns';
+import { toast } from 'sonner';
 
 type StatusOption = {
   id: number;
@@ -31,10 +32,19 @@ const StatusOptionItem = ({ option }: { option: StatusOption }) => {
 const CoursesTable = () => {
   const [selectedStatuses, setSelectedStatuses] = useState<StatusOption[]>([]);
 
-  const { data: courses = [], isLoading } = useGetCoursesQuery();
+  const { data: courses = [] } = useGetCoursesQuery();
   const [remove] = useRemoveCourseMutation();
 
-  const columns = useMemo(() => getColumns(remove), []);
+  const handleCourseRemove = async (courseId: string) => {
+    try {
+      await remove('asdgsadgs').unwrap();
+      toast.success('Course successfuly removed!');
+    } catch {
+      toast.error("Error! Course hasn't been removed");
+    }
+  };
+
+  const columns = useMemo(() => getColumns(handleCourseRemove), []);
 
   return (
     <div>

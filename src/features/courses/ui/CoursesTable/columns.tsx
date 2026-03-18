@@ -55,7 +55,7 @@ export const getColumns = (
   {
     key: 'study_area',
     header: 'Study area',
-    render: (row) => <span>{row.study_area.name}</span>,
+    render: (row) => <span>{row.study_area?.name}</span>,
     width: '14%',
   },
   {
