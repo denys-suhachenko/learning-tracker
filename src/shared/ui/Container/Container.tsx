@@ -3,5 +3,5 @@ type ContainerProps = {
 };
 
 export const Container = ({ children }: ContainerProps) => (
-  <div className="px-8 py-6">{children}</div>
+  <div className="h-full px-8 py-6">{children}</div>
 );

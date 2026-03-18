@@ -5,6 +5,7 @@ import useSidebarResize from './hooks/useSidebarResize';
 import { navItems } from './navItems';
 import { AcademicCapIcon, Cog6ToothIcon } from '@heroicons/react/24/outline';
 import { ThemeToggle } from './ThemeToggle';
+import { useAppDispatch } from '@/app/store/hooks';
 
 type SidebarProps = {
   width?: number;
@@ -58,7 +59,7 @@ export const Sidebar = ({
 
             <li>
               <NavLink
-                to="/sign-in"
+                to="/settings"
                 className={({ isActive }) =>
                   clsx(
                     'flex cursor-pointer items-center gap-x-3 px-4 py-3 text-sm font-medium hover:bg-gray-900 hover:text-white',

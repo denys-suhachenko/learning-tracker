@@ -9,7 +9,10 @@ const AppLayout = () => {
   return (
     <>
       <Sidebar />
-      <div className="min-h-screen" style={{ paddingLeft: sidebarWidth }}>
+      <div
+        className="h-full min-h-screen"
+        style={{ paddingLeft: sidebarWidth }}
+      >
         <ScrollRestoration />
         <Outlet />
       </div>
