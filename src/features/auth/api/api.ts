@@ -12,7 +12,7 @@ type LoginResponse = {
   refresh: string;
 };
 
-const coursesApi = baseApi.injectEndpoints({
+const authApi = baseApi.injectEndpoints({
   endpoints: (create) => ({
     login: create.mutation<LoginResponse, LoginRequest>({
       query: (body) => ({
@@ -20,6 +20,7 @@ const coursesApi = baseApi.injectEndpoints({
         method: 'POST',
         body,
       }),
+      invalidatesTags: ['Me'],
     }),
 
     register: create.mutation({
@@ -35,6 +36,7 @@ const coursesApi = baseApi.injectEndpoints({
         url: '/auth/logout/',
         method: 'POST',
       }),
+      invalidatesTags: ['Me'],
     }),
 
     refresh: create.mutation({
@@ -54,4 +56,4 @@ const coursesApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useLoginMutation, useRegisterMutation, useMeQuery } = coursesApi;
+export const { useLoginMutation, useRegisterMutation, useMeQuery } = authApi;

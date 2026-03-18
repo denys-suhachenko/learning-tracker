@@ -3,7 +3,7 @@ import { useMemo, useState } from 'react';
 import { Multiselect, Table } from '@/shared/ui';
 
 import type { CourseStatus } from '../../model/types';
-import { useGetCoursesQuery } from '../../api/api';
+import { useGetCoursesQuery, useRemoveCourseMutation } from '../../api/api';
 
 import { getColumns, CourseBadge } from './columns';
 
@@ -31,9 +31,10 @@ const StatusOptionItem = ({ option }: { option: StatusOption }) => {
 const CoursesTable = () => {
   const [selectedStatuses, setSelectedStatuses] = useState<StatusOption[]>([]);
 
-  const { data: courses = [] } = useGetCoursesQuery();
+  const { data: courses = [], isLoading } = useGetCoursesQuery();
+  const [remove] = useRemoveCourseMutation();
 
-  const columns = useMemo(() => getColumns(), []);
+  const columns = useMemo(() => getColumns(remove), []);
 
   return (
     <div>

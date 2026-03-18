@@ -1,4 +1,7 @@
+import { useCurrentUser } from '@/shared/hooks/useCurrentUser';
+import { useTheme } from '@/shared/hooks/useTheme';
 import { Badge, Container, Progress } from '@/shared/ui';
+import { MoonIcon, SunIcon } from '@heroicons/react/24/solid';
 import { Link } from 'react-router';
 
 const metrics = [
@@ -49,13 +52,27 @@ const lessons = [
 ];
 
 const DashboardPage = () => {
+  const { theme, toggleTheme } = useTheme();
+  const { user } = useCurrentUser();
+
   return (
     <>
       <Container>
-        <header className="mb-8">
+        <header className="mb-8 flex items-center justify-between">
           <h1 className="text-2xl font-semibold">
-            Hello! What are your plans for today?
+            Hello, {user?.first_name}! What are your plans for today?
           </h1>
+
+          <button
+            onClick={toggleTheme}
+            className="cursor-pointer text-gray-600 hover:text-gray-900 dark:text-white/80 dark:hover:text-white"
+          >
+            {theme === 'light' ? (
+              <SunIcon className="size-6" />
+            ) : (
+              <MoonIcon className="size-6" />
+            )}
+          </button>
         </header>
 
         <div className="mb-6 grid grid-cols-4 gap-0 divide-x divide-gray-200 overflow-hidden rounded-md bg-white shadow-sm outline outline-gray-200 dark:divide-gray-700 dark:bg-gray-800 dark:text-white dark:outline-gray-700">

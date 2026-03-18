@@ -1,4 +1,5 @@
 import { ChevronRightIcon } from '@heroicons/react/16/solid';
+import { Link } from 'react-router';
 
 export type BreadcrumbItem = {
   label: React.ReactNode;
@@ -11,13 +12,10 @@ type BreadcrumbsProps = {
 
 export const Breadcrumbs = ({ items }: BreadcrumbsProps) => {
   return (
-    <nav>
+    <nav aria-label="Breadcrumb">
       <ol className="flex items-center space-x-2">
         {items.map((item, index) => (
-          <li
-            key={`${String(item.label)}-${index}`}
-            aria-current={index === items.length - 1 ? 'page' : undefined}
-          >
+          <li key={item.link}>
             <div className="flex items-center gap-x-2">
               {index > 0 && (
                 <ChevronRightIcon
@@ -26,12 +24,12 @@ export const Breadcrumbs = ({ items }: BreadcrumbsProps) => {
                 />
               )}
               {index !== items.length - 1 ? (
-                <a
-                  href={item.link}
+                <Link
+                  to={item.link}
                   className="text-sm font-medium text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
                 >
                   {item.label}
-                </a>
+                </Link>
               ) : (
                 <span
                   aria-current="page"

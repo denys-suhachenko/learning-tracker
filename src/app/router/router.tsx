@@ -37,6 +37,9 @@ export const router = createBrowserRouter([
           },
           {
             path: 'courses',
+            handle: {
+              breadcrumb: () => ({ label: 'Courses', link: '/courses' }),
+            },
             children: [
               {
                 index: true,
@@ -44,11 +47,25 @@ export const router = createBrowserRouter([
               },
               {
                 path: ':courseId',
-                Component: CoursePage,
-              },
-              {
-                path: ':courseId/lessons/:lessonId',
-                Component: LessonPage,
+                handle: {
+                  breadcrumb: (match: any) => ({
+                    label: match.data?.title ?? 'Course',
+                    link: `/courses/${match.params.courseId}`,
+                  }),
+                },
+                children: [
+                  { index: true, Component: CoursePage },
+                  {
+                    path: 'lessons/:lessonId',
+                    Component: LessonPage,
+                    handle: {
+                      breadcrumb: (match: any) => ({
+                        label: match.data?.title ?? 'Lesson',
+                        link: `/courses/${match.params.courseId}/lessons/${match.params.lessonId}`,
+                      }),
+                    },
+                  },
+                ],
               },
             ],
           },

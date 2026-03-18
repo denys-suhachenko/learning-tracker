@@ -16,12 +16,9 @@ const PlannerBoard = () => {
   return (
     <div className="overflow-hidden rounded-lg shadow-sm outline-1 outline-black/5 dark:outline-gray-700">
       <header className="border-b border-gray-200 bg-white px-6 py-4 text-gray-900 dark:border-gray-700 dark:bg-gray-800 dark:text-white">
-        <div className="flex items-center justify-between">
-          <h2 className="font-semibold">
-            <time dateTime="2026-02-12">March 2026</time>
-          </h2>
-          <Button size="large">Add topic</Button>
-        </div>
+        <h2 className="font-semibold">
+          <time dateTime="2026-02-12">March 2026</time>
+        </h2>
       </header>
 
       <div className="grid max-w-full grid-cols-[256px_1fr] border-b border-gray-200 bg-white text-gray-900 dark:border-gray-700 dark:bg-gray-800/50 dark:text-white">

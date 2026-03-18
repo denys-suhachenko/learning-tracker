@@ -14,7 +14,7 @@ const coursesApi = baseApi.injectEndpoints({
     }),
     removeCourse: create.mutation<void, string>({
       query: (id) => ({
-        url: `/courses/${id}`,
+        url: `/courses/${id}/`,
         method: 'DELETE',
       }),
       invalidatesTags: ['Courses'],

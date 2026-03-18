@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router';
+import { Link, useParams } from 'react-router';
 import { skipToken } from '@reduxjs/toolkit/query';
 import clsx from 'clsx';
+import { toast } from 'sonner';
+import { ArrowLeftIcon } from '@heroicons/react/16/solid';
 
-import { Button, Container, Header } from '@/shared/ui';
+import { Button, Container, PageHeader } from '@/shared/ui';
 import { NoteEditor } from '@/widgets';
 import {
   useUpdateLessonMutation,
@@ -14,7 +16,7 @@ const LessonPage = () => {
   const [isEditMode, setIsEditMode] = useState(false);
   const [content, setContent] = useState('');
 
-  const { lessonId } = useParams();
+  const { lessonId, courseId } = useParams();
   const { data: lesson } = useGetLessonQuery(lessonId ?? skipToken);
   const [updateLesson, { isLoading: isUpdating }] = useUpdateLessonMutation();
 
@@ -38,15 +40,28 @@ const LessonPage = () => {
         content,
       }).unwrap();
 
+      toast.success('Lesson saved', {
+        description: 'Your changes have been stored successfully.',
+      });
+
       setIsEditMode(false);
     } catch (error) {
-      console.log('Error: ', error);
+      toast.error('Failed to save lesson');
     }
   };
 
   return (
     <>
-      <Header>
+      <PageHeader>
+        <div className="mb-4">
+          <Link
+            to={`/courses/${courseId}`}
+            className="inline-flex items-center gap-x-1 text-sm font-medium text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
+          >
+            <ArrowLeftIcon aria-hidden="true" className="size-4 shrink-0" />
+            Back
+          </Link>
+        </div>
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-3xl leading-9 font-semibold">
@@ -76,7 +91,7 @@ const LessonPage = () => {
             )}
           </div>
         </div>
-      </Header>
+      </PageHeader>
 
       <Container>
         <div

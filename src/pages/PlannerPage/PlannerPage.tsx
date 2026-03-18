@@ -1,14 +1,15 @@
 import PlannerBoard from '@/features/planner/ui/PlannerBoard';
-import { Header, Container } from '@/shared/ui';
+import { PageHeader, Container, Button } from '@/shared/ui';
 
 const PlannerPage = () => {
   return (
     <>
-      <Header>
+      <PageHeader>
         <div className="flex items-center justify-between">
           <div className="text-2xl leading-9 font-semibold">Planner</div>
+          <Button size="large">Add topic</Button>
         </div>
-      </Header>
+      </PageHeader>
 
       <Container>
         <PlannerBoard />

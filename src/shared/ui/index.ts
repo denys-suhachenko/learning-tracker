@@ -5,5 +5,7 @@ export { Progress } from './Progress/Progress';
 export { Table, type TableColumn } from './Table/Table';
 export { Multiselect } from './Multiselect/Multiselect';
 export { Container } from './Container/Container';
-export { Header } from './Header/Header';
+export { PageHeader } from './PageHeader/PageHeader';
 export { Breadcrumbs } from './Breadcrumbs/Breadcrumbs';
+export { Spinner } from './Spinner/Spinner';
+export { Avatar } from './Avatar/Avatar';

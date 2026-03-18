@@ -1,4 +1,4 @@
-import { Container, Header } from '@/shared/ui';
+import { Container, PageHeader } from '@/shared/ui';
 
 const baseItems = [
   {
@@ -19,11 +19,11 @@ const baseItems = [
 const KnowledgeBasePage = () => {
   return (
     <>
-      <Header>
+      <PageHeader>
         <div className="flex items-center justify-between">
           <div className="text-2xl leading-9 font-semibold">Knowledge base</div>
         </div>
-      </Header>
+      </PageHeader>
 
       <Container>
         <div className="mb-4 flex items-center justify-between text-sm">

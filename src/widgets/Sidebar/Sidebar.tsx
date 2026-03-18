@@ -1,21 +1,24 @@
 import { NavLink } from 'react-router';
 import clsx from 'clsx';
+import { AcademicCapIcon } from '@heroicons/react/24/outline';
+
+import type { User } from '@/features/auth/model/types';
+import { Avatar } from '@/shared/ui';
 
 import useSidebarResize from './hooks/useSidebarResize';
 import { navItems } from './navItems';
-import { AcademicCapIcon, Cog6ToothIcon } from '@heroicons/react/24/outline';
-import { ThemeToggle } from './ThemeToggle';
-import { useAppDispatch } from '@/app/store/hooks';
 
 type SidebarProps = {
   width?: number;
   resizable?: boolean;
+  user?: User | null;
   onResize?: (width: number) => void;
 };
 
 export const Sidebar = ({
   width = 256,
   resizable = false,
+  user = null,
   onResize,
 }: SidebarProps) => {
   const { onPointerUp, onPointerMove, onPointerDown, onPointerCancel } =
@@ -53,23 +56,13 @@ export const Sidebar = ({
               </li>
             ))}
 
-            <li className="mt-auto px-4 py-3">
-              <ThemeToggle />
-            </li>
-
-            <li>
-              <NavLink
-                to="/settings"
-                className={({ isActive }) =>
-                  clsx(
-                    'flex cursor-pointer items-center gap-x-3 px-4 py-3 text-sm font-medium hover:bg-gray-900 hover:text-white',
-                    isActive ? 'text-white' : 'text-white/70',
-                  )
-                }
-              >
-                <Cog6ToothIcon className="size-6" />
-                Settings
-              </NavLink>
+            <li className="mt-auto">
+              {user && (
+                <div className="flex cursor-pointer items-center gap-x-3 px-4 py-3 text-sm font-medium text-white/70 hover:bg-gray-900 hover:text-white">
+                  <Avatar />
+                  {user.first_name} {user.last_name}
+                </div>
+              )}
             </li>
           </ul>
         </nav>

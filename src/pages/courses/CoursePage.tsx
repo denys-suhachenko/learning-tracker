@@ -1,32 +1,27 @@
-import { useParams } from 'react-router';
+import { Link, useParams } from 'react-router';
 import { skipToken } from '@reduxjs/toolkit/query';
+import { ArrowLeftIcon } from '@heroicons/react/16/solid';
 
 import { useGetCourseQuery } from '@/features/courses/api/api';
-import { Button, Container, Header, Progress } from '@/shared/ui';
+import { Button, Container, PageHeader, Progress } from '@/shared/ui';
 import { ModulesList } from '@/features/courses/ui/ModulesList/ModulesList';
 
 const CoursePage = () => {
   const { courseId } = useParams();
   const { data: course } = useGetCourseQuery(courseId ?? skipToken);
 
-  const breadcrumbs = [
-    {
-      label: 'Homepage',
-      link: '/',
-    },
-    {
-      label: 'Courses',
-      link: '/courses',
-    },
-    {
-      label: 'Algebra',
-      link: '',
-    },
-  ];
-
   return (
     <>
-      <Header breadcrumbs={breadcrumbs}>
+      <PageHeader>
+        <div className="mb-4">
+          <Link
+            to="/courses"
+            className="inline-flex items-center gap-x-1 text-sm font-medium text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
+          >
+            <ArrowLeftIcon aria-hidden="true" className="size-4 shrink-0" />
+            Back
+          </Link>
+        </div>
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-3xl leading-9 font-semibold">
@@ -41,7 +36,7 @@ const CoursePage = () => {
             <Button>Continue Learning</Button>
           </div>
         </div>
-      </Header>
+      </PageHeader>
 
       <Container>
         <h2 className="mb-4 text-xl font-semibold">Lessons</h2>

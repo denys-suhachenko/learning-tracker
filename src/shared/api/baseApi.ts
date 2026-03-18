@@ -43,7 +43,7 @@ const baseQueryWithAuth: BaseQueryFn<
 
     const refresh = await baseQuery(
       {
-        url: '/auth/refresh',
+        url: '/auth/refresh/',
         method: 'POST',
         body: {
           refresh: refreshToken,
