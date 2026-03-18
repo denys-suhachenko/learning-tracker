@@ -63,7 +63,7 @@ const CoursePage = () => {
               <ul className="mt-6 space-y-1 dark:text-gray-300">
                 <li>
                   Modules:{' '}
-                  <span className="font-medium">{course?.modules.length}</span>
+                  <span className="font-medium">{course?.modules?.length}</span>
                 </li>
                 <li>
                   Lessons: <span className="font-medium">4</span>
