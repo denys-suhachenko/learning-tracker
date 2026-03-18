@@ -12,7 +12,7 @@ const buttonStyles = {
   variant: {
     primary: 'bg-blue-600 text-white hover:bg-blue-500',
     secondary:
-      'bg-white text-gray-900 outline outline-gray-300 hover:bg-gray-100 dark:bg-white/10 dark:text-white dark:outline-gray-700 dark:hover:bg-white/15',
+      'bg-white text-gray-900 outline outline-gray-300 hover:not-disabled:bg-gray-100 dark:bg-white/10 dark:text-white dark:outline-gray-700 dark:not-disabled:hover:bg-white/15',
   },
   size: {
     small: 'px-2 py-1 text-xs',

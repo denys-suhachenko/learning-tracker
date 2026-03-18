@@ -9,45 +9,62 @@ import {
   LessonPage,
   NotFoundPage,
   PlannerPage,
+  SignInPage,
+  SignUpPage,
 } from '@/pages';
+
+import ProtectedRoute from './ProtectedRoute';
 
 export const router = createBrowserRouter([
   {
-    path: '/',
-    Component: AppLayout,
+    path: '/sign-in',
+    Component: SignInPage,
+  },
+  {
+    path: '/sign-up',
+    Component: SignUpPage,
+  },
+  {
+    Component: ProtectedRoute,
     children: [
       {
-        index: true,
-        Component: DashboardPage,
-      },
-      {
-        path: 'courses',
+        path: '/',
+        Component: AppLayout,
         children: [
           {
             index: true,
-            Component: CoursesListPage,
+            Component: DashboardPage,
           },
           {
-            path: ':courseId',
-            Component: CoursePage,
+            path: 'courses',
+            children: [
+              {
+                index: true,
+                Component: CoursesListPage,
+              },
+              {
+                path: ':courseId',
+                Component: CoursePage,
+              },
+              {
+                path: ':courseId/lessons/:lessonId',
+                Component: LessonPage,
+              },
+            ],
           },
           {
-            path: ':courseId/lessons/:lessonId',
-            Component: LessonPage,
+            path: 'planner',
+            Component: PlannerPage,
+          },
+          {
+            path: 'knowledge-base',
+            Component: KnowledgeBasePage,
+          },
+          {
+            path: '*',
+            Component: NotFoundPage,
           },
         ],
-      },
-      {
-        path: 'planner',
-        Component: PlannerPage,
-      },
-      {
-        path: 'knowledge-base',
-        Component: KnowledgeBasePage,
-      },
-      {
-        path: '*',
-        Component: NotFoundPage,
       },
     ],
   },

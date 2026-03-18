@@ -5,3 +5,5 @@ export { default as CoursePage } from './courses/CoursePage';
 export { default as LessonPage } from './courses/LessonPage';
 export { default as KnowledgeBasePage } from './KnowledgeBasePage/KnowledgeBasePage';
 export { default as PlannerPage } from './PlannerPage/PlannerPage';
+export { default as SignInPage } from './SignInPage/SignInPage';
+export { default as SignUpPage } from './SignUpPage/SignUpPage';

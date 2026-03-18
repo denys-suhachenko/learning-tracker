@@ -1,3 +1,4 @@
+import { KeyIcon } from '@heroicons/react/24/outline';
 import {
   BookOpenIcon,
   CalendarIcon,
@@ -25,5 +26,10 @@ export const navItems = [
     path: '/knowledge-base',
     label: 'Knowledge Base',
     icon: <CircleStackIcon className="size-6" />,
+  },
+  {
+    path: '/sign-in',
+    label: 'Sign In',
+    icon: <KeyIcon className="size-6" />,
   },
 ];
