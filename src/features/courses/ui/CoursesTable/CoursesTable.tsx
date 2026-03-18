@@ -37,7 +37,7 @@ const CoursesTable = () => {
 
   const handleCourseRemove = async (courseId: string) => {
     try {
-      await remove('asdgsadgs').unwrap();
+      await remove(courseId).unwrap();
       toast.success('Course successfuly removed!');
     } catch {
       toast.error("Error! Course hasn't been removed");
