@@ -1,4 +1,3 @@
-import { Button } from '@/shared/ui';
 import { topicsList } from '../api/mock';
 import { BookOpenIcon } from '@heroicons/react/24/outline';
 
@@ -54,13 +53,7 @@ const PlannerBoard = () => {
                     {i + 9}
                   </span>
                 </div>
-                <div className="flex h-[680px] flex-col space-y-2 overflow-y-auto p-2">
-                  <div className="hover:bg- min-h-[128px] cursor-pointer rounded-lg bg-blue-50 p-2 text-sm select-none hover:bg-blue-100 dark:bg-gray-800 dark:hover:bg-gray-700/50">
-                    <span className="text-sm font-medium text-blue-700 dark:text-white">
-                      React.memo pitfalls
-                    </span>
-                  </div>
-                </div>
+                <div className="flex h-[680px] flex-col space-y-2 overflow-y-auto p-2" />
               </div>
             ))}
           </div>
