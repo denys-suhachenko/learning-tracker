@@ -50,6 +50,11 @@ pre {
   font-style: italic;
 }
 
+.md-editor hr {
+  margin: 16px 0;
+  border-color: #ccc;
+}
+
 .md-editor ul {
   margin: 8px 0;
   padding-left: 22px;
