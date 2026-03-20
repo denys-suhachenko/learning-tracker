@@ -4,6 +4,11 @@ Single-page application designed to help users organize learning topics, track p
 
 **Live Demo:** https://learning-tracker-demo.vercel.app/
 
+### Demo account
+
+Email: `demo-tracker@mail.com`\
+Password: `demo`
+
 ---
 
 ## Features

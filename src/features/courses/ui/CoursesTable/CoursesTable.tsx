@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import { toast } from 'sonner';
 
 import { Multiselect, Table } from '@/shared/ui';
 
@@ -6,7 +7,6 @@ import type { CourseStatus } from '../../model/types';
 import { useGetCoursesQuery, useRemoveCourseMutation } from '../../api/api';
 
 import { getColumns, CourseBadge } from './columns';
-import { toast } from 'sonner';
 
 type StatusOption = {
   id: number;

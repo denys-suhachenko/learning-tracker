@@ -2,11 +2,12 @@ import { createBrowserRouter } from 'react-router';
 
 import AppLayout from '@/app/layout/AppLayout';
 import {
-  CoursePage,
+  CourseDetailsPage,
   CoursesListPage,
+  CreateCoursePage,
   DashboardPage,
   KnowledgeBasePage,
-  LessonPage,
+  LessonDetailsPage,
   NotFoundPage,
   PlannerPage,
   SignInPage,
@@ -46,6 +47,10 @@ export const router = createBrowserRouter([
                 Component: CoursesListPage,
               },
               {
+                path: 'create',
+                Component: CreateCoursePage,
+              },
+              {
                 path: ':courseId',
                 handle: {
                   breadcrumb: (match: any) => ({
@@ -54,10 +59,13 @@ export const router = createBrowserRouter([
                   }),
                 },
                 children: [
-                  { index: true, Component: CoursePage },
+                  {
+                    index: true,
+                    Component: CourseDetailsPage,
+                  },
                   {
                     path: 'lessons/:lessonId',
-                    Component: LessonPage,
+                    Component: LessonDetailsPage,
                     handle: {
                       breadcrumb: (match: any) => ({
                         label: match.data?.title ?? 'Lesson',

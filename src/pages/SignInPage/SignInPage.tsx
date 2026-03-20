@@ -1,30 +1,34 @@
-import { useState } from 'react';
 import { Link, Navigate, useNavigate } from 'react-router';
+import { useForm } from 'react-hook-form';
 
 import { Button, Container, Input } from '@/shared/ui';
-import { useLoginMutation } from '@/features/auth/api/api';
-import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
-import { setTokens } from '@/features/auth/model/slice';
 import { AppleIcon, GoogleIcon } from '@/shared/icons';
+import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
+import { useLoginMutation } from '@/features/auth/api/api';
+import { setTokens } from '@/features/auth/model/slice';
+
+import { signInFormRules } from './signInFormRules';
+
+type SignInFormValues = {
+  email: string;
+  password: string;
+};
 
 const SignInPage = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
   const [login, { isLoading }] = useLoginMutation();
-  const token = useAppSelector((state) => state.auth.accessToken);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const token = useAppSelector((state) => state.auth.accessToken);
 
-  if (token) {
-    return <Navigate to="/" replace />;
-  }
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<SignInFormValues>();
 
-  const handleSubmit = async (event: React.SubmitEvent) => {
-    event.preventDefault();
-
+  const onSubmit = async (data: SignInFormValues) => {
     try {
-      const res = await login({ email, password }).unwrap();
+      const res = await login(data).unwrap();
       dispatch(
         setTokens({
           access: res.access,
@@ -32,58 +36,53 @@ const SignInPage = () => {
         }),
       );
       navigate('/', { replace: true });
-    } catch (err) {
-      console.log('Login failed: ', err);
+    } catch (error) {
+      console.log('Login failed!', error);
     }
   };
+
+  if (token) {
+    return <Navigate to="/" replace />;
+  }
 
   return (
     <Container>
       <div className="flex h-full flex-col justify-center">
-        <div className="mx-auto w-full max-w-96">
-          <h2 className="text-center text-2xl font-bold">
-            Sign in to your account
-          </h2>
-        </div>
-
         <div className="mx-auto mt-8 w-full max-w-md">
-          <div className="overflow-hidden rounded-md bg-white p-12 text-sm shadow-sm dark:bg-gray-800/50 dark:text-white dark:outline dark:outline-white/10">
-            <form className="space-y-6" onSubmit={handleSubmit}>
-              <div>
-                <label htmlFor="email" className="block font-medium">
-                  Email
-                </label>
-                <Input
-                  id="email"
-                  type="email"
-                  name="email"
-                  autoComplete="off"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </div>
-              <div>
-                <label htmlFor="password" className="block font-medium">
-                  Password
-                </label>
-                <Input
-                  id="password"
-                  type="password"
-                  name="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-              </div>
-              <div>
-                <Button
-                  type="submit"
-                  disabled={isLoading}
-                  size="large"
-                  className="w-full"
-                >
-                  Sign in
-                </Button>
-              </div>
+          <div className="overflow-hidden rounded-md bg-white px-10 py-8 text-sm shadow-sm dark:bg-gray-800/50 dark:text-white dark:outline dark:outline-white/10">
+            <h2 className="mb-6 text-center text-2xl font-bold">
+              Sign in to your account
+            </h2>
+
+            <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
+              <Input
+                id="email"
+                type="email"
+                label="Email"
+                placeholder="Enter your email"
+                autoComplete="off"
+                description={errors.email?.message}
+                {...register('email', signInFormRules.email)}
+              />
+
+              <Input
+                id="password"
+                type="password"
+                label="Password"
+                placeholder="Enter a unique password"
+                autoComplete="off"
+                description={errors.password?.message}
+                {...register('password', signInFormRules.password)}
+              />
+
+              <Button
+                type="submit"
+                disabled={isLoading}
+                size="large"
+                className="w-full"
+              >
+                Sign in
+              </Button>
             </form>
 
             <div className="mt-6">
@@ -118,7 +117,10 @@ const SignInPage = () => {
 
             <div className="mt-6 text-center text-gray-600 dark:text-gray-400">
               Need an account?{' '}
-              <Link to="/sign-up" className="underline hover:text-gray-900">
+              <Link
+                to="/sign-up"
+                className="underline hover:text-gray-900 dark:hover:text-white"
+              >
                 Sign up
               </Link>
             </div>

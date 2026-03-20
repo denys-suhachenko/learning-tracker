@@ -1,8 +1,15 @@
-import { useCurrentUser } from '@/shared/hooks/useCurrentUser';
-import { useTheme } from '@/shared/hooks/useTheme';
-import { Badge, Container, Progress } from '@/shared/ui';
-import { MoonIcon, SunIcon } from '@heroicons/react/24/solid';
 import { Link } from 'react-router';
+import { MoonIcon, SunIcon } from '@heroicons/react/24/solid';
+
+import {
+  Badge,
+  Card,
+  CardContent,
+  CardHeader,
+  Container,
+  Progress,
+} from '@/shared/ui';
+import { useCurrentUser, useTheme } from '@/shared/hooks';
 
 const metrics = [
   {
@@ -75,32 +82,38 @@ const DashboardPage = () => {
           </button>
         </header>
 
-        <div className="mb-6 grid grid-cols-4 gap-0 divide-x divide-gray-200 overflow-hidden rounded-md bg-white shadow-sm outline outline-gray-200 dark:divide-gray-700 dark:bg-gray-800 dark:text-white dark:outline-gray-700">
+        <div className="mb-6 grid grid-cols-4 gap-x-6">
           {metrics.map((metric) => (
-            <div key={metric.id} className="px-6 py-4">
-              <p className="text-sm font-medium text-gray-500 dark:text-gray-300">
-                {metric.title}
-              </p>
-              <p className="mt-2">
-                <span className="mr-2 text-3xl font-semibold tracking-tight">
-                  {metric.value}
-                </span>
-                {metric.subvalue && (
-                  <span className="font-medium text-gray-600 dark:text-gray-400">
-                    {metric.subvalue}
+            <Card key={metric.id}>
+              <CardContent>
+                <h4 className="text-sm font-medium text-gray-500 dark:text-gray-300">
+                  {metric.title}
+                </h4>
+
+                <p className="mt-4">
+                  <span className="mr-2 text-3xl font-semibold tracking-tight">
+                    {metric.value}
                   </span>
-                )}
-              </p>
-            </div>
+
+                  {metric.subvalue && (
+                    <span className="font-medium text-gray-600 dark:text-gray-400">
+                      {metric.subvalue}
+                    </span>
+                  )}
+                </p>
+              </CardContent>
+            </Card>
           ))}
         </div>
 
         <div className="grid grid-cols-[2fr_1fr] gap-x-6">
-          <div className="rounded-md bg-white px-6 py-4 shadow-sm outline outline-gray-200 dark:bg-gray-800 dark:text-white dark:outline-gray-700">
-            <h3 className="mb-4 font-medium">Today lessons</h3>
+          <Card>
+            <CardHeader>
+              <h3 className="font-medium">Today lessons</h3>
+            </CardHeader>
 
-            <div>
-              <ul className="divide-y divide-gray-200 dark:divide-gray-700">
+            <CardContent flush>
+              <ul className="divide-y divide-gray-200 px-6 pb-4 dark:divide-gray-700">
                 {lessons.map((lesson) => (
                   <li key={lesson.id} className="py-2">
                     <div className="flex items-center">
@@ -125,12 +138,14 @@ const DashboardPage = () => {
                   </li>
                 ))}
               </ul>
-            </div>
-          </div>
+            </CardContent>
+          </Card>
 
-          <div className="rounded-md bg-white px-8 py-6 shadow-sm outline outline-gray-200 dark:bg-gray-800 dark:text-white dark:outline-gray-700">
-            <h3 className="mb-4 font-medium">Notifications</h3>
-          </div>
+          <Card>
+            <CardHeader>
+              <h3 className="font-medium">Notifications</h3>
+            </CardHeader>
+          </Card>
         </div>
       </Container>
     </>

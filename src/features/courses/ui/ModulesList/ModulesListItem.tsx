@@ -33,7 +33,7 @@ export const ModulesListItem = ({ module }: ModulesListitemProps) => {
   return (
     <div>
       <div
-        className="flex cursor-pointer items-center justify-between px-6 py-4 select-none"
+        className="flex cursor-pointer items-center justify-between px-6 py-4 select-none hover:bg-gray-50/75 dark:hover:bg-white/5"
         onClick={() => setIsOpen((val) => !val)}
       >
         <div className="flex items-center">
