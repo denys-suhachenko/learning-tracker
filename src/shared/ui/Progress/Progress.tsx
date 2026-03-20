@@ -31,7 +31,11 @@ export const Progress = ({
           style={{ width: `${progress}%` }}
         />
       </div>
-      {label != null && <div className="shrink-0">{label}</div>}
+      {label != null && (
+        <div className="shrink-0 text-sm text-gray-500 dark:text-white/75">
+          {label}
+        </div>
+      )}
     </div>
   );
 };

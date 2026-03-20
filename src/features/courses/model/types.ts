@@ -14,9 +14,17 @@ export type Course = {
   description?: string;
   study_area: StudyArea;
   status: CourseStatus;
-  created_at: string;
-  updated_at: string;
-  modules: Module[];
+  created_at?: string;
+  updated_at?: string;
+  modules?: Module[];
+};
+
+export type CreateCourse = {
+  title: string;
+  slug: string;
+  description: string;
+  study_area: string;
+  status: CourseStatus;
 };
 
 export type Module = {

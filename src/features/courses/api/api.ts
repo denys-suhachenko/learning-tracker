@@ -1,6 +1,11 @@
 import { baseApi } from '@/shared/api/baseApi';
 
-import { type Course, type Lesson } from '../model/types';
+import {
+  type Course,
+  type CreateCourse,
+  type Lesson,
+  type StudyArea,
+} from '../model/types';
 
 const coursesApi = baseApi.injectEndpoints({
   endpoints: (create) => ({
@@ -12,6 +17,14 @@ const coursesApi = baseApi.injectEndpoints({
       query: (courseId) => `/courses/${courseId}`,
       providesTags: ['Courses'],
     }),
+    createCourse: create.mutation<Course, CreateCourse>({
+      query: (body) => ({
+        url: '/courses/',
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: ['Courses'],
+    }),
     removeCourse: create.mutation<void, string>({
       query: (id) => ({
         url: `/courses/${id}/`,
@@ -22,6 +35,9 @@ const coursesApi = baseApi.injectEndpoints({
     getLesson: create.query<Lesson, string>({
       query: (lessonId) => `/lessons/${lessonId}`,
     }),
+    getStudyAreas: create.query<StudyArea[], void>({
+      query: () => '/study-areas',
+    }),
   }),
   overrideExisting: true,
 });
@@ -29,6 +45,8 @@ const coursesApi = baseApi.injectEndpoints({
 export const {
   useGetCoursesQuery,
   useGetCourseQuery,
+  useCreateCourseMutation,
   useRemoveCourseMutation,
   useGetLessonQuery,
+  useGetStudyAreasQuery,
 } = coursesApi;

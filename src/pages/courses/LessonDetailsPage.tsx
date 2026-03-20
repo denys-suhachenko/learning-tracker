@@ -12,7 +12,7 @@ import {
   useGetLessonQuery,
 } from '@/features/lessons/api/api';
 
-const LessonPage = () => {
+const LessonDetailsPage = () => {
   const [isEditMode, setIsEditMode] = useState(false);
   const [content, setContent] = useState('');
 
@@ -125,4 +125,4 @@ const LessonPage = () => {
   );
 };
 
-export default LessonPage;
+export default LessonDetailsPage;

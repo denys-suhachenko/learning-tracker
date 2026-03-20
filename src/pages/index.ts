@@ -1,8 +1,9 @@
 export { default as DashboardPage } from './DashboardPage/DashboardPage';
 export { default as NotFoundPage } from './NotFoundPage/NotFoundPage';
 export { default as CoursesListPage } from './courses/CoursesListPage';
-export { default as CoursePage } from './courses/CoursePage';
-export { default as LessonPage } from './courses/LessonPage';
+export { default as CourseDetailsPage } from './courses/CourseDetailsPage';
+export { default as CreateCoursePage } from './courses/CreateCoursePage';
+export { default as LessonDetailsPage } from './courses/LessonDetailsPage';
 export { default as KnowledgeBasePage } from './KnowledgeBasePage/KnowledgeBasePage';
 export { default as PlannerPage } from './PlannerPage/PlannerPage';
 export { default as SignInPage } from './SignInPage/SignInPage';

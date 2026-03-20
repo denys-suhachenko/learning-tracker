@@ -9,3 +9,6 @@ export { PageHeader } from './PageHeader/PageHeader';
 export { Breadcrumbs } from './Breadcrumbs/Breadcrumbs';
 export { Spinner } from './Spinner/Spinner';
 export { Avatar } from './Avatar/Avatar';
+export { Textarea } from './Textarea/Textarea';
+export { Select } from './Select/Select';
+export { Card, CardHeader, CardContent, CardFooter } from './Card/Card';
