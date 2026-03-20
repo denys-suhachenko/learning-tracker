@@ -13,7 +13,6 @@ import {
   Progress,
 } from '@/shared/ui';
 import { ModulesList } from '@/features/courses/ui/ModulesList/ModulesList';
-import { DocumentTextIcon } from '@heroicons/react/24/outline';
 
 const CourseDetailsPage = () => {
   const { courseId } = useParams();
@@ -82,39 +81,6 @@ const CourseDetailsPage = () => {
                   <li>
                     Completed:{' '}
                     <span className="font-medium dark:text-white">2</span>
-                  </li>
-                </ul>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader bordered className="font-medium">
-                Attachments
-              </CardHeader>
-              <CardContent>
-                <ul className="space-y-4">
-                  <li className="flex items-center gap-x-4 rounded-sm bg-gray-100 px-4 py-2 dark:bg-gray-700">
-                    <DocumentTextIcon className="size-6 shrink-0" />
-                    <div>
-                      <h4 className="max-w-[168px] overflow-hidden text-sm text-ellipsis whitespace-nowrap">
-                        Discrete Mathematics and Its Applications.pdf
-                      </h4>
-                      <p className="mt-1 text-xs text-gray-700 dark:text-gray-300">
-                        3.2mb
-                      </p>
-                    </div>
-                  </li>
-
-                  <li className="flex items-center gap-x-4 rounded-sm bg-gray-100 px-4 py-2 dark:bg-gray-700">
-                    <DocumentTextIcon className="size-6 shrink-0" />
-                    <div>
-                      <h4 className="max-w-[168px] overflow-hidden text-sm text-ellipsis whitespace-nowrap">
-                        Discrete Mathematics and Its Applications.pdf
-                      </h4>
-                      <p className="mt-1 text-xs text-gray-700 dark:text-gray-300">
-                        3.2mb
-                      </p>
-                    </div>
                   </li>
                 </ul>
               </CardContent>

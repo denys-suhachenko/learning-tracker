@@ -44,7 +44,7 @@ const CoursesTable = () => {
     }
   };
 
-  const columns = useMemo(() => getColumns(handleCourseRemove), []);
+  const columns = useMemo(() => getColumns(), []);
 
   return (
     <div>

@@ -1,42 +1,19 @@
 import { Link } from 'react-router';
 import { ArrowLeftIcon } from '@heroicons/react/16/solid';
 import { AcademicCapIcon } from '@heroicons/react/24/outline';
-import { toast } from 'sonner';
 
 import {
   Button,
   Card,
   CardContent,
-  CardFooter,
   CardHeader,
   Container,
   PageHeader,
 } from '@/shared/ui';
 import CourseDetailsForm from '@/features/courses/ui/CourseDetailsForm/CourseDetailsForm';
 import ModulesForm from '@/features/courses/ui/ModulesForm/ModulesForm';
-import { useCreateCourseMutation } from '@/features/courses/api/api';
-import type { CreateCourse } from '@/features/courses/model/types';
 
 const CreateCoursePage = () => {
-  const [createCourse] = useCreateCourseMutation();
-
-  const course: CreateCourse = {
-    title: 'Quantum Mechanics',
-    slug: 'quantum-mechanics',
-    description: 'Intro course',
-    study_area: '3627eff5-329f-42af-9927-d68e833f4aa0',
-    status: 'draft',
-  };
-
-  const handleSave = async () => {
-    try {
-      await createCourse(course).unwrap();
-      toast.success('Course successfuly created!');
-    } catch {
-      toast.error("Error! Course hasn't been created");
-    }
-  };
-
   return (
     <>
       <PageHeader>
@@ -59,7 +36,7 @@ const CreateCoursePage = () => {
           </div>
           <div className="flex items-center gap-x-4">
             <Button variant="secondary">Save as Draft</Button>
-            <Button onClick={handleSave}>Create Course</Button>
+            <Button>Create Course</Button>
           </div>
         </div>
       </PageHeader>
