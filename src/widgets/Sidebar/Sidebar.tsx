@@ -1,12 +1,18 @@
-import { NavLink } from 'react-router';
+import { NavLink, useNavigate } from 'react-router';
 import clsx from 'clsx';
-import { AcademicCapIcon } from '@heroicons/react/24/outline';
+import {
+  AcademicCapIcon,
+  ArrowRightStartOnRectangleIcon,
+} from '@heroicons/react/24/outline';
 
-import type { User } from '@/features/auth/model/types';
 import { Avatar } from '@/shared/ui';
+import { useAppDispatch } from '@/app/store/hooks';
+import type { User } from '@/features/auth/model/types';
 
 import useSidebarResize from './hooks/useSidebarResize';
 import { navItems } from './navItems';
+import { logout } from '@/features/auth/model/slice';
+import { baseApi } from '@/shared/api/baseApi';
 
 type SidebarProps = {
   width?: number;
@@ -23,6 +29,16 @@ export const Sidebar = ({
 }: SidebarProps) => {
   const { onPointerUp, onPointerMove, onPointerDown, onPointerCancel } =
     useSidebarResize({ value: width, onChange: onResize });
+
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  // temporary logout implementation
+  const handleLogout = () => {
+    dispatch(logout());
+    dispatch(baseApi.util.resetApiState());
+    navigate('/sign-in');
+  };
 
   return (
     <aside
@@ -57,6 +73,14 @@ export const Sidebar = ({
             ))}
 
             <li className="mt-auto">
+              <div
+                className="flex cursor-pointer items-center gap-x-3 px-4 py-3 text-sm font-medium text-white/70 hover:bg-gray-900 hover:text-white"
+                onClick={handleLogout}
+              >
+                <ArrowRightStartOnRectangleIcon className="size-6" />
+                Logout
+              </div>
+
               {user && (
                 <div className="flex cursor-pointer items-center gap-x-3 px-4 py-3 text-sm font-medium text-white/70 hover:bg-gray-900 hover:text-white">
                   <Avatar />
