@@ -13,6 +13,7 @@
   "dependencies": {
     "@heroicons/react": "^2.2.0",
     "@reduxjs/toolkit": "^2.11.2",
+    "@sentry/react": "^10.47.0",
     "clsx": "^2.1.1",
     "katex": "^0.16.28",
     "react": "^19.2.0",
@@ -27,6 +28,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
+    "@sentry/vite-plugin": "^5.1.1",
     "@tailwindcss/vite": "^4.2.0",
     "@types/node": "^24.10.1",
     "@types/react": "^19.2.7",
