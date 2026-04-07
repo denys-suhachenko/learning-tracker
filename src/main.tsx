@@ -7,7 +7,7 @@ import * as Sentry from '@sentry/react';
 import { router } from './app/router/router.tsx';
 import { store } from './app/store/store.ts';
 import { ThemeProvider } from './app/providers/ThemeProvider.tsx';
-import { initSentry } from './shared/config/sentry.tsx';
+import { initSentry, SentryUser } from './shared/config/sentry.tsx';
 
 import './index.css';
 
@@ -18,6 +18,7 @@ createRoot(document.getElementById('root')!).render(
     <Sentry.ErrorBoundary fallback={<div>Error! Something went wrong</div>}>
       <Provider store={store}>
         <ThemeProvider>
+          <SentryUser />
           <RouterProvider router={router} />
         </ThemeProvider>
       </Provider>

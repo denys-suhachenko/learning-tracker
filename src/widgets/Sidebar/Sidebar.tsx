@@ -8,11 +8,11 @@ import {
 import { Avatar } from '@/shared/ui';
 import { useAppDispatch } from '@/app/store/hooks';
 import type { User } from '@/features/auth/model/types';
+import { logout } from '@/features/auth/model/slice';
+import { baseApi } from '@/shared/api/baseApi';
 
 import useSidebarResize from './hooks/useSidebarResize';
 import { navItems } from './navItems';
-import { logout } from '@/features/auth/model/slice';
-import { baseApi } from '@/shared/api/baseApi';
 
 type SidebarProps = {
   width?: number;
@@ -82,10 +82,18 @@ export const Sidebar = ({
               </div>
 
               {user && (
-                <div className="flex cursor-pointer items-center gap-x-3 px-4 py-3 text-sm font-medium text-white/70 hover:bg-gray-900 hover:text-white">
+                <NavLink
+                  to="/settings"
+                  className={({ isActive }) =>
+                    clsx(
+                      'flex cursor-pointer items-center gap-x-3 px-4 py-3 text-sm font-medium hover:bg-gray-900 hover:text-white',
+                      isActive ? 'text-white' : 'text-white/70',
+                    )
+                  }
+                >
                   <Avatar />
                   {user.first_name} {user.last_name}
-                </div>
+                </NavLink>
               )}
             </li>
           </ul>

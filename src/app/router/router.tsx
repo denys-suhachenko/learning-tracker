@@ -10,6 +10,7 @@ import {
   LessonDetailsPage,
   NotFoundPage,
   PlannerPage,
+  SettingsPage,
   SignInPage,
   SignUpPage,
 } from '@/pages';
@@ -84,6 +85,10 @@ export const router = createBrowserRouter([
           {
             path: 'knowledge-base',
             Component: KnowledgeBasePage,
+          },
+          {
+            path: 'settings',
+            Component: SettingsPage,
           },
           {
             path: '*',
