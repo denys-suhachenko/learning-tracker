@@ -1,13 +1,15 @@
 import { Link, Navigate, useNavigate } from 'react-router';
 import { useForm } from 'react-hook-form';
 
-import { Button, Container, Input } from '@/shared/ui';
+import { Container } from '@/shared/layout';
 import { AppleIcon, GoogleIcon } from '@/shared/icons';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { useLoginMutation } from '@/features/auth/api/api';
 import { setTokens } from '@/features/auth/model/slice';
 
 import { signInFormRules } from './signInFormRules';
+import { Input } from '@/shared/ui/input';
+import { Button } from '@/shared/ui/button';
 
 type SignInFormValues = {
   email: string;
@@ -58,27 +60,23 @@ const SignInPage = () => {
               <Input
                 id="email"
                 type="email"
-                label="Email"
                 placeholder="Enter your email"
                 autoComplete="off"
-                description={errors.email?.message}
                 {...register('email', signInFormRules.email)}
               />
 
               <Input
                 id="password"
                 type="password"
-                label="Password"
                 placeholder="Enter a unique password"
                 autoComplete="off"
-                description={errors.password?.message}
                 {...register('password', signInFormRules.password)}
               />
 
               <Button
                 type="submit"
                 disabled={isLoading}
-                size="large"
+                size="lg"
                 className="w-full"
               >
                 Sign in
@@ -97,7 +95,7 @@ const SignInPage = () => {
                   className="flex w-full items-center justify-center gap-x-3"
                   disabled={true}
                   variant="secondary"
-                  size="large"
+                  size="lg"
                 >
                   <GoogleIcon />
                   <span className="text-sm font-semibold">Google</span>
@@ -107,7 +105,7 @@ const SignInPage = () => {
                   className="flex w-full items-center justify-center gap-x-3"
                   disabled={true}
                   variant="secondary"
-                  size="large"
+                  size="lg"
                 >
                   <AppleIcon />
                   <span className="text-sm font-semibold">Apple</span>

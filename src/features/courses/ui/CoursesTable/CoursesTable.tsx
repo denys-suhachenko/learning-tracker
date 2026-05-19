@@ -1,5 +1,4 @@
 import { useMemo, useState } from 'react';
-import { toast } from 'sonner';
 
 import { Multiselect, Table } from '@/shared/ui';
 
@@ -7,6 +6,13 @@ import type { CourseStatus } from '../../model/types';
 import { useGetCoursesQuery, useRemoveCourseMutation } from '../../api/api';
 
 import { getColumns, CourseBadge } from './columns';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/shared/ui/select';
 
 type StatusOption = {
   id: number;
@@ -35,15 +41,6 @@ const CoursesTable = () => {
   const { data: courses = [] } = useGetCoursesQuery();
   const [remove] = useRemoveCourseMutation();
 
-  const handleCourseRemove = async (courseId: string) => {
-    try {
-      await remove(courseId).unwrap();
-      toast.success('Course successfuly removed!');
-    } catch {
-      toast.error("Error! Course hasn't been removed");
-    }
-  };
-
   const columns = useMemo(() => getColumns(), []);
 
   return (
@@ -59,9 +56,16 @@ const CoursesTable = () => {
           onChange={(value) => setSelectedStatuses(value)}
         />
 
-        <div className="text-sm">
-          <span className="font-medium">Sort by:</span> Progress
-        </div>
+        <Select defaultValue="name">
+          <SelectTrigger className="bg-white">
+            <span className="font-medium">Sort by:</span>{' '}
+            <SelectValue placeholder="Select" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="name">Name</SelectItem>
+            <SelectItem value="progress">Progress</SelectItem>
+          </SelectContent>
+        </Select>
       </div>
 
       <Table columns={columns} rows={courses} />

@@ -1,15 +1,20 @@
 import { NavLink, useNavigate } from 'react-router';
-import clsx from 'clsx';
-import {
-  AcademicCapIcon,
-  ArrowRightStartOnRectangleIcon,
-} from '@heroicons/react/24/outline';
+import { AcademicCapIcon } from '@heroicons/react/24/outline';
+import { LogOutIcon, SettingsIcon } from 'lucide-react';
 
-import { Avatar } from '@/shared/ui';
+import { cn } from '@/shared/lib/utils';
 import { useAppDispatch } from '@/app/store/hooks';
 import type { User } from '@/features/auth/model/types';
 import { logout } from '@/features/auth/model/slice';
 import { baseApi } from '@/shared/api/baseApi';
+import { Avatar, AvatarFallback, AvatarImage } from '@/shared/ui/avatar';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/shared/ui/dropdown-menu';
 
 import useSidebarResize from './hooks/useSidebarResize';
 import { navItems } from './navItems';
@@ -48,10 +53,17 @@ export const Sidebar = ({
       <div className="flex h-full flex-col">
         <a
           href="#"
-          className="flex items-center gap-x-3 p-4 text-xl font-semibold tracking-wide text-gray-50 select-none"
+          className="flex items-center gap-x-3 p-4 text-gray-50 select-none"
         >
           <AcademicCapIcon className="size-8" />
-          MindTracker
+          <div>
+            <div className="text-xl font-semibold tracking-wide">
+              Learning Tracker
+            </div>
+            <div className="text-xs font-medium text-gray-200">
+              Study. Practice. Progress.
+            </div>
+          </div>
         </a>
 
         <nav className="flex flex-1 flex-col">
@@ -61,8 +73,8 @@ export const Sidebar = ({
                 <NavLink
                   to={item.path}
                   className={({ isActive }) =>
-                    clsx(
-                      'flex cursor-pointer items-center gap-x-3 px-4 py-3 text-sm font-medium hover:bg-gray-900 hover:text-white',
+                    cn(
+                      'flex cursor-pointer items-center gap-x-3 px-4 py-3 text-sm font-medium transition-colors duration-100 hover:bg-gray-900 hover:text-white',
                       isActive ? 'text-white' : 'text-white/70',
                     )
                   }
@@ -73,27 +85,32 @@ export const Sidebar = ({
             ))}
 
             <li className="mt-auto">
-              <div
-                className="flex cursor-pointer items-center gap-x-3 px-4 py-3 text-sm font-medium text-white/70 hover:bg-gray-900 hover:text-white"
-                onClick={handleLogout}
-              >
-                <ArrowRightStartOnRectangleIcon className="size-6" />
-                Logout
-              </div>
-
               {user && (
-                <NavLink
-                  to="/settings"
-                  className={({ isActive }) =>
-                    clsx(
-                      'flex cursor-pointer items-center gap-x-3 px-4 py-3 text-sm font-medium hover:bg-gray-900 hover:text-white',
-                      isActive ? 'text-white' : 'text-white/70',
-                    )
-                  }
-                >
-                  <Avatar />
-                  {user.first_name} {user.last_name}
-                </NavLink>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <div className="flex w-full cursor-pointer items-center justify-start gap-x-3 px-3 py-4 text-sm font-medium text-white/70 hover:text-white">
+                      <Avatar>
+                        <AvatarImage
+                          src="https://github.com/shadcn.png"
+                          alt="shadcn"
+                        />
+                        <AvatarFallback>LR</AvatarFallback>
+                      </Avatar>
+                      {user.first_name} {user.last_name}
+                    </div>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end">
+                    <DropdownMenuItem onSelect={() => navigate('/settings')}>
+                      <SettingsIcon />
+                      Settings
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onSelect={handleLogout}>
+                      <LogOutIcon />
+                      Log Out
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               )}
             </li>
           </ul>

@@ -8,4 +8,5 @@ export { default as KnowledgeBasePage } from './KnowledgeBasePage/KnowledgeBaseP
 export { default as PlannerPage } from './PlannerPage/PlannerPage';
 export { default as SignInPage } from './SignInPage/SignInPage';
 export { default as SignUpPage } from './SignUpPage/SignUpPage';
-export { default as SettingsPage } from './SettingsPage/SettingsPage';
+export { default as SettingsPage } from './settings/SettingsPage';
+export { default as ReviewCardsPage } from './review/ReviewCardsPage';

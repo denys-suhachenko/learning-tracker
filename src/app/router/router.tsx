@@ -13,9 +13,12 @@ import {
   SettingsPage,
   SignInPage,
   SignUpPage,
+  ReviewCardsPage,
 } from '@/pages';
 
 import ProtectedRoute from './ProtectedRoute';
+import ReviewCreatePage from '@/pages/review/ReviewCreatePage';
+import ReviewSessionPage from '@/pages/review/ReviewSessionPage';
 
 export const router = createBrowserRouter([
   {
@@ -81,6 +84,26 @@ export const router = createBrowserRouter([
           {
             path: 'planner',
             Component: PlannerPage,
+          },
+          {
+            path: 'review',
+            handle: {
+              breadcrumb: () => ({ label: 'Review', link: '/review' }),
+            },
+            children: [
+              {
+                index: true,
+                Component: ReviewCardsPage,
+              },
+              {
+                path: ':sessionId',
+                Component: ReviewSessionPage,
+              },
+              {
+                path: 'create',
+                Component: ReviewCreatePage,
+              },
+            ],
           },
           {
             path: 'knowledge-base',

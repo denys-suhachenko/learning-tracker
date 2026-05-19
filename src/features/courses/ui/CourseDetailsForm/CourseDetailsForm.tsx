@@ -1,16 +1,18 @@
 import { Controller, useForm } from 'react-hook-form';
 
+import { Card, CardContent, CardHeader, Textarea } from '@/shared/ui';
+
 import {
-  Card,
-  CardContent,
-  CardHeader,
-  Input,
   Select,
-  Textarea,
-} from '@/shared/ui';
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from '@/shared/ui/select';
 
 import { useGetStudyAreasQuery } from '../../api/api';
 import { courseDetailsFormRules } from './courseDetailsFormRules';
+import { Input } from '@/shared/ui/input';
 
 type CourseFormValues = {
   title: string;
@@ -21,12 +23,6 @@ type CourseFormValues = {
 
 const CourseDetailsForm = () => {
   const { data: studyAreas = [] } = useGetStudyAreasQuery();
-
-  const studyAreasOptions = studyAreas.map((area) => ({
-    value: area.id,
-    label: area.name,
-  }));
-
   const { register, control } = useForm<CourseFormValues>();
 
   return (
@@ -79,14 +75,18 @@ const CourseDetailsForm = () => {
                 control={control}
                 rules={courseDetailsFormRules.study_area}
                 render={({ field }) => (
-                  <Select
-                    id="study_area"
-                    name={field.name}
-                    value={field.value}
-                    options={studyAreasOptions}
-                    onChange={field.onChange}
-                    placeholder="Select study area"
-                  />
+                  <Select value={field.value} onValueChange={field.onChange}>
+                    <SelectTrigger className="bg-white">
+                      <SelectValue placeholder="Select study area" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {studyAreas.map((option) => (
+                        <SelectItem key={option.id} value={option.id}>
+                          {option.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 )}
               />
             </div>

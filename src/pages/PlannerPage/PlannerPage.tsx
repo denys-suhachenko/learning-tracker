@@ -1,5 +1,7 @@
 import PlannerBoard from '@/features/planner/ui/PlannerBoard';
-import { PageHeader, Container, Button } from '@/shared/ui';
+import { PageHeader } from '@/shared/ui';
+import { Container } from '@/shared/layout';
+import { Button } from '@/shared/ui/button';
 
 const PlannerPage = () => {
   return (
@@ -7,7 +9,7 @@ const PlannerPage = () => {
       <PageHeader>
         <div className="flex items-center justify-between">
           <div className="text-2xl leading-9 font-semibold">Planner</div>
-          <Button size="large">Add topic</Button>
+          <Button size="lg">Add topic</Button>
         </div>
       </PageHeader>
 

@@ -2,16 +2,11 @@ import { Link } from 'react-router';
 import { ArrowLeftIcon } from '@heroicons/react/16/solid';
 import { AcademicCapIcon } from '@heroicons/react/24/outline';
 
-import {
-  Button,
-  Card,
-  CardContent,
-  CardHeader,
-  Container,
-  PageHeader,
-} from '@/shared/ui';
+import { Card, CardContent, CardHeader, PageHeader } from '@/shared/ui';
 import CourseDetailsForm from '@/features/courses/ui/CourseDetailsForm/CourseDetailsForm';
 import ModulesForm from '@/features/courses/ui/ModulesForm/ModulesForm';
+import { Button } from '@/shared/ui/button';
+import { Container } from '@/shared/layout';
 
 const CreateCoursePage = () => {
   return (

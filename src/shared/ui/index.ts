@@ -1,14 +1,9 @@
 export { Badge } from './Badge/Badge';
-export { Button } from './Button/Button';
-export { Input } from './Input/Input';
 export { Progress } from './Progress/Progress';
 export { Table, type TableColumn } from './Table/Table';
 export { Multiselect } from './Multiselect/Multiselect';
-export { Container } from './Container/Container';
 export { PageHeader } from './PageHeader/PageHeader';
 export { Breadcrumbs } from './Breadcrumbs/Breadcrumbs';
 export { Spinner } from './Spinner/Spinner';
-export { Avatar } from './Avatar/Avatar';
 export { Textarea } from './Textarea/Textarea';
-export { Select } from './Select/Select';
 export { Card, CardHeader, CardContent, CardFooter } from './Card/Card';

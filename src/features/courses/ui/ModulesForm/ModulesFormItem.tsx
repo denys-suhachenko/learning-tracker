@@ -1,9 +1,11 @@
-import { Button, Input } from '@/shared/ui';
 import {
   Bars3Icon,
   EllipsisVerticalIcon,
   TrashIcon,
 } from '@heroicons/react/16/solid';
+
+import { Input } from '@/shared/ui/input';
+import { Button } from '@/shared/ui/button';
 
 import type { Module } from '../../model/types';
 

@@ -1,4 +1,5 @@
-import { Container, PageHeader } from '@/shared/ui';
+import { PageHeader } from '@/shared/ui';
+import { Container } from '@/shared/layout';
 
 const baseItems = [
   {

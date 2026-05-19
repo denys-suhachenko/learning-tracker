@@ -1,8 +1,8 @@
-import { Button } from '@/shared/ui';
-
-import ModulesFormItem from './ModulesFormItem';
+import { Button } from '@/shared/ui/button';
 
 import type { Module } from '../../model/types';
+
+import ModulesFormItem from './ModulesFormItem';
 
 const ModulesForm = () => {
   const modules: Module[] = [];

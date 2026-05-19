@@ -1,15 +1,9 @@
 import { Link } from 'react-router';
 import { MoonIcon, SunIcon } from '@heroicons/react/24/solid';
 
-import {
-  Badge,
-  Card,
-  CardContent,
-  CardHeader,
-  Container,
-  Progress,
-} from '@/shared/ui';
+import { Badge, Card, CardContent, CardHeader, Progress } from '@/shared/ui';
 import { useCurrentUser, useTheme } from '@/shared/hooks';
+import { Container } from '@/shared/layout';
 
 const metrics = [
   {

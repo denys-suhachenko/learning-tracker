@@ -4,15 +4,15 @@ import { ArrowLeftIcon } from '@heroicons/react/16/solid';
 
 import { useGetCourseQuery } from '@/features/courses/api/api';
 import {
-  Button,
   Card,
   CardContent,
   CardHeader,
-  Container,
   PageHeader,
   Progress,
 } from '@/shared/ui';
 import { ModulesList } from '@/features/courses/ui/ModulesList/ModulesList';
+import { Button } from '@/shared/ui/button';
+import { Container } from '@/shared/layout';
 
 const CourseDetailsPage = () => {
   const { courseId } = useParams();

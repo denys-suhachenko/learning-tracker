@@ -5,12 +5,14 @@ import clsx from 'clsx';
 import { toast } from 'sonner';
 import { ArrowLeftIcon } from '@heroicons/react/16/solid';
 
-import { Button, Container, PageHeader } from '@/shared/ui';
+import { PageHeader } from '@/shared/ui';
+import { Container } from '@/shared/layout';
 import { NoteEditor } from '@/widgets';
 import {
   useUpdateLessonMutation,
   useGetLessonQuery,
 } from '@/features/lessons/api/api';
+import { Button } from '@/shared/ui/button';
 
 const LessonDetailsPage = () => {
   const [isEditMode, setIsEditMode] = useState(false);

@@ -1,4 +1,4 @@
-import clsx from 'clsx';
+import { cn } from '@/shared/lib/utils';
 
 type ProgressProps = {
   value: number;
@@ -18,13 +18,13 @@ export const Progress = ({
   return (
     <div className="flex w-full items-center">
       <div
-        className={clsx(
+        className={cn(
           'w-full flex-1 overflow-hidden rounded-full bg-gray-200 dark:bg-white/20',
           className,
         )}
       >
         <div
-          className={clsx(
+          className={cn(
             'shrink-0 rounded-full bg-blue-600 transition-all duration-300',
             size === 'small' ? 'h-1.5' : 'h-2',
           )}
@@ -32,7 +32,7 @@ export const Progress = ({
         />
       </div>
       {label != null && (
-        <div className="shrink-0 text-sm text-gray-500 dark:text-white/75">
+        <div className="ml-2 shrink-0 text-sm text-gray-500 dark:text-white/75">
           {label}
         </div>
       )}

@@ -1,8 +1,10 @@
 import { useNavigate } from 'react-router';
 
 import CoursesTable from '@/features/courses/ui/CoursesTable/CoursesTable';
-import { Button, Card, Container, PageHeader, Progress } from '@/shared/ui';
+import { Card, PageHeader, Progress } from '@/shared/ui';
 import { DocumentDuplicateIcon } from '@heroicons/react/24/outline';
+import { Container } from '@/shared/layout';
+import { Button } from '@/shared/ui/button';
 
 const CoursesListPage = () => {
   const navigate = useNavigate();
@@ -13,7 +15,7 @@ const CoursesListPage = () => {
         <div className="flex items-center justify-between">
           <div className="text-2xl leading-9 font-semibold">Courses</div>
           <Button
-            size="large"
+            size="lg"
             onClick={() =>
               navigate('/courses/create', {
                 replace: true,
