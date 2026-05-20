@@ -4,13 +4,7 @@ import { useForm } from 'react-hook-form';
 import { useCurrentUser } from '@/shared/hooks';
 import { Input } from '@/shared/ui/input';
 import { Button } from '@/shared/ui/button';
-import {
-  Field,
-  FieldContent,
-  FieldDescription,
-  FieldGroup,
-  FieldLabel,
-} from '@/shared/ui/field';
+import { Field, FieldGroup, FieldLabel } from '@/shared/ui/field';
 import {
   ClockIcon,
   LanguagesIcon,
@@ -27,6 +21,8 @@ import {
   SelectValue,
 } from '@/shared/ui/select';
 import { Switch } from '@/shared/ui/switch';
+import { AppleIcon, GoogleIcon } from '@/shared/icons';
+import { Badge } from '@/shared/ui/badge';
 
 type UserSettingsFormValues = {
   email: string;
@@ -224,6 +220,38 @@ const AccountSettings = () => {
         <p className="text-muted-foreground mb-4 text-sm">
           Manage your connected accounts and active sessions.
         </p>
+        <div className="space-y-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <div className="bg-muted rounded-md p-2">
+                <GoogleIcon />
+              </div>
+              <div>
+                <div className="text-sm font-medium">Google</div>
+                <p className="text-muted-foreground text-xs">
+                  Connected on May 12, 2024
+                </p>
+              </div>
+            </div>
+            <Badge className="border border-green-300 bg-green-100 text-green-700">
+              Connected
+            </Badge>
+          </div>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <div className="bg-muted rounded-md p-2">
+                <AppleIcon />
+              </div>
+              <div>
+                <div className="text-sm font-medium">Apple</div>
+                <p className="text-muted-foreground text-xs">Not connected</p>
+              </div>
+            </div>
+            <Button variant="outline" size="sm">
+              Connect
+            </Button>
+          </div>
+        </div>
       </div>
 
       <div className="bg-card col-span-2 rounded-md border p-4">

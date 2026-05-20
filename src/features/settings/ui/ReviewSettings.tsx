@@ -1,50 +1,26 @@
-import { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
+import { useState } from 'react';
 import {
-  AlbumIcon,
-  PaletteIcon,
-  BookOpen,
-  SparklesIcon,
-  BellIcon,
-  CircleUserIcon,
   RefreshCwIcon,
   Calendar1Icon,
   StickyNotePlusIcon,
   EyeIcon,
   FastForwardIcon,
   KeyboardIcon,
-  LeafIcon,
-  ScaleIcon,
   FlameIcon,
   InfoIcon,
   CalendarIcon,
   ArrowRightLeftIcon,
 } from 'lucide-react';
 
-import { Card, CardContent, CardHeader, PageHeader } from '@/shared/ui';
-import { useCurrentUser } from '@/shared/hooks';
-import { Input } from '@/shared/ui/input';
 import { Button } from '@/shared/ui/button';
-import { Container } from '@/shared/layout';
-import { Tabs, TabsList, TabsTrigger } from '@/shared/ui/tabs';
 import { RadioGroup, RadioGroupItem } from '@/shared/ui/radio-group';
 import { Separator } from '@/shared/ui/separator';
 import { Switch } from '@/shared/ui/switch';
-import {
-  Field,
-  FieldContent,
-  FieldDescription,
-  FieldLabel,
-  FieldTitle,
-} from '@/shared/ui/field';
 import NumberStepper from '@/shared/ui/number-stepper';
-import { ReviewIntensityRadioGroup } from '@/features/settings/ui/ReviewIntensityRadio';
-
-type UserSettingsFormValues = {
-  email: string;
-  first_name: string;
-  last_name: string;
-};
+import {
+  ReviewIntensityRadioGroup,
+  type ReviewIntensityType,
+} from '@/features/settings/ui/ReviewIntensityRadio';
 
 export const userSettingsFormRules = {
   email: {
@@ -59,6 +35,9 @@ export const userSettingsFormRules = {
 };
 
 const ReviewSettings = () => {
+  const [reviewIntensity, setReviewIntensity] =
+    useState<ReviewIntensityType>('balanced');
+
   return (
     <div className="grid grid-cols-2 gap-6">
       <div className="bg-card rounded-md border p-6">
@@ -212,8 +191,8 @@ const ReviewSettings = () => {
 
         <ReviewIntensityRadioGroup
           defaultValue="balanced"
-          value="balanced"
-          onChange={() => {}}
+          value={reviewIntensity}
+          onChange={(val) => setReviewIntensity(val)}
         />
 
         <div className="mt-4 flex flex-nowrap items-center gap-x-2 rounded-md bg-blue-50 px-3 py-2 text-xs font-medium text-blue-500">
@@ -277,7 +256,7 @@ const ReviewSettings = () => {
           </p>
         </div>
         <Button variant="destructive" data-icon="inline-start">
-          <RefreshCwIcon /> Reset to Defaults
+          <RefreshCwIcon /> Reset to default
         </Button>
       </div>
     </div>

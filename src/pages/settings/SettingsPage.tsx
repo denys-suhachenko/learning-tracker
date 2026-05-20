@@ -12,6 +12,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/ui/tabs';
 import ReviewSettings from '@/features/settings/ui/ReviewSettings';
 import AccountSettings from '@/features/settings/ui/AccountSettings';
 import { PageHeader } from '@/shared/ui';
+import AppereanceSettings from '@/features/settings/ui/AppereanceSettings';
 
 const SettingsPage = () => {
   return (
@@ -32,7 +33,7 @@ const SettingsPage = () => {
             <TabsTrigger value="review">
               <AlbumIcon /> Review
             </TabsTrigger>
-            <TabsTrigger value="appereance" disabled>
+            <TabsTrigger value="appereance">
               <PaletteIcon /> Appereance
             </TabsTrigger>
             <TabsTrigger value="learning" disabled>
@@ -50,6 +51,9 @@ const SettingsPage = () => {
           </TabsContent>
           <TabsContent value="review">
             <ReviewSettings />
+          </TabsContent>
+          <TabsContent value="appereance">
+            <AppereanceSettings />
           </TabsContent>
         </Tabs>
       </Container>

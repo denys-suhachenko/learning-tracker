@@ -1,48 +1,55 @@
-import { FlameIcon, LeafIcon, ScaleIcon } from 'lucide-react';
+import {
+  FlameIcon,
+  LeafIcon,
+  MonitorIcon,
+  MoonIcon,
+  ScaleIcon,
+  SunIcon,
+} from 'lucide-react';
 
 import { RadioGroup, RadioGroupItem } from '@/shared/ui/radio-group';
 import { cn } from '@/shared/lib/utils';
 
-export type ReviewIntensityType = 'light' | 'balanced' | 'intense';
+type ThemeValue = 'light' | 'dark' | 'system';
 
-type ReviewIntensityRadioGroupProps = {
-  defaultValue?: ReviewIntensityType;
-  value: ReviewIntensityType;
-  onChange: (value: ReviewIntensityType) => void;
+type ThemeSwitcherRadioProps = {
+  defaultValue?: ThemeValue;
+  value: ThemeValue;
+  onChange: (value: ThemeValue) => void;
 };
 
 const options = [
   {
     value: 'light',
     title: 'Light',
-    description: 'Slower intervals. More reviews.',
-    icon: <LeafIcon className="text-green-600" />,
+    description: 'Clean and bright',
+    icon: <SunIcon />,
   },
   {
-    value: 'balanced',
-    title: 'Balanced',
-    description: 'Recommended for most users.',
-    icon: <ScaleIcon className="text-blue-600" />,
+    value: 'dark',
+    title: 'Dark',
+    description: 'Easy on the eyes',
+    icon: <MoonIcon />,
   },
   {
-    value: 'intense',
-    title: 'Intense',
-    description: 'Faster intervals. Fewer reviews.',
-    icon: <FlameIcon className="text-orange-600" />,
+    value: 'system',
+    title: 'System',
+    description: 'Follow system',
+    icon: <MonitorIcon />,
   },
 ];
 
-export const ReviewIntensityRadioGroup = ({
+export const ThemeSwitcherRadio = ({
   defaultValue,
   value,
   onChange,
-}: ReviewIntensityRadioGroupProps) => {
+}: ThemeSwitcherRadioProps) => {
   return (
     <RadioGroup
       defaultValue={defaultValue}
       value={value}
       className="grid grid-cols-3 gap-4"
-      onValueChange={(nextValue) => onChange(nextValue as ReviewIntensityType)}
+      onValueChange={(nextValue) => onChange(nextValue as ThemeValue)}
     >
       {options.map((option) => (
         <label
@@ -50,8 +57,9 @@ export const ReviewIntensityRadioGroup = ({
           htmlFor={option.value}
           className={cn(
             'relative flex cursor-pointer flex-col items-center justify-center gap-2 rounded-md border p-4 text-center transition select-none',
-            'hover:bg-slate-50',
-            option.value === value ? 'bg-blue-50' : 'bg-white',
+            option.value === value
+              ? 'bg-blue-50'
+              : 'bg-white hover:bg-slate-50',
           )}
         >
           {option.icon}
