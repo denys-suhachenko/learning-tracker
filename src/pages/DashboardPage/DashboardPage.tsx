@@ -1,3 +1,4 @@
+import React from 'react';
 import { Link } from 'react-router';
 import {
   AtomIcon,
@@ -11,12 +12,12 @@ import {
   SigmaIcon,
 } from 'lucide-react';
 
+import { cn } from '@/shared/lib/utils';
 import { useCurrentUser } from '@/shared/hooks';
 import { Container } from '@/shared/layout';
-import { cn } from '@/shared/lib/utils';
 import { Separator } from '@/shared/ui/separator';
 import { Button } from '@/shared/ui/button';
-import React from 'react';
+import { Progress } from '@/shared/ui/progress';
 
 const metrics = [
   {
@@ -53,12 +54,14 @@ const metrics = [
   },
 ];
 
-const lessons = [
+const courses = [
   {
     id: 1,
     title: 'Classical Mechanics Fundamentals',
     description: 'An introductory course on motion, forces, and energy.',
     progress: 67,
+    completed: 12,
+    total: 18,
     bgClass: 'bg-violet-100',
     icon: <AtomIcon className="text-violet-600" />,
   },
@@ -67,6 +70,8 @@ const lessons = [
     title: 'Principles of Microeconomics',
     description: 'Explore how markets work and decisions are made.',
     progress: 42,
+    completed: 8,
+    total: 19,
     bgClass: 'bg-green-100',
     icon: <ChartNoAxesCombinedIcon className="text-green-600" />,
   },
@@ -75,6 +80,8 @@ const lessons = [
     title: 'Linear Algebra Essentials',
     description: 'Vectors, matrices, and linear transformations.',
     progress: 25,
+    completed: 5,
+    total: 20,
     bgClass: 'bg-orange-100',
     icon: <SigmaIcon className="text-orange-600" />,
   },
@@ -125,27 +132,39 @@ const DashboardPage = () => {
             <div className="bg-card rounded-md border p-4">
               <h2 className="mb-4 text-lg font-medium">Continue Learning</h2>
               <div className="space-y-4">
-                {lessons.map((lesson, idx) => (
-                  <React.Fragment key={lesson.id}>
+                {courses.map((course, idx) => (
+                  <React.Fragment key={course.id}>
                     <div className="flex items-center gap-4">
                       <div
                         className={cn(
                           'flex items-center justify-center rounded-md border p-2',
-                          lesson.bgClass,
+                          course.bgClass,
                         )}
                       >
-                        {lesson.icon}
+                        {course.icon}
                       </div>
-                      <div>
-                        <div className="font-medium">
-                          <Link to="/">{lesson.title}</Link>
+                      <div className="flex w-full items-center justify-between gap-2">
+                        <div>
+                          <div className="font-medium">
+                            <Link to="/">{course.title}</Link>
+                          </div>
+                          <p className="text-muted-foreground mt-1 text-sm font-medium">
+                            {course.description}
+                          </p>
                         </div>
-                        <p className="text-muted-foreground mt-1 text-sm font-medium">
-                          {lesson.description}
-                        </p>
+                        <div className="space-y-1 text-right text-xs font-medium">
+                          <div>{course.progress}%</div>
+                          <Progress
+                            value={course.progress}
+                            className="w-[120px]"
+                          />
+                          <div className="text-muted-foreground">
+                            {course.completed} / {course.total} lessons
+                          </div>
+                        </div>
                       </div>
                     </div>
-                    {idx !== lessons.length - 1 && <Separator />}
+                    {idx !== courses.length - 1 && <Separator />}
                   </React.Fragment>
                 ))}
               </div>
@@ -241,44 +260,56 @@ const DashboardPage = () => {
               <h2 className="mb-4 text-lg font-medium">Upcoming</h2>
               <div className="space-y-4">
                 <div className="flex items-center gap-4">
-                  <div>
-                    <CalendarClockIcon className="size-5 text-blue-600" />
-                  </div>
-                  <div>
-                    <div className="text-sm font-medium">
-                      <Link to="/">2. Velocity and Speed</Link>
+                  <CalendarClockIcon className="size-5 text-blue-600" />
+                  <div className="flex w-full items-center justify-between gap-2">
+                    <div>
+                      <div className="text-sm font-medium">
+                        <Link to="/">2. Velocity and Speed</Link>
+                      </div>
+                      <p className="text-muted-foreground mt-1 text-xs font-medium">
+                        Classical Mechanics Fundamentals
+                      </p>
                     </div>
-                    <p className="text-muted-foreground mt-1 text-xs font-medium">
-                      Classical Mechanics Fundamentals
-                    </p>
+                    <div className="text-muted-foreground text-right text-xs font-medium">
+                      <div>Today</div>
+                      <div>2:00 PM</div>
+                    </div>
                   </div>
                 </div>
                 <Separator />
                 <div className="flex items-center gap-4">
-                  <div>
-                    <CalendarClockIcon className="size-5 text-blue-600" />
-                  </div>
-                  <div>
-                    <div className="text-sm font-medium">
-                      <Link to="/">Supply and Demand</Link>
+                  <CalendarClockIcon className="size-5 text-blue-600" />
+                  <div className="flex w-full items-center justify-between gap-2">
+                    <div>
+                      <div className="text-sm font-medium">
+                        <Link to="/">Supply and Demand</Link>
+                      </div>
+                      <p className="text-muted-foreground mt-1 text-xs font-medium">
+                        Principles of Microeconomics
+                      </p>
                     </div>
-                    <p className="text-muted-foreground mt-1 text-xs font-medium">
-                      Principles of Microeconomics
-                    </p>
+                    <div className="text-muted-foreground text-right text-xs font-medium">
+                      <div>Tomorrow</div>
+                      <div>10:00 AM</div>
+                    </div>
                   </div>
                 </div>
                 <Separator />
                 <div className="flex items-center gap-4">
-                  <div>
-                    <CalendarClockIcon className="size-5 text-blue-600" />
-                  </div>
-                  <div>
-                    <div className="text-sm font-medium">
-                      <Link to="/">Matrix Operations</Link>
+                  <CalendarClockIcon className="size-5 text-blue-600" />
+                  <div className="flex w-full items-center justify-between gap-2">
+                    <div>
+                      <div className="text-sm font-medium">
+                        <Link to="/">Matrix Operations</Link>
+                      </div>
+                      <p className="text-muted-foreground mt-1 text-xs font-medium">
+                        Linear Algebra Essentials
+                      </p>
                     </div>
-                    <p className="text-muted-foreground mt-1 text-xs font-medium">
-                      Linear Algebra Essentials
-                    </p>
+                    <div className="text-muted-foreground text-right text-xs font-medium">
+                      <div>May 29</div>
+                      <div>3:00 PM</div>
+                    </div>
                   </div>
                 </div>
               </div>
