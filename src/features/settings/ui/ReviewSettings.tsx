@@ -40,7 +40,7 @@ const ReviewSettings = () => {
 
   return (
     <div className="grid grid-cols-2 gap-6">
-      <div className="bg-card rounded-md border p-6">
+      <div className="bg-card rounded-md border p-4">
         <h2 className="mb-1 text-lg font-medium">Daily Limits</h2>
         <p className="text-muted-foreground mb-4 text-sm">
           Control how many items you review each day
