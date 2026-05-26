@@ -81,8 +81,8 @@ export const ModulesListItem = ({ module }: ModulesListitemProps) => {
                       {lesson.order}. {lesson.title}
                     </Link>
                   </h3>
-                  <Badge color={lessonStatuses[lesson.status].color}>
-                    {lessonStatuses[lesson.status].label}
+                  <Badge color={lessonStatuses[lesson.status ?? '']?.color}>
+                    {lessonStatuses[lesson.status ?? '']?.label}
                   </Badge>
                 </li>
               ))

@@ -3,6 +3,8 @@ import { Button } from '@/shared/ui/button';
 import type { Module } from '../../model/types';
 
 import ModulesFormItem from './ModulesFormItem';
+import { PlusIcon } from 'lucide-react';
+import { useState } from 'react';
 
 const ModulesForm = () => {
   const modules: Module[] = [];
@@ -16,7 +18,10 @@ const ModulesForm = () => {
           ))}
         </div>
       </div>
-      <Button className="mt-4">Add module</Button>
+
+      <Button data-icon="inline-start" className="mt-4">
+        <PlusIcon /> Add module
+      </Button>
     </>
   );
 };

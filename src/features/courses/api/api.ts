@@ -2,6 +2,7 @@ import { baseApi } from '@/shared/api/baseApi';
 
 import {
   type Course,
+  type CourseDetail,
   type CreateCourse,
   type Lesson,
   type StudyArea,
@@ -13,7 +14,7 @@ const coursesApi = baseApi.injectEndpoints({
       query: () => '/courses',
       providesTags: ['Courses'],
     }),
-    getCourse: create.query<Course, string>({
+    getCourse: create.query<CourseDetail, string>({
       query: (courseId) => `/courses/${courseId}`,
       providesTags: ['Courses'],
     }),

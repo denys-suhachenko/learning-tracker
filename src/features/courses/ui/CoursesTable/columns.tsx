@@ -82,7 +82,7 @@ export const getColumns = (
   },
 ];
 
-export function CourseBadge({ status }: { status: string }) {
+export function CourseBadge({ status }: { status?: string }) {
   const meta = {
     active: {
       color: 'green',
@@ -94,9 +94,10 @@ export function CourseBadge({ status }: { status: string }) {
     },
   } as any;
 
+  const key = status ?? '';
   return (
-    <Badge color={meta[status]?.color || 'gray'}>
-      {meta[status]?.label || status}
+    <Badge color={meta[key]?.color || 'gray'}>
+      {meta[key]?.label || status}
     </Badge>
   );
 }

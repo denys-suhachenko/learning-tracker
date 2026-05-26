@@ -1,48 +1,18 @@
-export type CourseStatus = 'draft' | 'active';
-export type LessonStatus = 'planned' | 'in_progress' | 'completed';
+import type { Schemas } from '@/shared/api/types';
 
-export type StudyArea = {
-  id: string;
-  name: string;
-  slug?: string;
-};
+export type CourseStatus = Schemas['CourseStatusEnum'];
+export type LessonStatus = Schemas['LessonStatusEnum'];
 
-export type Course = {
-  id: string;
-  title: string;
-  slug: string;
-  description?: string;
-  study_area: StudyArea;
-  status: CourseStatus;
-  created_at?: string;
-  updated_at?: string;
-  modules?: Module[];
-};
+export type StudyArea = Schemas['StudyArea'];
 
-export type CreateCourse = {
-  title: string;
-  slug: string;
-  description: string;
-  study_area: string;
-  status: CourseStatus;
-};
+export type Course = Schemas['CourseRead'];
+export type CourseDetail = Schemas['CourseDetailRead'];
 
-export type Module = {
-  id: string;
-  course_id: string;
-  title: string;
-  description?: string;
-  order: number;
-  lessons: Lesson[];
-};
+export type CreateCourse = Omit<
+  Schemas['Course'],
+  'id' | 'created_at' | 'updated_at'
+>;
 
-export type Lesson = {
-  id: string;
-  module: string;
-  title: string;
-  description?: string;
-  content?: string;
-  order: number;
-  estimated_minutes: number;
-  status: LessonStatus;
-};
+export type Module = Schemas['ModuleDetail'];
+
+export type Lesson = Schemas['Lesson'];

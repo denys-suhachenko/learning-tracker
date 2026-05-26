@@ -1,6 +1,4 @@
-import { Controller, useForm } from 'react-hook-form';
-
-import { Card, CardContent, CardHeader, Textarea } from '@/shared/ui';
+import { Controller, useFormContext } from 'react-hook-form';
 
 import {
   Select,
@@ -11,89 +9,109 @@ import {
 } from '@/shared/ui/select';
 
 import { useGetStudyAreasQuery } from '../../api/api';
-import { courseDetailsFormRules } from './courseDetailsFormRules';
 import { Input } from '@/shared/ui/input';
-
-type CourseFormValues = {
-  title: string;
-  slug: string;
-  description: string;
-  study_area: string;
-};
+import {
+  Field,
+  FieldDescription,
+  FieldError,
+  FieldGroup,
+  FieldLabel,
+  FieldSet,
+} from '@/shared/ui/field';
+import { Separator } from '@/shared/ui/separator';
+import { Textarea } from '@/shared/ui/textarea';
+import type { CreateCourse } from '../../model/types';
 
 const CourseDetailsForm = () => {
   const { data: studyAreas = [] } = useGetStudyAreasQuery();
-  const { register, control } = useForm<CourseFormValues>();
+  const {
+    register,
+    control,
+    formState: { errors },
+  } = useFormContext<CreateCourse>();
 
   return (
-    <Card>
-      <CardHeader bordered>
-        <h3 className="font-medium">Course Details</h3>
-      </CardHeader>
-      <CardContent flush>
-        <form className="divide-y divide-gray-200/70 text-sm dark:divide-white/10">
-          <div className="flex items-center gap-x-4 px-6 py-4">
-            <div className="w-1/5 font-medium">Course title</div>
-            <div className="w-4/5">
-              <Input
-                id="title"
-                placeholder="Enter course title"
-                autoComplete="off"
-                {...register('title', courseDetailsFormRules.title)}
-              />
-            </div>
-          </div>
+    <div className="bg-card rounded-md border p-4">
+      <h2 className="mb-4 text-lg font-medium">Course Details</h2>
+      <FieldSet>
+        <FieldGroup className="gap-4">
+          <Field>
+            <FieldLabel htmlFor="title">Course title</FieldLabel>
+            <Input
+              id="title"
+              placeholder="Enter course title"
+              {...register('title', {
+                required: 'Title is required',
+              })}
+            />
+            {errors.title && <FieldError>{errors.title.message}</FieldError>}
+          </Field>
 
-          <div className="flex items-center gap-x-4 px-6 py-4">
-            <div className="w-1/5 font-medium">Course slug</div>
-            <div className="w-4/5">
-              <Input
-                id="slug"
-                placeholder="Enter course slug"
-                autoComplete="off"
-                {...register('slug', courseDetailsFormRules.title)}
-              />
-            </div>
-          </div>
+          <Separator />
 
-          <div className="flex items-start gap-x-4 px-6 py-4">
-            <div className="w-1/5 font-medium">Short description</div>
-            <div className="w-4/5">
-              <Textarea
-                id="description"
-                placeholder="Write a description of a course"
-                {...register('description', courseDetailsFormRules.description)}
-              />
-            </div>
-          </div>
+          <Field>
+            <FieldLabel htmlFor="slug">Course slug</FieldLabel>
+            <Input
+              id="slug"
+              placeholder="Enter course slug"
+              {...register('slug', {
+                required: 'Slug is required',
+              })}
+            />
+            {errors.slug && <FieldError>{errors.slug.message}</FieldError>}
+            <FieldDescription>
+              A unique URL-friendly identifier (e.g.
+              classical-mechanics-fundamentals).
+            </FieldDescription>
+          </Field>
 
-          <div className="flex items-center gap-x-4 px-6 py-4">
-            <div className="w-1/5 font-medium">Study area</div>
-            <div className="w-4/5">
-              <Controller
-                name="study_area"
-                control={control}
-                rules={courseDetailsFormRules.study_area}
-                render={({ field }) => (
-                  <Select value={field.value} onValueChange={field.onChange}>
-                    <SelectTrigger className="bg-white">
-                      <SelectValue placeholder="Select study area" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {studyAreas.map((option) => (
-                        <SelectItem key={option.id} value={option.id}>
-                          {option.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                )}
-              />
-            </div>
-          </div>
-        </form>
-      </CardContent>
-    </Card>
+          <Separator />
+
+          <Field>
+            <FieldLabel htmlFor="description">Short description</FieldLabel>
+            <Textarea
+              id="description"
+              placeholder="Write a description of a course"
+              {...register('description')}
+            />
+            <FieldDescription>
+              Briefly describe what learners will learn in this course.
+            </FieldDescription>
+          </Field>
+
+          <Separator />
+
+          <Field className="w-[30%]">
+            <FieldLabel htmlFor="study_area">Study area</FieldLabel>
+            <Controller
+              name="study_area"
+              control={control}
+              rules={{ required: 'Study area is required' }}
+              render={({ field }) => (
+                <Select
+                  value={field.value ?? ''}
+                  onValueChange={field.onChange}
+                >
+                  <SelectTrigger id="study_area">
+                    <SelectValue placeholder="Select study area" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {studyAreas.map((option) => (
+                      <SelectItem key={option.id} value={option.id}>
+                        {option.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              )}
+            />
+            {errors.study_area && (
+              <FieldError>{errors.study_area.message}</FieldError>
+            )}
+          </Field>
+        </FieldGroup>
+      </FieldSet>
+    </div>
   );
 };
 

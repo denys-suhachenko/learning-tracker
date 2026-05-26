@@ -1,85 +1,163 @@
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
+import { FormProvider, useForm } from 'react-hook-form';
+import { toast } from 'sonner';
+import { BookOpenIcon, CircleCheckIcon, LightbulbIcon } from 'lucide-react';
 import { ArrowLeftIcon } from '@heroicons/react/16/solid';
-import { AcademicCapIcon } from '@heroicons/react/24/outline';
 
-import { Card, CardContent, CardHeader, PageHeader } from '@/shared/ui';
+import { PageHeader } from '@/shared/ui';
 import CourseDetailsForm from '@/features/courses/ui/CourseDetailsForm/CourseDetailsForm';
 import ModulesForm from '@/features/courses/ui/ModulesForm/ModulesForm';
 import { Button } from '@/shared/ui/button';
 import { Container } from '@/shared/layout';
+import { Separator } from '@/shared/ui/separator';
+import { Badge } from '@/shared/ui/badge';
+import type { CreateCourse } from '@/features/courses/model/types';
+import { useCreateCourseMutation } from '@/features/courses/api/api';
 
 const CreateCoursePage = () => {
+  const methods = useForm<CreateCourse>();
+  const navigate = useNavigate();
+  const [createCourse, { isLoading }] = useCreateCourseMutation();
+
+  const onSubmit = (status: 'draft' | 'active') =>
+    methods.handleSubmit(async (data) => {
+      try {
+        await createCourse({ ...data, status }).unwrap();
+        toast.success('Course status');
+        navigate('/courses');
+      } catch (err) {
+        toast.error('Failed to create course');
+      }
+    });
+
   return (
-    <>
-      <PageHeader>
-        <div className="mb-4">
-          <Link
-            to="/courses"
-            replace
-            className="inline-flex items-center gap-x-1 text-sm font-medium text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
-          >
-            <ArrowLeftIcon aria-hidden="true" className="size-4 shrink-0" />
-            Back
-          </Link>
-        </div>
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-3xl leading-9 font-semibold">Create Course</h1>
-            <p className="mt-2 text-base font-medium text-gray-500 dark:text-white/60">
-              Add a new course, organize modules, and prepare lessons;
-            </p>
+    <FormProvider {...methods}>
+      <form>
+        <PageHeader>
+          <div className="mb-4">
+            <Link
+              to="/courses"
+              replace
+              className="inline-flex items-center gap-x-1 text-sm font-medium text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
+            >
+              <ArrowLeftIcon aria-hidden="true" className="size-4 shrink-0" />
+              Back
+            </Link>
           </div>
-          <div className="flex items-center gap-x-4">
-            <Button variant="secondary">Save as Draft</Button>
-            <Button>Create Course</Button>
-          </div>
-        </div>
-      </PageHeader>
-
-      <Container>
-        <div className="grid grid-cols-[3fr_1fr] gap-x-6">
-          <div>
-            <div className="mb-6">
-              <CourseDetailsForm />
-            </div>
-
+          <div className="flex items-center justify-between">
             <div>
-              <h2 className="mb-4 text-lg font-semibold">Modules & Lessons</h2>
-              <ModulesForm />
+              <h1 className="text-3xl leading-9 font-semibold">
+                Create Course
+              </h1>
+              <p className="mt-2 text-base font-medium text-gray-500 dark:text-white/60">
+                Add a new course, organize modules, and prepare lessons;
+              </p>
+            </div>
+            <div className="flex items-center gap-x-4">
+              <Button variant="secondary" onClick={onSubmit('draft')}>
+                Save as Draft
+              </Button>
+              <Button onClick={onSubmit('active')}>Create Course</Button>
             </div>
           </div>
+        </PageHeader>
 
-          <aside className="sticky top-8 self-start">
-            <Card>
-              <CardHeader bordered>
-                <h3 className="font-medium">Course Preview</h3>
-              </CardHeader>
-              <CardContent>
-                <h2 className="mb-2 text-lg font-medium">
-                  Principles of Microeconomics
-                </h2>
+        <Container>
+          <div className="grid grid-cols-[2fr_1fr] gap-x-6">
+            <div>
+              <div className="mb-6">
+                <CourseDetailsForm />
+              </div>
 
-                <p className="flex items-center gap-x-2 text-sm text-gray-600 dark:text-gray-300">
-                  <AcademicCapIcon className="size-4" />
-                  <span>Economics</span>
+              <div>
+                <h2 className="text-lg font-medium">Modules & Lessons</h2>
+                <p className="text-muted-foreground text-sm font-medium">
+                  Add modules and lessons to build your course structure.
                 </p>
+                <ModulesForm />
+              </div>
+            </div>
 
-                <ul className="mt-4 space-y-1 border-t border-gray-200 pt-4 text-sm dark:border-gray-700 dark:text-gray-300">
-                  <li>
-                    Modules:{' '}
-                    <span className="font-medium dark:text-white">2</span>
-                  </li>
-                  <li>
-                    Lessons:{' '}
-                    <span className="font-medium dark:text-white">4</span>
-                  </li>
-                </ul>
-              </CardContent>
-            </Card>
-          </aside>
-        </div>
-      </Container>
-    </>
+            <aside className="sticky top-8 self-start">
+              <div className="bg-card rounded-md border p-4">
+                <h2 className="mb-4 text-lg font-medium">Course Preview</h2>
+                <div className="space-y-4">
+                  <div className="flex items-center gap-4">
+                    <div className="bg-muted flex items-center justify-center rounded-md border p-2">
+                      <BookOpenIcon />
+                    </div>
+                    <div>
+                      <div className="text-lg font-medium">Course Title</div>
+                      <div className="text-muted-foreground text-xs">
+                        Category
+                      </div>
+                    </div>
+                  </div>
+                  <Separator />
+                  <ul className="space-y-1 text-sm">
+                    <li className="flex items-center justify-between">
+                      <div>Modules</div>
+                      <div className="font-medium">2</div>
+                    </li>
+                    <li className="flex items-center justify-between">
+                      <div>Lessons</div>
+                      <div className="font-medium">2</div>
+                    </li>
+                    <li className="flex items-center justify-between">
+                      <div>Est. duration</div>
+                      <div className="font-medium">-</div>
+                    </li>
+                  </ul>
+                  <Separator />
+                  <div>
+                    <div className="flex items-center justify-between">
+                      <div className="text-sm font-medium">Status</div>
+                      <Badge
+                        variant="secondary"
+                        className="border border-gray-300"
+                      >
+                        Draft
+                      </Badge>
+                    </div>
+                  </div>
+                  <Separator />
+                  <div className="text-sm font-medium">Ready to publish</div>
+                  <ul className="space-y-1 text-sm">
+                    <li className="text-muted-foreground flex items-center gap-x-2">
+                      <CircleCheckIcon className="size-4" /> Add a course title
+                    </li>
+                    <li className="text-muted-foreground flex items-center gap-x-2">
+                      <CircleCheckIcon className="size-4" /> Add a short
+                      description
+                    </li>
+                    <li className="text-muted-foreground flex items-center gap-x-2">
+                      <CircleCheckIcon className="size-4" /> Select a study area
+                    </li>
+                    <li className="text-muted-foreground flex items-center gap-x-2">
+                      <CircleCheckIcon className="size-4" /> Add at least one
+                      module
+                    </li>
+                    <li className="text-muted-foreground flex items-center gap-x-2">
+                      <CircleCheckIcon className="size-4" /> Add at least one
+                      lesson
+                    </li>
+                  </ul>
+                  <div className="bg-muted flex items-center gap-4 rounded-md border p-2">
+                    <div className="text-blue-00 rounded-md border border-blue-200 bg-blue-100 p-2">
+                      <LightbulbIcon />
+                    </div>
+                    <div className="text-muted-foreground text-xs font-medium">
+                      Tip: A clear structure helps learners stay focused and
+                      engaged.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </Container>
+      </form>
+    </FormProvider>
   );
 };
 

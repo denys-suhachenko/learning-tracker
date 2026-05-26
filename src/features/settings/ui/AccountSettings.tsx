@@ -81,7 +81,7 @@ const AccountSettings = () => {
         <form className="text-sm" onSubmit={handleSubmit(onSubmit)}>
           <FieldGroup className="gap-4">
             <Field>
-              <FieldLabel>Email</FieldLabel>
+              <FieldLabel htmlFor="email">Email</FieldLabel>
               <Input
                 id="email"
                 placeholder="Enter your email"
@@ -92,7 +92,7 @@ const AccountSettings = () => {
 
             <div className="grid grid-cols-2 gap-4">
               <Field>
-                <FieldLabel>First name</FieldLabel>
+                <FieldLabel htmlFor="first_name">First name</FieldLabel>
                 <Input
                   id="first_name"
                   placeholder="Enter first name"
@@ -102,7 +102,7 @@ const AccountSettings = () => {
               </Field>
 
               <Field>
-                <FieldLabel>Last name</FieldLabel>
+                <FieldLabel htmlFor="last_name">Last name</FieldLabel>
                 <Input
                   id="last_name"
                   placeholder="Enter last name"

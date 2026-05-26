@@ -316,48 +316,6 @@ const DashboardPage = () => {
             </div>
           </div>
         </div>
-
-        {/* <div className="grid grid-cols-[2fr_1fr] gap-x-6">
-          <Card>
-            <CardHeader>
-              <h3 className="font-medium">Today lessons</h3>
-            </CardHeader>
-
-            <CardContent flush>
-              <ul className="divide-y divide-gray-200 px-6 pb-4 dark:divide-gray-700">
-                {lessons.map((lesson) => (
-                  <li key={lesson.id} className="py-2">
-                    <div className="flex items-center">
-                      <div className="w-1/2">
-                        <h3 className="text-sm font-medium">
-                          <Link to="/">{lesson.title}</Link>
-                        </h3>
-                        <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
-                          {lesson.description}
-                        </p>
-                      </div>
-                      <div className="flex w-1/2 items-center justify-between">
-                        <Progress
-                          value={60}
-                          label={<div className="ml-2 text-xs">60%</div>}
-                          size="small"
-                          className="max-w-32"
-                        />
-                        <Badge>{lesson.status}</Badge>
-                      </div>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <h3 className="font-medium">Notifications</h3>
-            </CardHeader>
-          </Card>
-        </div> */}
       </Container>
     </>
   );
