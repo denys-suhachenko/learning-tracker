@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import { useNavigate } from 'react-router';
 
 import { Multiselect, Table } from '@/shared/ui';
 
@@ -25,6 +26,9 @@ import {
 } from '@/shared/ui/alert-dialog';
 import { toast } from 'sonner';
 import { getErrorMessage } from '@/shared/lib/getErrorMessage';
+import { Skeleton } from '@/shared/ui/skeleton';
+import { Button } from '@/shared/ui/button';
+import { QueryState } from '@/shared/ui/QueryState';
 
 type StatusOption = {
   id: number;
@@ -50,8 +54,14 @@ const StatusOptionItem = ({ option }: { option: StatusOption }) => {
 const CoursesTable = () => {
   const [selectedStatuses, setSelectedStatuses] = useState<StatusOption[]>([]);
   const [courseToDelete, setCourseToDelete] = useState<Course | null>(null);
+  const navigate = useNavigate();
 
-  const { data: courses = [] } = useGetCoursesQuery();
+  const {
+    data: courses = [],
+    isLoading,
+    isError,
+    refetch,
+  } = useGetCoursesQuery();
   const [removeCourse] = useRemoveCourseMutation();
 
   const columns = useMemo(
@@ -105,7 +115,32 @@ const CoursesTable = () => {
         </Select>
       </div>
 
-      <Table columns={columns} rows={courses} />
+      <QueryState
+        isLoading={isLoading}
+        isError={isError}
+        errorMessage="Failed to load courses."
+        onRetry={refetch}
+        skeleton={
+          <div className="space-y-2">
+            {Array.from({ length: 5 }).map((_, i) => (
+              <Skeleton key={i} className="h-14 w-full" />
+            ))}
+          </div>
+        }
+      >
+        {courses.length === 0 ? (
+          <div className="flex flex-col items-center gap-3 py-12 text-center">
+            <p className="text-muted-foreground text-sm">
+              You do not have any courses yet.
+            </p>
+            <Button onClick={() => navigate('/courses/create')}>
+              Create your first course
+            </Button>
+          </div>
+        ) : (
+          <Table columns={columns} rows={courses} />
+        )}
+      </QueryState>
 
       <AlertDialog
         open={!!courseToDelete}
