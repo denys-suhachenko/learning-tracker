@@ -22,11 +22,7 @@ const SignUpPage = () => {
   const navigate = useNavigate();
   const token = useAppSelector((state) => state.auth.accessToken);
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<SignUpFormValues>();
+  const { register, handleSubmit } = useForm<SignUpFormValues>();
 
   const onSubmit = async (data: SignUpFormValues) => {
     try {

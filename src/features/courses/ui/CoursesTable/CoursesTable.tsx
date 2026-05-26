@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 
 import { Multiselect, Table } from '@/shared/ui';
 
-import type { CourseStatus } from '../../model/types';
+import type { Course, CourseStatus } from '../../model/types';
 import { useGetCoursesQuery, useRemoveCourseMutation } from '../../api/api';
 
 import { getColumns, CourseBadge } from './columns';
@@ -13,6 +13,18 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/shared/ui/select';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/shared/ui/alert-dialog';
+import { toast } from 'sonner';
+import { getErrorMessage } from '@/shared/lib/getErrorMessage';
 
 type StatusOption = {
   id: number;
@@ -37,11 +49,36 @@ const StatusOptionItem = ({ option }: { option: StatusOption }) => {
 
 const CoursesTable = () => {
   const [selectedStatuses, setSelectedStatuses] = useState<StatusOption[]>([]);
+  const [courseToDelete, setCourseToDelete] = useState<Course | null>(null);
 
   const { data: courses = [] } = useGetCoursesQuery();
-  const [remove] = useRemoveCourseMutation();
+  const [removeCourse] = useRemoveCourseMutation();
 
-  const columns = useMemo(() => getColumns(), []);
+  const columns = useMemo(
+    () =>
+      getColumns((id) => {
+        const course = courses.find((c) => c.id === id);
+        if (course) {
+          setCourseToDelete(course);
+        }
+      }),
+    [courses],
+  );
+
+  const handleConfirmDelete = async () => {
+    if (!courseToDelete) {
+      return;
+    }
+
+    try {
+      await removeCourse(courseToDelete.id).unwrap();
+      toast.success('Course deleted');
+    } catch (err) {
+      toast.error(getErrorMessage(err, 'Failed to delete course'));
+    } finally {
+      setCourseToDelete(null);
+    }
+  };
 
   return (
     <div>
@@ -69,6 +106,34 @@ const CoursesTable = () => {
       </div>
 
       <Table columns={columns} rows={courses} />
+
+      <AlertDialog
+        open={!!courseToDelete}
+        onOpenChange={(open) => {
+          if (!open) {
+            setCourseToDelete(null);
+          }
+        }}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Delete course?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This will permanently delete &ldquo;{courseToDelete?.title}
+              &rdquo;. This action cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleConfirmDelete}
+              variant="destructive"
+            >
+              Delete
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 };

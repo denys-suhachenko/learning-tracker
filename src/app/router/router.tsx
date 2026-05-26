@@ -4,7 +4,7 @@ import AppLayout from '@/app/layout/AppLayout';
 import {
   CourseDetailsPage,
   CoursesListPage,
-  CreateCoursePage,
+  CourseFormPage,
   DashboardPage,
   KnowledgeBasePage,
   LessonDetailsPage,
@@ -52,12 +52,15 @@ export const router = createBrowserRouter([
               },
               {
                 path: 'create',
-                Component: CreateCoursePage,
+                Component: CourseFormPage,
               },
               {
                 path: ':courseId',
                 handle: {
-                  breadcrumb: (match: any) => ({
+                  breadcrumb: (match: {
+                    data: { title: any };
+                    params: { courseId: any };
+                  }) => ({
                     label: match.data?.title ?? 'Course',
                     link: `/courses/${match.params.courseId}`,
                   }),
@@ -68,10 +71,17 @@ export const router = createBrowserRouter([
                     Component: CourseDetailsPage,
                   },
                   {
+                    path: 'edit',
+                    Component: CourseFormPage,
+                  },
+                  {
                     path: 'lessons/:lessonId',
                     Component: LessonDetailsPage,
                     handle: {
-                      breadcrumb: (match: any) => ({
+                      breadcrumb: (match: {
+                        data: { title: any };
+                        params: { courseId: any; lessonId: any };
+                      }) => ({
                         label: match.data?.title ?? 'Lesson',
                         link: `/courses/${match.params.courseId}/lessons/${match.params.lessonId}`,
                       }),

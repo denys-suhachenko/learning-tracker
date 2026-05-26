@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Link, useParams } from 'react-router';
 import { skipToken } from '@reduxjs/toolkit/query';
 import clsx from 'clsx';
@@ -16,18 +16,21 @@ import { Button } from '@/shared/ui/button';
 
 const LessonDetailsPage = () => {
   const [isEditMode, setIsEditMode] = useState(false);
-  const [content, setContent] = useState('');
+  const [draftContent, setDraftContent] = useState('');
 
   const { lessonId, courseId } = useParams();
   const { data: lesson } = useGetLessonQuery(lessonId ?? skipToken);
   const [updateLesson, { isLoading: isUpdating }] = useUpdateLessonMutation();
 
-  useEffect(() => {
-    setContent(lesson?.content || '');
-  }, [lesson?.content]);
+  const editorContent = isEditMode ? draftContent : (lesson?.content ?? '');
+
+  const handleEdit = () => {
+    setDraftContent(lesson?.content ?? '');
+    setIsEditMode(true);
+  };
 
   const handleCancel = () => {
-    setContent(lesson?.content || '');
+    setDraftContent('');
     setIsEditMode(false);
   };
 
@@ -39,7 +42,7 @@ const LessonDetailsPage = () => {
     try {
       await updateLesson({
         id: lesson.id,
-        content,
+        content: draftContent,
       }).unwrap();
 
       toast.success('Lesson saved', {
@@ -47,7 +50,8 @@ const LessonDetailsPage = () => {
       });
 
       setIsEditMode(false);
-    } catch (error) {
+      setDraftContent('');
+    } catch {
       toast.error('Failed to save lesson');
     }
   };
@@ -84,10 +88,7 @@ const LessonDetailsPage = () => {
                 </Button>
               </>
             ) : (
-              <Button
-                variant="secondary"
-                onClick={() => setIsEditMode((prev) => !prev)}
-              >
+              <Button variant="secondary" onClick={handleEdit}>
                 Edit Lesson
               </Button>
             )}
@@ -103,10 +104,10 @@ const LessonDetailsPage = () => {
           )}
         >
           <NoteEditor
-            value={content}
+            value={editorContent}
             readOnly={!isEditMode}
             autoFocus={isEditMode}
-            onChange={(value) => setContent(value)}
+            onChange={setDraftContent}
           />
 
           {!isEditMode && (

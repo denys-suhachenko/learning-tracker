@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router';
+import { Link, useNavigate, useParams } from 'react-router';
 import { FormProvider, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { BookOpenIcon, CircleCheckIcon, LightbulbIcon } from 'lucide-react';
@@ -14,16 +14,28 @@ import { Badge } from '@/shared/ui/badge';
 import type { CreateCourse } from '@/features/courses/model/types';
 import {
   useCreateCourseMutation,
+  useGetCourseQuery,
   useGetStudyAreasQuery,
+  useUpdateCourseMutation,
 } from '@/features/courses/api/api';
 import { getErrorMessage } from '@/shared/lib/getErrorMessage';
 import { cn } from '@/shared/lib/utils';
+import { useEffect } from 'react';
 
-const CreateCoursePage = () => {
+const CourseFormPage = () => {
   const methods = useForm<CreateCourse>();
   const navigate = useNavigate();
-  const [createCourse, { isLoading }] = useCreateCourseMutation();
+  const { courseId } = useParams();
+
   const { data: studyAreas = [] } = useGetStudyAreasQuery();
+  const { data: course } = useGetCourseQuery(courseId!, { skip: !courseId });
+
+  const [createCourse, { isLoading: isCreating }] = useCreateCourseMutation();
+  const [updateCourse, { isLoading: isUpdating }] = useUpdateCourseMutation();
+
+  const isEdit = !!courseId;
+
+  const isLoading = isCreating || isUpdating;
 
   const title = methods.watch('title');
   const slug = methods.watch('slug');
@@ -60,14 +72,41 @@ const CreateCoursePage = () => {
     },
   ];
 
+  useEffect(() => {
+    if (!course) {
+      return;
+    }
+
+    methods.reset({
+      title: course.title,
+      slug: course.slug,
+      description: course.description,
+      study_area: course.study_area?.id,
+      status: course.status,
+    });
+  }, [course, methods]);
+
   const onSubmit = (status: 'draft' | 'active') =>
     methods.handleSubmit(async (data) => {
       try {
-        await createCourse({ ...data, status }).unwrap();
-        toast.success('Course status');
+        if (isEdit) {
+          await updateCourse({
+            id: courseId!,
+            body: { ...data, status },
+          }).unwrap();
+          toast.success('Course updated');
+        } else {
+          await createCourse({ ...data, status }).unwrap();
+          toast.success('Course created');
+        }
         navigate('/courses');
       } catch (err) {
-        toast.error(getErrorMessage(err, 'Failed to create course'));
+        toast.error(
+          getErrorMessage(
+            err,
+            isEdit ? 'Failed to update course' : 'Failed to create course',
+          ),
+        );
       }
     });
 
@@ -88,17 +127,25 @@ const CreateCoursePage = () => {
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-3xl leading-9 font-semibold">
-                Create Course
+                {isEdit ? 'Edit Course' : 'Create Course'}
               </h1>
               <p className="mt-2 text-base font-medium text-gray-500 dark:text-white/60">
                 Add a new course, organize modules, and prepare lessons;
               </p>
             </div>
             <div className="flex items-center gap-x-4">
-              <Button variant="secondary" onClick={onSubmit('draft')}>
-                Save as Draft
+              {!isEdit && (
+                <Button
+                  variant="secondary"
+                  disabled={isLoading}
+                  onClick={onSubmit('draft')}
+                >
+                  Save as Draft
+                </Button>
+              )}
+              <Button disabled={isLoading} onClick={onSubmit('active')}>
+                {isEdit ? 'Save changes' : 'Create Course'}
               </Button>
-              <Button onClick={onSubmit('active')}>Create Course</Button>
             </div>
           </div>
         </PageHeader>
@@ -204,4 +251,4 @@ const CreateCoursePage = () => {
   );
 };
 
-export default CreateCoursePage;
+export default CourseFormPage;

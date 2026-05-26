@@ -1,10 +1,9 @@
-import { Button } from '@/shared/ui/button';
+import { PlusIcon } from 'lucide-react';
 
+import { Button } from '@/shared/ui/button';
 import type { Module } from '../../model/types';
 
 import ModulesFormItem from './ModulesFormItem';
-import { PlusIcon } from 'lucide-react';
-import { useState } from 'react';
 
 const ModulesForm = () => {
   const modules: Module[] = [];

@@ -1,13 +1,5 @@
 import { Link } from 'react-router';
-import {
-  CheckIcon,
-  EllipsisVerticalIcon,
-  FlameIcon,
-  PencilIcon,
-  PlayIcon,
-  ThumbsUpIcon,
-  TrashIcon,
-} from 'lucide-react';
+import { EllipsisVerticalIcon, PencilIcon, TrashIcon } from 'lucide-react';
 
 import { Badge, Table, type TableColumn } from '@/shared/ui';
 import {
@@ -20,9 +12,7 @@ import {
 } from '@/shared/ui/dropdown-menu';
 import { Button } from '@/shared/ui/button';
 
-export const getColumns = (
-  onRemove?: (id: string) => void,
-): TableColumn<any>[] => [
+export const getColumns = (): TableColumn<any>[] => [
   {
     key: 'title',
     header: 'Name',
@@ -66,7 +56,7 @@ export const getColumns = (
     header: '',
     width: '5%',
     align: 'right',
-    render: (row) => (
+    render: () => (
       <div className="flex justify-end">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>

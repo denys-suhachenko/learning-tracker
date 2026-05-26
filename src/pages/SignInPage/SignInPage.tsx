@@ -10,7 +10,6 @@ import { setTokens } from '@/features/auth/model/slice';
 import { signInFormRules } from './signInFormRules';
 import { Input } from '@/shared/ui/input';
 import { Button } from '@/shared/ui/button';
-import { useState } from 'react';
 
 type SignInFormValues = {
   email: string;
@@ -23,15 +22,7 @@ const SignInPage = () => {
   const navigate = useNavigate();
   const token = useAppSelector((state) => state.auth.accessToken);
 
-  const user = {
-    name: 'test',
-  };
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<SignInFormValues>();
+  const { register, handleSubmit } = useForm<SignInFormValues>();
 
   const onSubmit = async (data: SignInFormValues) => {
     try {

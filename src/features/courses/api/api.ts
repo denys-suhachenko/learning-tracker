@@ -26,6 +26,14 @@ const coursesApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ['Courses'],
     }),
+    updateCourse: create.mutation<Course, { id: string; body: CreateCourse }>({
+      query: ({ id, body }) => ({
+        url: `/courses/${id}/`,
+        method: 'PUT',
+        body,
+      }),
+      invalidatesTags: ['Courses'],
+    }),
     removeCourse: create.mutation<void, string>({
       query: (id) => ({
         url: `/courses/${id}/`,
@@ -47,6 +55,7 @@ export const {
   useGetCoursesQuery,
   useGetCourseQuery,
   useCreateCourseMutation,
+  useUpdateCourseMutation,
   useRemoveCourseMutation,
   useGetLessonQuery,
   useGetStudyAreasQuery,

@@ -1,8 +1,7 @@
 import { useNavigate } from 'react-router';
 
 import CoursesTable from '@/features/courses/ui/CoursesTable/CoursesTable';
-import { Card, PageHeader, Progress } from '@/shared/ui';
-import { DocumentDuplicateIcon } from '@heroicons/react/24/outline';
+import { PageHeader } from '@/shared/ui';
 import { Container } from '@/shared/layout';
 import { Button } from '@/shared/ui/button';
 

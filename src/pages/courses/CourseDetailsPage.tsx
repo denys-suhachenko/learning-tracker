@@ -1,4 +1,4 @@
-import { Link, useParams } from 'react-router';
+import { Link, useNavigate, useParams } from 'react-router';
 import { skipToken } from '@reduxjs/toolkit/query';
 import { ArrowLeftIcon } from '@heroicons/react/16/solid';
 
@@ -17,6 +17,7 @@ import { Container } from '@/shared/layout';
 const CourseDetailsPage = () => {
   const { courseId } = useParams();
   const { data: course } = useGetCourseQuery(courseId ?? skipToken);
+  const navigate = useNavigate();
 
   return (
     <>
@@ -40,7 +41,12 @@ const CourseDetailsPage = () => {
             </p>
           </div>
           <div className="flex items-center gap-x-4">
-            <Button variant="secondary">Edit Course</Button>
+            <Button
+              variant="secondary"
+              onClick={() => navigate(`/courses/${course?.id}/edit`)}
+            >
+              Edit Course
+            </Button>
             <Button>Continue Learning</Button>
           </div>
         </div>

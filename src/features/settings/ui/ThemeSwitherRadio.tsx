@@ -1,11 +1,4 @@
-import {
-  FlameIcon,
-  LeafIcon,
-  MonitorIcon,
-  MoonIcon,
-  ScaleIcon,
-  SunIcon,
-} from 'lucide-react';
+import { MonitorIcon, MoonIcon, SunIcon } from 'lucide-react';
 
 import { RadioGroup, RadioGroupItem } from '@/shared/ui/radio-group';
 import { cn } from '@/shared/lib/utils';

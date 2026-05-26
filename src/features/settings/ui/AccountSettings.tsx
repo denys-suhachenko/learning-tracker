@@ -45,12 +45,7 @@ export const userSettingsFormRules = {
 const AccountSettings = () => {
   const { user } = useCurrentUser();
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm<UserSettingsFormValues>({
+  const { register, handleSubmit, reset } = useForm<UserSettingsFormValues>({
     defaultValues: {
       email: '',
       first_name: '',

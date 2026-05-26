@@ -66,7 +66,7 @@ export const getColumns = (
     render: (row) => (
       <div className="flex items-center justify-end gap-x-4">
         <Link
-          to={row.id}
+          to={`${row.id}/edit`}
           className="cursor-pointer text-sm font-medium text-gray-400 hover:text-gray-900 dark:text-white/60 dark:hover:text-white"
         >
           <PencilIcon className="size-4" />
