@@ -12,12 +12,53 @@ import { Container } from '@/shared/layout';
 import { Separator } from '@/shared/ui/separator';
 import { Badge } from '@/shared/ui/badge';
 import type { CreateCourse } from '@/features/courses/model/types';
-import { useCreateCourseMutation } from '@/features/courses/api/api';
+import {
+  useCreateCourseMutation,
+  useGetStudyAreasQuery,
+} from '@/features/courses/api/api';
+import { getErrorMessage } from '@/shared/lib/getErrorMessage';
+import { cn } from '@/shared/lib/utils';
 
 const CreateCoursePage = () => {
   const methods = useForm<CreateCourse>();
   const navigate = useNavigate();
   const [createCourse, { isLoading }] = useCreateCourseMutation();
+  const { data: studyAreas = [] } = useGetStudyAreasQuery();
+
+  const title = methods.watch('title');
+  const slug = methods.watch('slug');
+  const studyAreaId = methods.watch('study_area');
+  const description = methods.watch('description');
+  const studyAreaName = studyAreas.find(
+    (area) => area.id === studyAreaId,
+  )?.name;
+
+  const checklist = [
+    {
+      label: 'Add a course title',
+      done: !!title,
+    },
+    {
+      label: 'Add a course slug',
+      done: !!slug,
+    },
+    {
+      label: 'Add a short description',
+      done: !!description,
+    },
+    {
+      label: 'Select a study area',
+      done: !!studyAreaId,
+    },
+    {
+      label: 'Add at least one module',
+      done: false,
+    },
+    {
+      label: 'Add at least one lesson',
+      done: false,
+    },
+  ];
 
   const onSubmit = (status: 'draft' | 'active') =>
     methods.handleSubmit(async (data) => {
@@ -26,7 +67,7 @@ const CreateCoursePage = () => {
         toast.success('Course status');
         navigate('/courses');
       } catch (err) {
-        toast.error('Failed to create course');
+        toast.error(getErrorMessage(err, 'Failed to create course'));
       }
     });
 
@@ -87,9 +128,11 @@ const CreateCoursePage = () => {
                       <BookOpenIcon />
                     </div>
                     <div>
-                      <div className="text-lg font-medium">Course Title</div>
+                      <div className="text-lg font-medium">
+                        {title || 'Course Title'}
+                      </div>
                       <div className="text-muted-foreground text-xs">
-                        Category
+                        {studyAreaName || 'Category'}
                       </div>
                     </div>
                   </div>
@@ -97,18 +140,20 @@ const CreateCoursePage = () => {
                   <ul className="space-y-1 text-sm">
                     <li className="flex items-center justify-between">
                       <div>Modules</div>
-                      <div className="font-medium">2</div>
+                      <div className="font-medium">-</div>
                     </li>
                     <li className="flex items-center justify-between">
                       <div>Lessons</div>
-                      <div className="font-medium">2</div>
+                      <div className="font-medium">-</div>
                     </li>
                     <li className="flex items-center justify-between">
                       <div>Est. duration</div>
                       <div className="font-medium">-</div>
                     </li>
                   </ul>
+
                   <Separator />
+
                   <div>
                     <div className="flex items-center justify-between">
                       <div className="text-sm font-medium">Status</div>
@@ -120,28 +165,26 @@ const CreateCoursePage = () => {
                       </Badge>
                     </div>
                   </div>
+
                   <Separator />
+
                   <div className="text-sm font-medium">Ready to publish</div>
                   <ul className="space-y-1 text-sm">
-                    <li className="text-muted-foreground flex items-center gap-x-2">
-                      <CircleCheckIcon className="size-4" /> Add a course title
-                    </li>
-                    <li className="text-muted-foreground flex items-center gap-x-2">
-                      <CircleCheckIcon className="size-4" /> Add a short
-                      description
-                    </li>
-                    <li className="text-muted-foreground flex items-center gap-x-2">
-                      <CircleCheckIcon className="size-4" /> Select a study area
-                    </li>
-                    <li className="text-muted-foreground flex items-center gap-x-2">
-                      <CircleCheckIcon className="size-4" /> Add at least one
-                      module
-                    </li>
-                    <li className="text-muted-foreground flex items-center gap-x-2">
-                      <CircleCheckIcon className="size-4" /> Add at least one
-                      lesson
-                    </li>
+                    {checklist.map((item) => (
+                      <li
+                        key={item.label}
+                        className={cn(
+                          'flex items-center gap-x-2',
+                          item.done
+                            ? 'text-green-600'
+                            : 'text-muted-foreground',
+                        )}
+                      >
+                        <CircleCheckIcon className="size-4" /> {item.label}
+                      </li>
+                    ))}
                   </ul>
+
                   <div className="bg-muted flex items-center gap-4 rounded-md border p-2">
                     <div className="text-blue-00 rounded-md border border-blue-200 bg-blue-100 p-2">
                       <LightbulbIcon />
