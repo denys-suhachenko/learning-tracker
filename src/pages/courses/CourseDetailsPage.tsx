@@ -16,6 +16,7 @@ import { Container } from '@/shared/layout';
 import { useEffect } from 'react';
 import { Skeleton } from '@/shared/ui/skeleton';
 import { QueryState } from '@/shared/ui/QueryState';
+import CourseModules from '@/features/courses/ui/CourseModules';
 
 const CourseDetailsPage = () => {
   const { courseId } = useParams();
@@ -89,12 +90,10 @@ const CourseDetailsPage = () => {
         }
       >
         <Container>
-          <h2 className="mb-4 text-xl font-semibold">Lessons</h2>
-
           <div className="grid grid-cols-[3fr_1fr] gap-x-6">
-            <div>
-              <ModulesList modules={course?.modules} />
-            </div>
+            {courseId && (
+              <CourseModules courseId={courseId} modules={course?.modules} />
+            )}
 
             <aside className="sticky top-6 self-start">
               <Card className="mb-6">

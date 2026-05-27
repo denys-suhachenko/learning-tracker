@@ -16,3 +16,5 @@ export type CreateCourse = Omit<
 export type Module = Schemas['ModuleDetail'];
 
 export type Lesson = Schemas['Lesson'];
+
+export type CreateModule = Omit<Schemas['Module'], 'id'>;

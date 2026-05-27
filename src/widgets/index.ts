@@ -1,2 +1,2 @@
 export { Sidebar } from './Sidebar/Sidebar';
-export { NoteEditor } from './NoteEditor/NoteEditor';
+export { NoteEditor, type TocItem } from './NoteEditor/NoteEditor';

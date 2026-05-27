@@ -7,16 +7,18 @@ import { ArrowLeftIcon } from '@heroicons/react/16/solid';
 
 import { PageHeader } from '@/shared/ui';
 import { Container } from '@/shared/layout';
-import { NoteEditor } from '@/widgets';
+import { NoteEditor, type TocItem } from '@/widgets';
 import {
   useUpdateLessonMutation,
   useGetLessonQuery,
 } from '@/features/lessons/api/api';
 import { Button } from '@/shared/ui/button';
+import { getErrorMessage } from '@/shared/lib/getErrorMessage';
 
 const LessonDetailsPage = () => {
   const [isEditMode, setIsEditMode] = useState(false);
   const [draftContent, setDraftContent] = useState('');
+  const [tableOfContents, setTableOfContents] = useState<TocItem[]>([]);
 
   const { lessonId, courseId } = useParams();
   const { data: lesson } = useGetLessonQuery(lessonId ?? skipToken);
@@ -51,8 +53,8 @@ const LessonDetailsPage = () => {
 
       setIsEditMode(false);
       setDraftContent('');
-    } catch {
-      toast.error('Failed to save lesson');
+    } catch (err) {
+      toast.error(getErrorMessage(err, 'Failed to save lesson'));
     }
   };
 
@@ -107,6 +109,7 @@ const LessonDetailsPage = () => {
             value={editorContent}
             readOnly={!isEditMode}
             autoFocus={isEditMode}
+            setToc={setTableOfContents}
             onChange={setDraftContent}
           />
 
@@ -115,9 +118,17 @@ const LessonDetailsPage = () => {
               <div className="overflow-hidden rounded-md bg-white px-6 py-4 text-sm shadow-sm dark:bg-gray-800/50 dark:outline dark:outline-white/10">
                 <h3 className="mb-4 text-lg font-medium">Table of contents</h3>
                 <ol className="space-y-1">
-                  <li className="cursor-pointer text-sm font-medium text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
-                    <a href="#">Heading</a>
-                  </li>
+                  {tableOfContents.map((item, i) => (
+                    <li
+                      key={i}
+                      style={{
+                        paddingLeft: `${(item.level - 1) * 12}px`,
+                      }}
+                      className="cursor-pointer text-sm font-medium text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+                    >
+                      <a href={`#${item.id}`}>{item.text}</a>
+                    </li>
+                  ))}
                 </ol>
               </div>
             </aside>

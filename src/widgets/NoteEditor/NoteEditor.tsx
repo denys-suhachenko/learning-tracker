@@ -2,11 +2,13 @@ import { useEffect, useRef, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
+import rehypeSlug from 'rehype-slug';
 import clsx from 'clsx';
 
 import './NodeEditor.css';
 
-type TocItem = {
+export type TocItem = {
+  id: string;
   text: string;
   level: number;
 };
@@ -16,7 +18,7 @@ type NoteEditorProps = {
   autoFocus?: boolean;
   readOnly?: boolean;
   onChange?: (value: string) => void;
-  setToc?: (val: TocItem[]) => TocItem;
+  setToc?: (val: TocItem[]) => void;
 };
 
 const useTableOfContents = (
@@ -35,7 +37,8 @@ const useTableOfContents = (
     const headings = container.querySelectorAll('h1, h2, h3');
 
     const items = Array.from(headings).map((item) => ({
-      text: item.textContent.trim() ?? '',
+      id: item.id,
+      text: (item.textContent ?? '').trim(),
       level: Number(item.tagName[1]),
     }));
 
@@ -85,6 +88,7 @@ export const NoteEditor = ({
             <ReactMarkdown
               remarkPlugins={[remarkMath]}
               rehypePlugins={[
+                rehypeSlug,
                 [rehypeKatex, { throwOnError: false, strict: 'ignore' }],
               ]}
             >

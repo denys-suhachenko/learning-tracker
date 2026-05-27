@@ -1,17 +1,23 @@
 import { useRef, useState } from 'react';
 import { Link } from 'react-router';
 import clsx from 'clsx';
-import { ChevronDownIcon } from '@heroicons/react/16/solid';
+import { ChevronDownIcon, Trash2Icon } from 'lucide-react';
 
 import { Badge } from '@/shared/ui';
 
-import { type Module } from '../../model/types';
+import { type LessonStatus, type Module } from '../../model/types';
+import { Button } from '@/shared/ui/button';
 
 type ModulesListitemProps = {
   module: Module;
+  editable?: boolean;
+  onRequestDelete?: (module: Module) => void;
 };
 
-const lessonStatuses = {
+const lessonStatuses: Record<
+  LessonStatus,
+  { label: string; color: 'gray' | 'green' | 'yellow' | 'red' }
+> = {
   planned: {
     label: 'Planned',
     color: 'gray',
@@ -24,9 +30,13 @@ const lessonStatuses = {
     label: 'Completed',
     color: 'green',
   },
-} as any;
+};
 
-export const ModulesListItem = ({ module }: ModulesListitemProps) => {
+export const ModulesListItem = ({
+  module,
+  editable = false,
+  onRequestDelete,
+}: ModulesListitemProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const panelRef = useRef<HTMLDivElement>(null);
 
@@ -48,7 +58,19 @@ export const ModulesListItem = ({ module }: ModulesListitemProps) => {
           </div>
         </div>
 
-        <div className="flex items-center gap-x-8">
+        <div className="flex items-center gap-x-3">
+          {editable && (
+            <Button
+              variant="ghost"
+              size="icon-xs"
+              onClick={(e) => {
+                e.stopPropagation();
+                onRequestDelete?.(module);
+              }}
+            >
+              <Trash2Icon className="size-4" />
+            </Button>
+          )}
           <ChevronDownIcon
             className={clsx(
               'size-5 text-gray-500 transition-transform',
@@ -58,42 +80,42 @@ export const ModulesListItem = ({ module }: ModulesListitemProps) => {
         </div>
       </div>
 
-      {
-        <div
-          ref={panelRef}
-          className="overflow-hidden transition-all duration-300"
-          style={{
-            height: isOpen ? panelRef.current?.scrollHeight : 0,
-          }}
-        >
-          <ul className="divide-y divide-gray-200 border-t border-gray-200/70 bg-gray-50 px-6 dark:divide-white/10 dark:border-white/5 dark:bg-gray-700/25">
-            {module.lessons.length > 0 ? (
-              module.lessons.map((lesson) => (
-                <li
-                  key={lesson.id}
-                  className="flex items-center justify-between py-4"
-                >
-                  <h3 className="text-sm font-medium">
-                    <Link
-                      to={`/courses/${module.course_id}/lessons/${lesson.id}`}
-                      className="text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white"
-                    >
-                      {lesson.order}. {lesson.title}
-                    </Link>
-                  </h3>
+      <div
+        ref={panelRef}
+        className="overflow-hidden transition-all duration-300"
+        style={{
+          height: isOpen ? panelRef.current?.scrollHeight : 0,
+        }}
+      >
+        <ul className="divide-y divide-gray-200 border-t border-gray-200/70 bg-gray-50 px-6 dark:divide-white/10 dark:border-white/5 dark:bg-gray-700/25">
+          {module.lessons.length > 0 ? (
+            module.lessons.map((lesson) => (
+              <li
+                key={lesson.id}
+                className="flex items-center justify-between py-4"
+              >
+                <h3 className="text-sm font-medium">
+                  <Link
+                    to={`/courses/${module.course_id}/lessons/${lesson.id}`}
+                    className="text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white"
+                  >
+                    {lesson.order}. {lesson.title}
+                  </Link>
+                </h3>
+                {lesson.status && (
                   <Badge color={lessonStatuses[lesson.status ?? '']?.color}>
                     {lessonStatuses[lesson.status ?? '']?.label}
                   </Badge>
-                </li>
-              ))
-            ) : (
-              <div className="p-4 text-center text-sm font-medium text-gray-500">
-                No lessons
-              </div>
-            )}
-          </ul>
-        </div>
-      }
+                )}
+              </li>
+            ))
+          ) : (
+            <div className="p-4 text-center text-sm font-medium text-gray-500">
+              No lessons
+            </div>
+          )}
+        </ul>
+      </div>
     </div>
   );
 };

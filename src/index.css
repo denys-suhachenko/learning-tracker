@@ -149,7 +149,7 @@
 @layer base {
   #root,
   html {
-    @apply h-full;
+    @apply h-full scroll-smooth;
   }
 
   body {

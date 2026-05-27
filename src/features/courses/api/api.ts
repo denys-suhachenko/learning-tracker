@@ -4,7 +4,9 @@ import {
   type Course,
   type CourseDetail,
   type CreateCourse,
+  type CreateModule,
   type Lesson,
+  type Module,
   type StudyArea,
 } from '../model/types';
 
@@ -41,6 +43,21 @@ const coursesApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ['Courses'],
     }),
+    createModule: create.mutation<Module, CreateModule>({
+      query: (body) => ({
+        url: `/modules/`,
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: ['Courses'],
+    }),
+    removeModule: create.mutation<void, string>({
+      query: (id) => ({
+        url: `/modules/${id}/`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Courses'],
+    }),
     getLesson: create.query<Lesson, string>({
       query: (lessonId) => `/lessons/${lessonId}`,
     }),
@@ -57,6 +74,8 @@ export const {
   useCreateCourseMutation,
   useUpdateCourseMutation,
   useRemoveCourseMutation,
+  useCreateModuleMutation,
+  useRemoveModuleMutation,
   useGetLessonQuery,
   useGetStudyAreasQuery,
 } = coursesApi;

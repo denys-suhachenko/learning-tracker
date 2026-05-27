@@ -4,15 +4,26 @@ import { ModulesListItem } from './ModulesListItem';
 
 type ModulesListProps = {
   modules?: Module[];
+  editable?: boolean;
+  onRequestDelete?: (module: Module) => void;
 };
 
-export const ModulesList = ({ modules = [] }: ModulesListProps) => {
+export const ModulesList = ({
+  modules = [],
+  editable = false,
+  onRequestDelete,
+}: ModulesListProps) => {
   return (
     <div className="overflow-hidden rounded-md bg-white shadow-sm dark:bg-gray-800/50 dark:outline dark:outline-white/10">
       {modules?.length ? (
         <div className="divide-y divide-gray-200/70 dark:divide-white/10">
           {modules.map((module) => (
-            <ModulesListItem key={module.id} module={module} />
+            <ModulesListItem
+              key={module.id}
+              module={module}
+              editable={editable}
+              onRequestDelete={onRequestDelete}
+            />
           ))}
         </div>
       ) : (
