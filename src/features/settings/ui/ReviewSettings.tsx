@@ -22,18 +22,6 @@ import {
   type ReviewIntensityType,
 } from '@/features/settings/ui/ReviewIntensityRadio';
 
-export const userSettingsFormRules = {
-  email: {
-    required: 'Email is required',
-    pattern: {
-      value: /^\S+@\S+$/i,
-      message: 'Invalid format',
-    },
-  },
-  first_name: {},
-  last_name: {},
-};
-
 const ReviewSettings = () => {
   const [reviewIntensity, setReviewIntensity] =
     useState<ReviewIntensityType>('balanced');

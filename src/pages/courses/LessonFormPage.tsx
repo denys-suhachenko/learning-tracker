@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router';
-import { FormProvider, useForm } from 'react-hook-form';
+import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { skipToken } from '@reduxjs/toolkit/query';
 import { toast } from 'sonner';
 import { BookOpenIcon } from 'lucide-react';
@@ -32,7 +32,10 @@ const LessonFormPage = () => {
   const [updateLesson, { isLoading: isUpdating }] = useUpdateLessonMutation();
   const isLoading = isCreating || isUpdating;
 
-  const title = methods.watch('title');
+  const title = useWatch({
+    control: methods.control,
+    name: 'title',
+  });
 
   useEffect(() => {
     if (!lesson) return;

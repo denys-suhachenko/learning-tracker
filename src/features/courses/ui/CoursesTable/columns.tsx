@@ -80,14 +80,3 @@ export const getColumns = (
     ),
   },
 ];
-
-const COURSE_STATUS_META: Record<string, { color: string; label: string }> = {
-  active: {
-    color: 'green',
-    label: 'Active',
-  },
-  draft: {
-    color: 'gray',
-    label: 'Draft',
-  },
-};

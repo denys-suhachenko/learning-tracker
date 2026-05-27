@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useLayoutEffect } from 'react';
 import { Link } from 'react-router';
 import clsx from 'clsx';
 import {
@@ -45,11 +45,22 @@ export const ModulesListItem = ({
   onRequestDeleteLesson,
 }: ModulesListitemProps) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [panelHeight, setPanelHeight] = useState<number>(0);
   const panelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setIsOpen(editable);
   }, [editable]);
+
+  // Use useLayoutEffect to correctly measure the panel after render,
+  // and avoid accessing panelRef.current during render.
+  useLayoutEffect(() => {
+    if (isOpen && panelRef.current) {
+      setPanelHeight(panelRef.current.scrollHeight);
+    } else {
+      setPanelHeight(0);
+    }
+  }, [isOpen, module.lessons.length]);
 
   return (
     <div>
@@ -93,7 +104,7 @@ export const ModulesListItem = ({
         ref={panelRef}
         className="overflow-hidden transition-all duration-300"
         style={{
-          height: isOpen ? panelRef.current?.scrollHeight : 0,
+          height: panelHeight,
         }}
       >
         <ul className="divide-y divide-gray-200 border-t border-gray-200/70 bg-gray-50 px-6">

@@ -2,6 +2,13 @@ import { useState } from 'react';
 import { Link, useParams } from 'react-router';
 import { skipToken } from '@reduxjs/toolkit/query';
 import { toast } from 'sonner';
+import {
+  ChartNoAxesColumnIncreasingIcon,
+  CheckIcon,
+  ClockIcon,
+  NotebookIcon,
+  PencilIcon,
+} from 'lucide-react';
 
 import { PageHeader } from '@/shared/ui';
 import { Container } from '@/shared/layout';
@@ -13,13 +20,6 @@ import {
 import { Button } from '@/shared/ui/button';
 import { getErrorMessage } from '@/shared/lib/getErrorMessage';
 import { cn } from '@/shared/lib/utils';
-import {
-  ChartNoAxesColumnIncreasingIcon,
-  CheckIcon,
-  ClockIcon,
-  NotebookIcon,
-  PencilIcon,
-} from 'lucide-react';
 import { Separator } from '@/shared/ui/separator';
 
 const LessonDetailsPage = () => {
@@ -27,21 +27,11 @@ const LessonDetailsPage = () => {
   const [draftContent, setDraftContent] = useState('');
   const [tableOfContents, setTableOfContents] = useState<TocItem[]>([]);
 
-  const { lessonId, courseId } = useParams();
+  const { lessonId } = useParams();
   const { data: lesson } = useGetLessonQuery(lessonId ?? skipToken);
   const [updateLesson, { isLoading: isUpdating }] = useUpdateLessonMutation();
 
   const editorContent = isEditMode ? draftContent : (lesson?.content ?? '');
-
-  const handleEdit = () => {
-    setDraftContent(lesson?.content ?? '');
-    setIsEditMode(true);
-  };
-
-  const handleCancel = () => {
-    setDraftContent('');
-    setIsEditMode(false);
-  };
 
   const handleSave = async () => {
     if (isUpdating || !lesson) {
@@ -50,11 +40,9 @@ const LessonDetailsPage = () => {
 
     try {
       await updateLesson({
+        ...lesson,
         id: lesson.id,
-        body: {
-          ...lesson,
-          content: draftContent,
-        },
+        content: draftContent,
       }).unwrap();
 
       toast.success('Lesson saved', {
@@ -77,9 +65,7 @@ const LessonDetailsPage = () => {
           <div className="flex items-center gap-x-4">
             {isEditMode ? (
               <>
-                <Button variant="secondary" onClick={handleCancel}>
-                  Cancel
-                </Button>
+                <Button variant="secondary">Cancel</Button>
                 <Button disabled={isUpdating} onClick={handleSave}>
                   Save
                 </Button>

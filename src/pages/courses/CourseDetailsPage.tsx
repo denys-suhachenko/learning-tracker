@@ -5,7 +5,6 @@ import { ArrowRightIcon, MicroscopeIcon, PlayIcon } from 'lucide-react';
 
 import { useGetCourseQuery } from '@/features/courses/api/api';
 import {
-  Breadcrumbs,
   Card,
   CardContent,
   CardHeader,
@@ -17,13 +16,6 @@ import { Container } from '@/shared/layout';
 import { Skeleton } from '@/shared/ui/skeleton';
 import { QueryState } from '@/shared/ui/QueryState';
 import CourseModules from '@/features/courses/ui/CourseModules';
-
-const breadcrumbs = [
-  {
-    label: 'Courses',
-    link: '/courses',
-  },
-];
 
 const CourseDetailsPage = () => {
   const { courseId } = useParams();

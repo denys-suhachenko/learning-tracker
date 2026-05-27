@@ -30,7 +30,7 @@ type UserSettingsFormValues = {
   last_name: string;
 };
 
-export const userSettingsFormRules = {
+const userSettingsFormRules = {
   email: {
     required: 'Email is required',
     pattern: {

@@ -1,12 +1,11 @@
-import { Link, useNavigate, useParams } from 'react-router';
-import { FormProvider, useForm } from 'react-hook-form';
+import { useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router';
+import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { toast } from 'sonner';
 import { BookOpenIcon, CircleCheckIcon, LightbulbIcon } from 'lucide-react';
-import { ArrowLeftIcon } from '@heroicons/react/16/solid';
 
 import { PageHeader } from '@/shared/ui';
 import CourseDetailsForm from '@/features/courses/ui/CourseDetailsForm/CourseDetailsForm';
-import ModulesForm from '@/features/courses/ui/ModulesForm/ModulesForm';
 import { Button } from '@/shared/ui/button';
 import { Container } from '@/shared/layout';
 import { Separator } from '@/shared/ui/separator';
@@ -20,7 +19,6 @@ import {
 } from '@/features/courses/api/api';
 import { getErrorMessage } from '@/shared/lib/getErrorMessage';
 import { cn } from '@/shared/lib/utils';
-import { useEffect } from 'react';
 
 const CourseFormPage = () => {
   const methods = useForm<CreateCourse>();
@@ -37,10 +35,11 @@ const CourseFormPage = () => {
 
   const isLoading = isCreating || isUpdating;
 
-  const title = methods.watch('title');
-  const slug = methods.watch('slug');
-  const studyAreaId = methods.watch('study_area');
-  const description = methods.watch('description');
+  const [title, slug, studyAreaId, description] = useWatch({
+    control: methods.control,
+    name: ['title', 'slug', 'study_area', 'description'],
+  });
+
   const studyAreaName = studyAreas.find(
     (area) => area.id === studyAreaId,
   )?.name;
