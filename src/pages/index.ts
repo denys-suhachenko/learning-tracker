@@ -10,3 +10,4 @@ export { default as SignInPage } from './SignInPage/SignInPage';
 export { default as SignUpPage } from './SignUpPage/SignUpPage';
 export { default as SettingsPage } from './settings/SettingsPage';
 export { default as ReviewCardsPage } from './review/ReviewCardsPage';
+export { default as LessonFormPage } from './courses/LessonFormPage';

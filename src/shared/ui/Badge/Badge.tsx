@@ -1,14 +1,15 @@
 import type { ReactNode } from 'react';
-import clsx from 'clsx';
+
+import { cn } from '@/shared/lib/utils';
 
 type BadgeProps = {
-  color?: 'gray' | 'green' | 'yellow' | 'red';
+  color: string;
   children: ReactNode;
 };
 
 export const Badge = ({ color = 'gray', children }: BadgeProps) => (
   <div
-    className={clsx(
+    className={cn(
       'inline-flex items-center justify-center rounded-full px-2 py-1 text-xs font-medium whitespace-nowrap ring-1',
       color === 'green' &&
         'bg-green-50 text-green-700 ring-green-600/20 dark:bg-green-500/10 dark:text-green-500',

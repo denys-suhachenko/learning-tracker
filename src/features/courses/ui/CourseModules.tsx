@@ -1,12 +1,8 @@
 import { useState } from 'react';
+import { toast } from 'sonner';
 
 import { Button } from '@/shared/ui/button';
-import type { Module } from '../model/types';
-import { ModulesList } from './ModulesList/ModulesList';
 import { Input } from '@/shared/ui/input';
-import { useCreateModuleMutation, useRemoveModuleMutation } from '../api/api';
-import { toast } from 'sonner';
-import { getErrorMessage } from '@/shared/lib/getErrorMessage';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -17,6 +13,13 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/shared/ui/alert-dialog';
+import { getErrorMessage } from '@/shared/lib/getErrorMessage';
+import { useRemoveLessonMutation } from '@/features/lessons/api/api';
+
+import type { Lesson, Module } from '../model/types';
+import { useCreateModuleMutation, useRemoveModuleMutation } from '../api/api';
+
+import { ModulesList } from './ModulesList/ModulesList';
 
 type CourseModulesProps = {
   courseId: string;
@@ -26,10 +29,13 @@ type CourseModulesProps = {
 const CourseModules = ({ courseId, modules }: CourseModulesProps) => {
   const [isEditMode, setIsEditMode] = useState(false);
   const [newModuleTitle, setNewModuleTitle] = useState('');
+  const [newModuleDescription, setNewModuleDescription] = useState('');
   const [moduleToDelete, setModuleToDelete] = useState<Module | null>(null);
+  const [lessonToDelete, setLessonToDelete] = useState<Lesson | null>(null);
 
   const [createModule, { isLoading }] = useCreateModuleMutation();
   const [removeModule] = useRemoveModuleMutation();
+  const [removeLesson] = useRemoveLessonMutation();
 
   const handleAddModule = async () => {
     const title = newModuleTitle.trim();
@@ -44,6 +50,7 @@ const CourseModules = ({ courseId, modules }: CourseModulesProps) => {
         title,
       }).unwrap();
       setNewModuleTitle('');
+      setNewModuleDescription('');
       toast.success('Module added');
     } catch (err) {
       toast.error(getErrorMessage(err, 'Failed to add module'));
@@ -65,6 +72,21 @@ const CourseModules = ({ courseId, modules }: CourseModulesProps) => {
     }
   };
 
+  const handleConfirmDeleteLesson = async () => {
+    if (!lessonToDelete) {
+      return;
+    }
+
+    try {
+      await removeLesson(lessonToDelete.id).unwrap();
+      toast.success('Lesson deleted');
+    } catch (err) {
+      toast.error(getErrorMessage(err, 'Failed to delete lesson'));
+    } finally {
+      setLessonToDelete(null);
+    }
+  };
+
   return (
     <div>
       <div className="mb-4 flex items-center justify-between">
@@ -78,6 +100,7 @@ const CourseModules = ({ courseId, modules }: CourseModulesProps) => {
         modules={modules}
         editable={isEditMode}
         onRequestDelete={setModuleToDelete}
+        onRequestDeleteLesson={setLessonToDelete}
       />
 
       <AlertDialog
@@ -107,18 +130,55 @@ const CourseModules = ({ courseId, modules }: CourseModulesProps) => {
         </AlertDialogContent>
       </AlertDialog>
 
+      <AlertDialog
+        open={!!lessonToDelete}
+        onOpenChange={(open) => {
+          if (!open) setLessonToDelete(null);
+        }}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Delete lesson?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This will permanently delete{' '}
+              <span className="font-bold">{lessonToDelete?.title}</span>.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleConfirmDeleteLesson}
+              variant="destructive"
+            >
+              Delete
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
       {isEditMode && (
-        <div className="mt-4 flex items-center gap-x-2">
+        <div className="mt-6 rounded-md border bg-white px-6 py-4 shadow-sm">
+          <div className="mb-4 font-medium">New module</div>
+
           <Input
             value={newModuleTitle}
-            placeholder="New module title"
-            className="bg-white"
-            onKeyDown={(e) => e.key === 'Enter' && handleAddModule()}
+            placeholder="Module title"
+            className="mb-4 bg-white"
             onChange={(e) => setNewModuleTitle(e.target.value)}
           />
-          <Button disabled={isLoading} onClick={handleAddModule}>
-            Add module
-          </Button>
+
+          <Input
+            value={newModuleDescription}
+            placeholder="Module description"
+            className="mb-4 bg-white"
+            onChange={(e) => setNewModuleDescription(e.target.value)}
+          />
+
+          <div className="text-right">
+            <Button disabled={isLoading} onClick={handleAddModule}>
+              Add module
+            </Button>
+          </div>
         </div>
       )}
     </div>

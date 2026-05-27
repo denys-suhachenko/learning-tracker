@@ -6,7 +6,6 @@ import { Multiselect, Table } from '@/shared/ui';
 import type { Course, CourseStatus } from '../../model/types';
 import { useGetCoursesQuery, useRemoveCourseMutation } from '../../api/api';
 
-import { getColumns, CourseBadge } from './columns';
 import {
   Select,
   SelectContent,
@@ -29,6 +28,9 @@ import { getErrorMessage } from '@/shared/lib/getErrorMessage';
 import { Skeleton } from '@/shared/ui/skeleton';
 import { Button } from '@/shared/ui/button';
 import { QueryState } from '@/shared/ui/QueryState';
+
+import { getColumns } from './columns';
+import { Badge } from '@/shared/ui/badge';
 
 type StatusOption = {
   id: number;
@@ -98,7 +100,7 @@ const CoursesTable = () => {
           options={statuses}
           width={220}
           label="Statuses"
-          chipTemplate={(val) => <CourseBadge status={val.value} />}
+          chipTemplate={(val) => <Badge>{val.value}</Badge>}
           optionTemplate={(option) => <StatusOptionItem option={option} />}
           onChange={(value) => setSelectedStatuses(value)}
         />

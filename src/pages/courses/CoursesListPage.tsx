@@ -12,6 +12,7 @@ const CoursesListPage = () => {
     <>
       <PageHeader
         title="Courses"
+        description="Manage your courses, track progress, and continue learning."
         actions={
           <Button
             onClick={() =>

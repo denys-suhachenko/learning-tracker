@@ -1,9 +1,7 @@
 import { useState } from 'react';
 import { Link, useParams } from 'react-router';
 import { skipToken } from '@reduxjs/toolkit/query';
-import clsx from 'clsx';
 import { toast } from 'sonner';
-import { ArrowLeftIcon } from '@heroicons/react/16/solid';
 
 import { PageHeader } from '@/shared/ui';
 import { Container } from '@/shared/layout';
@@ -14,6 +12,15 @@ import {
 } from '@/features/lessons/api/api';
 import { Button } from '@/shared/ui/button';
 import { getErrorMessage } from '@/shared/lib/getErrorMessage';
+import { cn } from '@/shared/lib/utils';
+import {
+  ChartNoAxesColumnIncreasingIcon,
+  CheckIcon,
+  ClockIcon,
+  NotebookIcon,
+  PencilIcon,
+} from 'lucide-react';
+import { Separator } from '@/shared/ui/separator';
 
 const LessonDetailsPage = () => {
   const [isEditMode, setIsEditMode] = useState(false);
@@ -44,7 +51,10 @@ const LessonDetailsPage = () => {
     try {
       await updateLesson({
         id: lesson.id,
-        content: draftContent,
+        body: {
+          ...lesson,
+          content: draftContent,
+        },
       }).unwrap();
 
       toast.success('Lesson saved', {
@@ -64,26 +74,37 @@ const LessonDetailsPage = () => {
         title={lesson?.title}
         description={lesson?.description}
         actions={
-          isEditMode ? (
-            <div className="flex items-center gap-x-4">
-              <Button variant="secondary" onClick={handleCancel}>
-                Cancel
-              </Button>
-              <Button disabled={isUpdating} onClick={handleSave}>
-                Save
-              </Button>
-            </div>
-          ) : (
-            <Button variant="secondary" onClick={handleEdit}>
-              Edit Lesson
-            </Button>
-          )
+          <div className="flex items-center gap-x-4">
+            {isEditMode ? (
+              <>
+                <Button variant="secondary" onClick={handleCancel}>
+                  Cancel
+                </Button>
+                <Button disabled={isUpdating} onClick={handleSave}>
+                  Save
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button asChild variant="outline" data-icon="inline-start">
+                  <Link to="edit">
+                    <PencilIcon />
+                    Edit Lesson
+                  </Link>
+                </Button>
+                <Button data-icon="inline-start">
+                  <CheckIcon />
+                  Mark Complete
+                </Button>
+              </>
+            )}
+          </div>
         }
       />
 
       <Container>
         <div
-          className={clsx(
+          className={cn(
             'grid gap-x-6',
             isEditMode ? 'grid-cols-1' : 'grid-cols-[3fr_1fr]',
           )}
@@ -97,7 +118,7 @@ const LessonDetailsPage = () => {
           />
 
           {!isEditMode && (
-            <aside className="sticky top-6 self-start">
+            <aside className="sticky top-6 space-y-6 self-start">
               <div className="overflow-hidden rounded-md bg-white px-6 py-4 text-sm shadow-sm">
                 <h3 className="mb-4 text-lg font-medium">Table of contents</h3>
                 <ol className="space-y-1">
@@ -113,6 +134,43 @@ const LessonDetailsPage = () => {
                     </li>
                   ))}
                 </ol>
+              </div>
+
+              <div className="overflow-hidden rounded-md bg-white px-6 py-4 shadow-sm">
+                <h3 className="mb-4 text-lg font-medium">Lesson info</h3>
+                <ul className="space-y-3">
+                  <li className="flex items-center gap-4">
+                    <ClockIcon />
+                    <div>
+                      <div className="text-muted-foreground text-sm">
+                        Estimated time
+                      </div>
+                      <div className="text-sm font-medium">20 minutes</div>
+                    </div>
+                  </li>
+                  <Separator />
+                  <li className="flex items-center gap-4">
+                    <ChartNoAxesColumnIncreasingIcon />
+                    <div>
+                      <div className="text-muted-foreground text-sm">
+                        Difficulty
+                      </div>
+                      <div className="text-sm font-medium">Beginner</div>
+                    </div>
+                  </li>
+                  <Separator />
+                  <li className="flex items-center gap-4">
+                    <NotebookIcon />
+                    <div>
+                      <div className="text-muted-foreground text-sm">
+                        Module
+                      </div>
+                      <div className="text-sm font-medium">
+                        Kinematics Basics
+                      </div>
+                    </div>
+                  </li>
+                </ul>
               </div>
             </aside>
           )}

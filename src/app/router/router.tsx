@@ -7,6 +7,7 @@ import {
   CourseFormPage,
   DashboardPage,
   KnowledgeBasePage,
+  LessonFormPage,
   LessonDetailsPage,
   NotFoundPage,
   PlannerPage,
@@ -58,8 +59,8 @@ export const router = createBrowserRouter([
                 path: ':courseId',
                 handle: {
                   breadcrumb: (match: {
-                    data: { title: any };
-                    params: { courseId: any };
+                    data: { title: string };
+                    params: { courseId: string };
                   }) => ({
                     label: match.data?.title ?? 'Course',
                     link: `/courses/${match.params.courseId}`,
@@ -75,17 +76,30 @@ export const router = createBrowserRouter([
                     Component: CourseFormPage,
                   },
                   {
+                    path: 'modules/:moduleId/lessons/create',
+                    Component: LessonFormPage,
+                  },
+                  {
                     path: 'lessons/:lessonId',
-                    Component: LessonDetailsPage,
                     handle: {
                       breadcrumb: (match: {
-                        data: { title: any };
-                        params: { courseId: any; lessonId: any };
+                        data: { title: string };
+                        params: { courseId: string; lessonId: string };
                       }) => ({
                         label: match.data?.title ?? 'Lesson',
                         link: `/courses/${match.params.courseId}/lessons/${match.params.lessonId}`,
                       }),
                     },
+                    children: [
+                      {
+                        index: true,
+                        Component: LessonDetailsPage,
+                      },
+                      {
+                        path: 'edit',
+                        Component: LessonFormPage,
+                      },
+                    ],
                   },
                 ],
               },

@@ -1,4 +1,4 @@
-import type { Module } from '../../model/types';
+import type { Lesson, Module } from '../../model/types';
 
 import { ModulesListItem } from './ModulesListItem';
 
@@ -6,12 +6,14 @@ type ModulesListProps = {
   modules?: Module[];
   editable?: boolean;
   onRequestDelete?: (module: Module) => void;
+  onRequestDeleteLesson?: (lesson: Lesson) => void;
 };
 
 export const ModulesList = ({
   modules = [],
   editable = false,
   onRequestDelete,
+  onRequestDeleteLesson,
 }: ModulesListProps) => {
   return (
     <div className="overflow-hidden rounded-md bg-white shadow-sm">
@@ -23,6 +25,7 @@ export const ModulesList = ({
               module={module}
               editable={editable}
               onRequestDelete={onRequestDelete}
+              onRequestDeleteLesson={onRequestDeleteLesson}
             />
           ))}
         </div>

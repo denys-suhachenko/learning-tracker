@@ -1,17 +1,23 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router';
 import clsx from 'clsx';
-import { ChevronDownIcon, Trash2Icon } from 'lucide-react';
+import {
+  ChevronDownIcon,
+  PencilIcon,
+  PlusIcon,
+  Trash2Icon,
+} from 'lucide-react';
 
 import { Badge } from '@/shared/ui';
-
-import { type LessonStatus, type Module } from '../../model/types';
 import { Button } from '@/shared/ui/button';
+
+import { type Lesson, type LessonStatus, type Module } from '../../model/types';
 
 type ModulesListitemProps = {
   module: Module;
   editable?: boolean;
   onRequestDelete?: (module: Module) => void;
+  onRequestDeleteLesson?: (lesson: Lesson) => void;
 };
 
 const lessonStatuses: Record<
@@ -36,9 +42,14 @@ export const ModulesListItem = ({
   module,
   editable = false,
   onRequestDelete,
+  onRequestDeleteLesson,
 }: ModulesListitemProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const panelRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setIsOpen(editable);
+  }, [editable]);
 
   return (
     <div>
@@ -100,11 +111,40 @@ export const ModulesListItem = ({
                     {lesson.order}. {lesson.title}
                   </Link>
                 </h3>
-                {lesson.status && (
-                  <Badge color={lessonStatuses[lesson.status ?? '']?.color}>
-                    {lessonStatuses[lesson.status ?? '']?.label}
-                  </Badge>
-                )}
+                <div className="flex items-center gap-x-3">
+                  {lesson.status && (
+                    <Badge color={lessonStatuses[lesson.status ?? '']?.color}>
+                      {lessonStatuses[lesson.status ?? '']?.label}
+                    </Badge>
+                  )}
+                  {editable && (
+                    <>
+                      <Button
+                        asChild
+                        variant="ghost"
+                        size="icon-xs"
+                        className="text-muted-foreground"
+                      >
+                        <Link
+                          to={`/courses/${module.course_id}/lessons/${lesson.id}/edit`}
+                        >
+                          <PencilIcon className="size-4" />
+                        </Link>
+                      </Button>
+
+                      <Button
+                        variant="ghost"
+                        size="icon-xs"
+                        className="text-muted-foreground"
+                        onClick={() => {
+                          onRequestDeleteLesson?.(lesson);
+                        }}
+                      >
+                        <Trash2Icon className="size-4" />
+                      </Button>
+                    </>
+                  )}
+                </div>
               </li>
             ))
           ) : (
@@ -112,6 +152,14 @@ export const ModulesListItem = ({
               No lessons
             </div>
           )}
+
+          <div className="py-4">
+            <Button asChild data-icon="inline-start">
+              <Link to={`modules/${module.id}/lessons/create`}>
+                <PlusIcon /> Add lesson
+              </Link>
+            </Button>
+          </div>
         </ul>
       </div>
     </div>

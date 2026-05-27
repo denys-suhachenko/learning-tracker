@@ -1,9 +1,10 @@
 import { Link } from 'react-router';
 import { PencilIcon, TrashIcon } from '@heroicons/react/16/solid';
 
-import { Badge, Progress, type TableColumn } from '@/shared/ui';
+import { Progress, type TableColumn } from '@/shared/ui';
 
 import type { Course } from '../../model/types';
+import { Badge } from '@/shared/ui/badge';
 
 export const getColumns = (
   onRemove?: (id: string) => void,
@@ -47,7 +48,7 @@ export const getColumns = (
   {
     key: 'status',
     header: 'Status',
-    render: (row) => <CourseBadge status={row.status} />,
+    render: (row) => <Badge>{row.status}</Badge>,
     width: '12%',
   },
   {
@@ -80,22 +81,13 @@ export const getColumns = (
   },
 ];
 
-export function CourseBadge({ status }: { status?: string }) {
-  const meta = {
-    active: {
-      color: 'green',
-      label: 'Active',
-    },
-    draft: {
-      color: 'gray',
-      label: 'Draft',
-    },
-  } as any;
-
-  const key = status ?? '';
-  return (
-    <Badge color={meta[key]?.color || 'gray'}>
-      {meta[key]?.label || status}
-    </Badge>
-  );
-}
+const COURSE_STATUS_META: Record<string, { color: string; label: string }> = {
+  active: {
+    color: 'green',
+    label: 'Active',
+  },
+  draft: {
+    color: 'gray',
+    label: 'Draft',
+  },
+};
