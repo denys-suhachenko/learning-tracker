@@ -32,27 +32,18 @@ const ReviewCardsPage = () => {
 
   return (
     <>
-      <PageHeader>
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-3xl leading-9 font-semibold">
-              Cards & Due Today
-            </h1>
-            <p className="mt-2 text-base font-medium text-gray-500 dark:text-white/60">
-              Overview of your cards and what's due for review.
-            </p>
-          </div>
-          <div className="flex items-center gap-x-4">
-            <Button
-              size="lg"
-              data-icon="inline-start"
-              onClick={() => navigate('/review/create')}
-            >
-              <PlusIcon className="size-4" /> New Card
-            </Button>
-          </div>
-        </div>
-      </PageHeader>
+      <PageHeader
+        title="Cards & Due Today"
+        description="Overview of your cards and what's due for review."
+        actions={
+          <Button
+            data-icon="inline-start"
+            onClick={() => navigate('/review/create')}
+          >
+            <PlusIcon className="size-4" /> New Card
+          </Button>
+        }
+      />
 
       <Container>
         <div className="grid grid-cols-[3fr_1fr] gap-x-6">
@@ -105,7 +96,7 @@ const ReviewCardsPage = () => {
           </div>
 
           <aside className="sticky top-6 space-y-6 self-start">
-            <div className="overflow-hidden rounded-md bg-white px-6 py-4 text-sm shadow-sm dark:bg-gray-800/50 dark:outline dark:outline-white/10">
+            <div className="overflow-hidden rounded-md bg-white px-6 py-4 text-sm shadow-sm">
               <h3 className="mb-4 text-lg font-medium">Today's Summary</h3>
 
               <ul className="space-y-1">
@@ -140,7 +131,7 @@ const ReviewCardsPage = () => {
               </Button>
             </div>
 
-            <div className="overflow-hidden rounded-md bg-white px-6 py-4 shadow-sm dark:bg-gray-800/50 dark:outline dark:outline-white/10">
+            <div className="overflow-hidden rounded-md bg-white px-6 py-4 shadow-sm">
               <h3 className="mb-4 text-lg font-medium">Study Streak</h3>
 
               <div className="mb-6 flex items-center gap-x-2">

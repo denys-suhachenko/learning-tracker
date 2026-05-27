@@ -14,9 +14,9 @@ export const ModulesList = ({
   onRequestDelete,
 }: ModulesListProps) => {
   return (
-    <div className="overflow-hidden rounded-md bg-white shadow-sm dark:bg-gray-800/50 dark:outline dark:outline-white/10">
+    <div className="overflow-hidden rounded-md bg-white shadow-sm">
       {modules?.length ? (
-        <div className="divide-y divide-gray-200/70 dark:divide-white/10">
+        <div className="divide-y divide-gray-200/70">
           {modules.map((module) => (
             <ModulesListItem
               key={module.id}
@@ -27,7 +27,7 @@ export const ModulesList = ({
           ))}
         </div>
       ) : (
-        <div className="p-6 text-center font-medium text-gray-500 dark:bg-gray-800/50 dark:text-gray-400">
+        <div className="p-6 text-center font-medium text-gray-500">
           No modules
         </div>
       )}

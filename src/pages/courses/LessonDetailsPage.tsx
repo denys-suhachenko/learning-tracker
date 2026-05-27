@@ -60,43 +60,26 @@ const LessonDetailsPage = () => {
 
   return (
     <>
-      <PageHeader>
-        <div className="mb-4">
-          <Link
-            to={`/courses/${courseId}`}
-            className="inline-flex items-center gap-x-1 text-sm font-medium text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
-          >
-            <ArrowLeftIcon aria-hidden="true" className="size-4 shrink-0" />
-            Back
-          </Link>
-        </div>
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-3xl leading-9 font-semibold">
-              {lesson?.title}
-            </h1>
-            <p className="mt-2 text-base font-medium text-gray-500 dark:text-white/60">
-              {lesson?.description}
-            </p>
-          </div>
-          <div className="flex items-center gap-x-4">
-            {isEditMode ? (
-              <>
-                <Button variant="secondary" onClick={handleCancel}>
-                  Cancel
-                </Button>
-                <Button disabled={isUpdating} onClick={handleSave}>
-                  Save
-                </Button>
-              </>
-            ) : (
-              <Button variant="secondary" onClick={handleEdit}>
-                Edit Lesson
+      <PageHeader
+        title={lesson?.title}
+        description={lesson?.description}
+        actions={
+          isEditMode ? (
+            <div className="flex items-center gap-x-4">
+              <Button variant="secondary" onClick={handleCancel}>
+                Cancel
               </Button>
-            )}
-          </div>
-        </div>
-      </PageHeader>
+              <Button disabled={isUpdating} onClick={handleSave}>
+                Save
+              </Button>
+            </div>
+          ) : (
+            <Button variant="secondary" onClick={handleEdit}>
+              Edit Lesson
+            </Button>
+          )
+        }
+      />
 
       <Container>
         <div
@@ -115,7 +98,7 @@ const LessonDetailsPage = () => {
 
           {!isEditMode && (
             <aside className="sticky top-6 self-start">
-              <div className="overflow-hidden rounded-md bg-white px-6 py-4 text-sm shadow-sm dark:bg-gray-800/50 dark:outline dark:outline-white/10">
+              <div className="overflow-hidden rounded-md bg-white px-6 py-4 text-sm shadow-sm">
                 <h3 className="mb-4 text-lg font-medium">Table of contents</h3>
                 <ol className="space-y-1">
                   {tableOfContents.map((item, i) => (
@@ -124,7 +107,7 @@ const LessonDetailsPage = () => {
                       style={{
                         paddingLeft: `${(item.level - 1) * 12}px`,
                       }}
-                      className="cursor-pointer text-sm font-medium text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+                      className="cursor-pointer text-sm font-medium text-gray-500 hover:text-gray-900"
                     >
                       <a href={`#${item.id}`}>{item.text}</a>
                     </li>

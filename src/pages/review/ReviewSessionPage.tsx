@@ -19,32 +19,22 @@ const ReviewSessionPage = () => {
 
   return (
     <>
-      <PageHeader>
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-2xl leading-9 font-semibold">Review Session</h1>
-            <p className="mt-2 text-sm text-gray-500 dark:text-white/60">
-              Deck:{' '}
-              <span className="font-medium text-blue-600">
-                Cell Biology Basics
-              </span>{' '}
-              &middot; Topic: <span className="font-medium">Biology</span>
-            </p>
-          </div>
-          <div className="flex items-center gap-x-4">
-            <Button
-              size="lg"
-              variant="outline"
-              onClick={() => navigate('/review')}
-            >
-              End session
-            </Button>
-          </div>
-        </div>
-      </PageHeader>
+      <PageHeader
+        title="Review Session"
+        description="Deck: Cell Biology Basics and Topic: Biology"
+        actions={
+          <Button
+            size="lg"
+            variant="outline"
+            onClick={() => navigate('/review')}
+          >
+            End session
+          </Button>
+        }
+      />
 
       <Container>
-        <div className="space-y-8 overflow-hidden rounded-md bg-white p-6 shadow-sm dark:bg-gray-800/50 dark:outline dark:outline-white/10">
+        <div className="space-y-8 overflow-hidden rounded-md bg-white p-6 shadow-sm">
           <div className="flex flex-col items-center gap-2">
             Card 4 of 12
             <div className="w-md">

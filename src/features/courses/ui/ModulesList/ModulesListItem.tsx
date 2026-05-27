@@ -43,7 +43,7 @@ export const ModulesListItem = ({
   return (
     <div>
       <div
-        className="flex cursor-pointer items-center justify-between px-6 py-4 select-none hover:bg-gray-50/75 dark:hover:bg-white/5"
+        className="flex cursor-pointer items-center justify-between px-6 py-4 select-none"
         onClick={() => setIsOpen((val) => !val)}
       >
         <div className="flex items-center">
@@ -52,9 +52,7 @@ export const ModulesListItem = ({
           </div>
           <div>
             <h3 className="font-medium">{module.title}</h3>
-            <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-              {module.description}
-            </p>
+            <p className="mt-1 text-sm text-gray-500">{module.description}</p>
           </div>
         </div>
 
@@ -87,7 +85,7 @@ export const ModulesListItem = ({
           height: isOpen ? panelRef.current?.scrollHeight : 0,
         }}
       >
-        <ul className="divide-y divide-gray-200 border-t border-gray-200/70 bg-gray-50 px-6 dark:divide-white/10 dark:border-white/5 dark:bg-gray-700/25">
+        <ul className="divide-y divide-gray-200 border-t border-gray-200/70 bg-gray-50 px-6">
           {module.lessons.length > 0 ? (
             module.lessons.map((lesson) => (
               <li
@@ -97,7 +95,7 @@ export const ModulesListItem = ({
                 <h3 className="text-sm font-medium">
                   <Link
                     to={`/courses/${module.course_id}/lessons/${lesson.id}`}
-                    className="text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white"
+                    className="text-gray-600 hover:text-gray-900"
                   >
                     {lesson.order}. {lesson.title}
                   </Link>

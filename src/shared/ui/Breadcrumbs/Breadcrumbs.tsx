@@ -23,7 +23,7 @@ export const Breadcrumbs = ({ items }: BreadcrumbsProps) => {
                   className="size-5 shrink-0 text-gray-400"
                 />
               )}
-              {index !== items.length - 1 ? (
+              {item.link ? (
                 <Link
                   to={item.link}
                   className="text-sm font-medium text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"

@@ -62,14 +62,6 @@ const CourseFormPage = () => {
       label: 'Select a study area',
       done: !!studyAreaId,
     },
-    {
-      label: 'Add at least one module',
-      done: false,
-    },
-    {
-      label: 'Add at least one lesson',
-      done: false,
-    },
   ];
 
   useEffect(() => {
@@ -113,26 +105,10 @@ const CourseFormPage = () => {
   return (
     <FormProvider {...methods}>
       <form>
-        <PageHeader>
-          <div className="mb-4">
-            <Link
-              to="/courses"
-              replace
-              className="inline-flex items-center gap-x-1 text-sm font-medium text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
-            >
-              <ArrowLeftIcon aria-hidden="true" className="size-4 shrink-0" />
-              Back
-            </Link>
-          </div>
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl leading-9 font-semibold">
-                {isEdit ? 'Edit Course' : 'Create Course'}
-              </h1>
-              <p className="mt-2 text-base font-medium text-gray-500 dark:text-white/60">
-                Add a new course, organize modules, and prepare lessons;
-              </p>
-            </div>
+        <PageHeader
+          title={isEdit ? 'Edit Course' : 'Create Course'}
+          description="Add a new course, organize modules, and prepare lessons"
+          actions={
             <div className="flex items-center gap-x-4">
               {!isEdit && (
                 <Button
@@ -147,24 +123,12 @@ const CourseFormPage = () => {
                 {isEdit ? 'Save changes' : 'Create Course'}
               </Button>
             </div>
-          </div>
-        </PageHeader>
+          }
+        />
 
         <Container>
           <div className="grid grid-cols-[2fr_1fr] gap-x-6">
-            <div>
-              <div className="mb-6">
-                <CourseDetailsForm />
-              </div>
-
-              <div>
-                <h2 className="text-lg font-medium">Modules & Lessons</h2>
-                <p className="text-muted-foreground text-sm font-medium">
-                  Add modules and lessons to build your course structure.
-                </p>
-                <ModulesForm />
-              </div>
-            </div>
+            <CourseDetailsForm />
 
             <aside className="sticky top-8 self-start">
               <div className="bg-card rounded-md border p-4">
@@ -183,21 +147,6 @@ const CourseFormPage = () => {
                       </div>
                     </div>
                   </div>
-                  <Separator />
-                  <ul className="space-y-1 text-sm">
-                    <li className="flex items-center justify-between">
-                      <div>Modules</div>
-                      <div className="font-medium">-</div>
-                    </li>
-                    <li className="flex items-center justify-between">
-                      <div>Lessons</div>
-                      <div className="font-medium">-</div>
-                    </li>
-                    <li className="flex items-center justify-between">
-                      <div>Est. duration</div>
-                      <div className="font-medium">-</div>
-                    </li>
-                  </ul>
 
                   <Separator />
 
@@ -237,8 +186,7 @@ const CourseFormPage = () => {
                       <LightbulbIcon />
                     </div>
                     <div className="text-muted-foreground text-xs font-medium">
-                      Tip: A clear structure helps learners stay focused and
-                      engaged.
+                      Tip: A clear structure helps to stay focused and engaged.
                     </div>
                   </div>
                 </div>

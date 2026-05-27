@@ -1,22 +1,29 @@
+import { useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router';
 import { skipToken } from '@reduxjs/toolkit/query';
-import { ArrowLeftIcon } from '@heroicons/react/16/solid';
+import { ArrowRightIcon, MicroscopeIcon, PlayIcon } from 'lucide-react';
 
 import { useGetCourseQuery } from '@/features/courses/api/api';
 import {
+  Breadcrumbs,
   Card,
   CardContent,
   CardHeader,
   PageHeader,
   Progress,
 } from '@/shared/ui';
-import { ModulesList } from '@/features/courses/ui/ModulesList/ModulesList';
 import { Button } from '@/shared/ui/button';
 import { Container } from '@/shared/layout';
-import { useEffect } from 'react';
 import { Skeleton } from '@/shared/ui/skeleton';
 import { QueryState } from '@/shared/ui/QueryState';
 import CourseModules from '@/features/courses/ui/CourseModules';
+
+const breadcrumbs = [
+  {
+    label: 'Courses',
+    link: '/courses',
+  },
+];
 
 const CourseDetailsPage = () => {
   const { courseId } = useParams();
@@ -41,26 +48,11 @@ const CourseDetailsPage = () => {
 
   return (
     <>
-      <PageHeader>
-        <div className="mb-4">
-          <Link
-            to="/courses"
-            className="inline-flex items-center gap-x-1 text-sm font-medium text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
-          >
-            <ArrowLeftIcon aria-hidden="true" className="size-4 shrink-0" />
-            Back
-          </Link>
-        </div>
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-3xl leading-9 font-semibold">
-              {course?.title}
-            </h1>
-            <p className="mt-2 text-base font-medium text-gray-500 dark:text-white/60">
-              {course?.description}
-            </p>
-          </div>
-          {course && (
+      <PageHeader
+        title={course?.title}
+        description={course?.description}
+        actions={
+          course && (
             <div className="flex items-center gap-x-4">
               <Button
                 variant="secondary"
@@ -70,9 +62,9 @@ const CourseDetailsPage = () => {
               </Button>
               <Button>Continue Learning</Button>
             </div>
-          )}
-        </div>
-      </PageHeader>
+          )
+        }
+      />
 
       <QueryState
         isLoading={isLoading}
@@ -90,40 +82,84 @@ const CourseDetailsPage = () => {
         }
       >
         <Container>
-          <div className="grid grid-cols-[3fr_1fr] gap-x-6">
+          <div className="grid grid-cols-[2fr_1fr] gap-x-6">
             {courseId && (
               <CourseModules courseId={courseId} modules={course?.modules} />
             )}
 
-            <aside className="sticky top-6 self-start">
+            <aside className="sticky top-6 space-y-6 self-start">
               <Card className="mb-6">
                 <CardHeader bordered className="font-medium">
                   Course details
                 </CardHeader>
                 <CardContent className="text-sm">
-                  <div className="mb-2 flex items-center justify-between font-medium dark:text-gray-300">
-                    <div>In progress</div>
+                  <div className="mb-2 flex items-center justify-between font-medium">
+                    <div>Overall progress</div>
                     <div>67%</div>
                   </div>
 
                   <Progress value={67} />
 
-                  <ul className="mt-4 space-y-1 dark:text-gray-300">
-                    <li>
-                      Modules:{' '}
-                      <span className="font-medium dark:text-white">
+                  <ul className="mt-4 space-y-2">
+                    <li className="flex items-center justify-between">
+                      <div>Modules:</div>
+                      <div className="font-medium">
                         {course?.modules?.length}
-                      </span>
+                      </div>
                     </li>
-                    <li>
-                      Lessons:{' '}
-                      <span className="font-medium dark:text-white">4</span>
+                    <li className="flex items-center justify-between">
+                      <div>Lessons:</div>
+                      <span className="font-medium">-</span>
                     </li>
-                    <li>
-                      Completed:{' '}
-                      <span className="font-medium dark:text-white">2</span>
+                    <li className="flex items-center justify-between">
+                      <div>Completed:</div>
+                      <span className="font-medium">-</span>
                     </li>
                   </ul>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardContent>
+                  <div className="flex items-center gap-4">
+                    <div className="flex items-center justify-center rounded-md border bg-indigo-50 p-2 text-indigo-400">
+                      <MicroscopeIcon />
+                    </div>
+                    <div>
+                      <div className="text-muted-foreground text-sm font-medium">
+                        Study area
+                      </div>
+                      <div className="text-sm font-semibold">
+                        {course?.study_area?.name}
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader className="font-medium">Next lesson</CardHeader>
+                <CardContent>
+                  <div className="flex items-center gap-4">
+                    <div className="flex items-center justify-center rounded-full border bg-blue-50 p-2 text-blue-400">
+                      <PlayIcon fill="currentColor" strokeWidth={0} />
+                    </div>
+                    <div>
+                      <div className="text-sm font-semibold">
+                        2. Velocity and Speed
+                      </div>
+                      <div className="text-muted-foreground text-sm font-medium">
+                        Kinematics
+                      </div>
+                    </div>
+                  </div>
+                  <Link
+                    to="#"
+                    className="mt-3 flex flex-nowrap items-center gap-x-1 text-sm font-medium text-blue-600"
+                  >
+                    Continue lesson
+                    <ArrowRightIcon className="size-4" />
+                  </Link>
                 </CardContent>
               </Card>
             </aside>

@@ -29,18 +29,10 @@ import { Container } from '@/shared/layout';
 const ReviewCreatePage = () => {
   return (
     <>
-      <PageHeader>
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-3xl leading-9 font-semibold">
-              Create Review Card
-            </h1>
-            <p className="mt-2 text-base font-medium text-gray-500 dark:text-white/60">
-              Add a new card to your deck. Good cards make great reviews.
-            </p>
-          </div>
-        </div>
-      </PageHeader>
+      <PageHeader
+        title="Create Review Card"
+        description="Add a new card to your deck. Good cards make great reviews."
+      />
 
       <Container>
         <div className="mb-6 flex items-center gap-4">
@@ -86,7 +78,7 @@ const ReviewCreatePage = () => {
           </TabsList>
         </Tabs>
 
-        <div className="grid grid-cols-[3fr_2fr] gap-x-6 overflow-hidden rounded-md bg-white p-6 text-sm shadow-sm dark:bg-gray-800/50 dark:outline dark:outline-white/10">
+        <div className="grid grid-cols-[3fr_2fr] gap-x-6 overflow-hidden rounded-md bg-white p-6 text-sm shadow-sm">
           <div className="space-y-6">
             <Field>
               <FieldLabel htmlFor="front-side">

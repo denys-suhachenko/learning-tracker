@@ -19,7 +19,7 @@ export const Progress = ({
     <div className="flex w-full items-center">
       <div
         className={cn(
-          'w-full flex-1 overflow-hidden rounded-full bg-gray-200 dark:bg-white/20',
+          'w-full flex-1 overflow-hidden rounded-full bg-gray-200',
           className,
         )}
       >
@@ -32,9 +32,7 @@ export const Progress = ({
         />
       </div>
       {label != null && (
-        <div className="ml-2 shrink-0 text-sm text-gray-500 dark:text-white/75">
-          {label}
-        </div>
+        <div className="ml-2 shrink-0 text-sm text-gray-500">{label}</div>
       )}
     </div>
   );

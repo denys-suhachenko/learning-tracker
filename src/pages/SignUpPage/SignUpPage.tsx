@@ -47,7 +47,7 @@ const SignUpPage = () => {
     <Container>
       <div className="flex h-full flex-col justify-center">
         <div className="mx-auto mt-8 w-full max-w-md">
-          <div className="overflow-hidden rounded-md bg-white px-10 py-8 text-sm shadow-sm dark:bg-gray-800/50 dark:text-white dark:outline dark:outline-white/10">
+          <div className="overflow-hidden rounded-md bg-white px-10 py-8 text-sm shadow-sm">
             <h2 className="mb-6 text-center text-2xl font-bold">
               Sign up for an account
             </h2>
@@ -81,9 +81,9 @@ const SignUpPage = () => {
 
             <div className="mt-6">
               <div className="flex items-center gap-x-4">
-                <div className="w-full flex-1 border-t border-gray-200 dark:border-gray-700" />
+                <div className="w-full flex-1 border-t border-gray-200" />
                 <div className="font-medium text-nowrap">Or continue with</div>
-                <div className="w-full flex-1 border-t border-gray-200 dark:border-gray-700" />
+                <div className="w-full flex-1 border-t border-gray-200" />
               </div>
 
               <div className="mt-6 space-y-4">
@@ -109,12 +109,9 @@ const SignUpPage = () => {
               </div>
             </div>
 
-            <div className="mt-6 text-center text-gray-600 dark:text-gray-400">
+            <div className="mt-6 text-center text-gray-600">
               Already have an account?{' '}
-              <Link
-                to="/sign-in"
-                className="underline hover:text-gray-900 dark:hover:text-white"
-              >
+              <Link to="/sign-in" className="underline hover:text-gray-900">
                 Sign in
               </Link>
             </div>

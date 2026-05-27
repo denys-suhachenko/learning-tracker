@@ -47,7 +47,7 @@ export const Sidebar = ({
 
   return (
     <aside
-      className="fixed inset-y-0 z-40 w-3xs border-r border-gray-800 bg-gray-900 dark:bg-[oklab(0%_none_none/0.2)]"
+      className="fixed inset-y-0 z-40 w-3xs border-r border-gray-800 bg-gray-900"
       style={{ width }}
     >
       <div className="flex h-full flex-col">

@@ -39,13 +39,13 @@ const ModulesFormItem = ({ module }: ModulesFormItemProps) => {
         </div>
 
         <div className="shrink-0">
-          <button className="cursor-pointer text-sm font-medium text-gray-400 hover:text-gray-900 dark:text-white/60 dark:hover:text-white">
+          <button className="cursor-pointer text-sm font-medium text-gray-400 hover:text-gray-900">
             <TrashIcon className="size-4" />
           </button>
         </div>
       </div>
 
-      <ul className="divide-y divide-gray-200 border-t border-gray-200/70 bg-gray-50 px-6 dark:divide-white/10 dark:border-white/5 dark:bg-gray-700/25">
+      <ul className="divide-y divide-gray-200 border-t border-gray-200/70 bg-gray-50 px-6">
         {module.lessons.map((lesson) => (
           <li
             key={lesson.id}

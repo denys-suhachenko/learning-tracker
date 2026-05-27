@@ -6,12 +6,10 @@ import { Button } from '@/shared/ui/button';
 const PlannerPage = () => {
   return (
     <>
-      <PageHeader>
-        <div className="flex items-center justify-between">
-          <div className="text-2xl leading-9 font-semibold">Planner</div>
-          <Button size="lg">Add topic</Button>
-        </div>
-      </PageHeader>
+      <PageHeader
+        title="Planner"
+        actions={<Button size="lg">Add topic</Button>}
+      />
 
       <Container>
         <PlannerBoard />

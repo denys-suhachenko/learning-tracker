@@ -10,11 +10,10 @@ const CoursesListPage = () => {
 
   return (
     <>
-      <PageHeader>
-        <div className="flex items-center justify-between">
-          <div className="text-2xl leading-9 font-semibold">Courses</div>
+      <PageHeader
+        title="Courses"
+        actions={
           <Button
-            size="lg"
             onClick={() =>
               navigate('/courses/create', {
                 replace: true,
@@ -23,8 +22,8 @@ const CoursesListPage = () => {
           >
             Create course
           </Button>
-        </div>
-      </PageHeader>
+        }
+      />
 
       <Container>
         <CoursesTable />

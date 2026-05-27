@@ -19,7 +19,7 @@ export const getColumns = (): TableColumn<any>[] => [
     render: (row) => (
       <Link
         to={`/courses/${row.id}`}
-        className="text-sm font-medium text-gray-700 hover:text-gray-900 dark:text-gray-200 dark:hover:text-white"
+        className="text-sm font-medium text-gray-700 hover:text-gray-900"
       >
         {row.title}
       </Link>
@@ -31,10 +31,7 @@ export const getColumns = (): TableColumn<any>[] => [
     header: 'Deck',
     width: '26%',
     render: (row) => (
-      <Link
-        to={`/courses/${row.id}`}
-        className="text-sm text-blue-600 dark:text-blue-500 dark:hover:text-white"
-      >
+      <Link to={`/courses/${row.id}`} className="text-sm text-blue-600">
         {row.deck}
       </Link>
     ),

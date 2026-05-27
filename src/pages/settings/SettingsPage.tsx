@@ -17,12 +17,10 @@ import AppereanceSettings from '@/features/settings/ui/AppereanceSettings';
 const SettingsPage = () => {
   return (
     <>
-      <PageHeader>
-        <h1 className="text-2xl font-semibold">Settings</h1>
-        <p className="text-muted-foreground mt-2 text-base font-medium">
-          Customize your learning experience
-        </p>
-      </PageHeader>
+      <PageHeader
+        title="Settings"
+        description="Customize your learning experience"
+      />
 
       <Container>
         <Tabs defaultValue="account">
