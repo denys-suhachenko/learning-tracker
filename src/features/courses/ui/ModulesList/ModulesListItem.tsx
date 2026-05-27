@@ -8,10 +8,10 @@ import {
   Trash2Icon,
 } from 'lucide-react';
 
-import { Badge } from '@/shared/ui';
 import { Button } from '@/shared/ui/button';
 
 import { type Lesson, type LessonStatus, type Module } from '../../model/types';
+import { Badge } from '@/shared/ui/badge';
 
 type ModulesListitemProps = {
   module: Module;
@@ -124,7 +124,7 @@ export const ModulesListItem = ({
                 </h3>
                 <div className="flex items-center gap-x-3">
                   {lesson.status && (
-                    <Badge color={lessonStatuses[lesson.status ?? '']?.color}>
+                    <Badge variant="outline">
                       {lessonStatuses[lesson.status ?? '']?.label}
                     </Badge>
                   )}

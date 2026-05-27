@@ -33,16 +33,13 @@ export const getColumns = (
   {
     key: 'slug',
     header: 'Progress',
-    render: () => {
-      const val = Math.max(0, Math.min(Math.round(Math.random() * 100), 100));
-      return (
-        <Progress
-          value={val}
-          label={<span className="ml-2">{val}%</span>}
-          className="max-w-32"
-        />
-      );
-    },
+    render: () => (
+      <Progress
+        value={0}
+        label={<span className="ml-2">{0}%</span>}
+        className="max-w-32"
+      />
+    ),
     width: '16%',
   },
   {

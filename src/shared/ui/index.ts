@@ -1,4 +1,3 @@
-export { Badge } from './Badge/Badge';
 export { Progress } from './Progress/Progress';
 export { Table, type TableColumn } from './Table/Table';
 export { Multiselect } from './Multiselect/Multiselect';
