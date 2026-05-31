@@ -2,26 +2,26 @@ name: CI
 
 on:
   push:
-    braches: [main, dev]
+    branches: [main, dev]
   pull_request:
     branches: [main, dev]
 
 jobs:
   check:
-    runs-on: ubuntu-lastes
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
       - name: Setup pnpm
-        uses: pnmp/actions-setup@v3
+        uses: pnpm/action-setup@v3
         with:
           version: '10.29.1'
 
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          version: '24'
+          node-version: '24'
           cache: 'pnpm'
 
       - name: Install dependencies
