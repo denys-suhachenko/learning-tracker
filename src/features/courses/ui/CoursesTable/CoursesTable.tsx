@@ -27,7 +27,7 @@ import { toast } from 'sonner';
 import { getErrorMessage } from '@/shared/lib/getErrorMessage';
 import { Skeleton } from '@/shared/ui/skeleton';
 import { Button } from '@/shared/ui/button';
-import { QueryState } from '@/shared/ui/QueryState';
+import { QueryState } from '@/shared/ui/QueryState/QueryState';
 
 import { getColumns } from './columns';
 import { Badge } from '@/shared/ui/badge';

@@ -2,7 +2,7 @@ export { default as DashboardPage } from './DashboardPage/DashboardPage';
 export { default as NotFoundPage } from './NotFoundPage/NotFoundPage';
 export { default as CoursesListPage } from './courses/CoursesListPage';
 export { default as CourseDetailsPage } from './courses/CourseDetailsPage';
-export { default as CourseFormPage } from './courses/CourseFormPage';
+export { default as CourseFormPage } from './courses/CourseFormPage/CourseFormPage';
 export { default as LessonDetailsPage } from './courses/LessonDetailsPage';
 export { default as KnowledgeBasePage } from './KnowledgeBasePage/KnowledgeBasePage';
 export { default as PlannerPage } from './PlannerPage/PlannerPage';

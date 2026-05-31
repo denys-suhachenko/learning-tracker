@@ -9,8 +9,8 @@ type AuthState = {
 };
 
 const initialState: AuthState = {
-  accessToken: localStorage.getItem('accessToken'),
-  refreshToken: localStorage.getItem('refreshToken'),
+  accessToken: getStoredToken('accessToken'),
+  refreshToken: getStoredToken('refreshToken'),
   user: null,
 };
 
@@ -45,6 +45,18 @@ const authSlice = createSlice({
     },
   },
 });
+
+function getStoredToken(key: string): string | null {
+  if (typeof window === 'undefined') {
+    return null;
+  }
+
+  try {
+    return window.localStorage.getItem(key);
+  } catch {
+    return null;
+  }
+}
 
 export const { setAccessToken, setTokens, setUser, logout } = authSlice.actions;
 export default authSlice.reducer;

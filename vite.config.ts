@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite';
+import { defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 import path from 'path';
@@ -9,6 +9,7 @@ export default defineConfig({
   build: {
     sourcemap: 'hidden',
   },
+
   plugins: [
     react(),
     tailwindcss(),
@@ -21,15 +22,23 @@ export default defineConfig({
       },
     }),
   ],
+
   define: {
     __APP_VERSION__: JSON.stringify(process.env.npm_package_version),
     __COMMIT_SHA__: JSON.stringify(
       process.env.VERCEL_GIT_COMMIT_SHA || 'local',
     ),
   },
+
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src'),
     },
+  },
+
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: './src/test/setup.ts',
   },
 });
