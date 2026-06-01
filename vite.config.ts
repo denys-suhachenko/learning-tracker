@@ -20,6 +20,11 @@ export default defineConfig({
       sourcemaps: {
         filesToDeleteAfterUpload: ['./dist/**/*.map'],
       },
+      release: {
+        setCommits: {
+          auto: true,
+        },
+      },
     }),
   ],
 
