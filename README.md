@@ -157,4 +157,3 @@ The note-taking vertical is the foundation. Planned next domains:
 ## License
 
 [MIT](./LICENSE) — free to use, modify, and share.
-
