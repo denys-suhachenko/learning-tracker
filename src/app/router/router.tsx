@@ -1,20 +1,147 @@
 import { createBrowserRouter } from 'react-router';
 
-import { DashboardPage, NotFoundPage } from '@/pages';
+import AppLayout from '@/app/layout/AppLayout';
+import {
+  CourseDetailsPage,
+  CoursesListPage,
+  CourseFormPage,
+  DashboardPage,
+  KnowledgeBasePage,
+  LessonFormPage,
+  LessonDetailsPage,
+  NotFoundPage,
+  PlannerPage,
+  SettingsPage,
+  SignInPage,
+  SignUpPage,
+  ReviewCardsPage,
+} from '@/pages';
 
-import AppLayout from '@/app/layout/layout';
+import ProtectedRoute from './ProtectedRoute';
+import ReviewCreatePage from '@/pages/review/ReviewCreatePage';
+import ReviewSessionPage from '@/pages/review/ReviewSessionPage';
 
 export const router = createBrowserRouter([
   {
-    Component: AppLayout,
+    path: '/sign-in',
+    Component: SignInPage,
+  },
+  {
+    path: '/sign-up',
+    Component: SignUpPage,
+  },
+  {
+    Component: ProtectedRoute,
     children: [
       {
-        index: true,
-        Component: DashboardPage,
-      },
-      {
-        path: '*',
-        Component: NotFoundPage,
+        path: '/',
+        Component: AppLayout,
+        children: [
+          {
+            index: true,
+            Component: DashboardPage,
+          },
+          {
+            path: 'courses',
+            handle: {
+              breadcrumb: () => ({ label: 'Courses', link: '/courses' }),
+            },
+            children: [
+              {
+                index: true,
+                Component: CoursesListPage,
+              },
+              {
+                path: 'create',
+                Component: CourseFormPage,
+              },
+              {
+                path: ':courseId',
+                handle: {
+                  breadcrumb: (match: {
+                    data: { title: string };
+                    params: { courseId: string };
+                  }) => ({
+                    label: match.data?.title ?? 'Course',
+                    link: `/courses/${match.params.courseId}`,
+                  }),
+                },
+                children: [
+                  {
+                    index: true,
+                    Component: CourseDetailsPage,
+                  },
+                  {
+                    path: 'edit',
+                    Component: CourseFormPage,
+                  },
+                  {
+                    path: 'modules/:moduleId/lessons/create',
+                    Component: LessonFormPage,
+                  },
+                  {
+                    path: 'lessons/:lessonId',
+                    handle: {
+                      breadcrumb: (match: {
+                        data: { title: string };
+                        params: { courseId: string; lessonId: string };
+                      }) => ({
+                        label: match.data?.title ?? 'Lesson',
+                        link: `/courses/${match.params.courseId}/lessons/${match.params.lessonId}`,
+                      }),
+                    },
+                    children: [
+                      {
+                        index: true,
+                        Component: LessonDetailsPage,
+                      },
+                      {
+                        path: 'edit',
+                        Component: LessonFormPage,
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            path: 'planner',
+            Component: PlannerPage,
+          },
+          {
+            path: 'review',
+            handle: {
+              breadcrumb: () => ({ label: 'Review', link: '/review' }),
+            },
+            children: [
+              {
+                index: true,
+                Component: ReviewCardsPage,
+              },
+              {
+                path: ':sessionId',
+                Component: ReviewSessionPage,
+              },
+              {
+                path: 'create',
+                Component: ReviewCreatePage,
+              },
+            ],
+          },
+          {
+            path: 'knowledge-base',
+            Component: KnowledgeBasePage,
+          },
+          {
+            path: 'settings',
+            Component: SettingsPage,
+          },
+          {
+            path: '*',
+            Component: NotFoundPage,
+          },
+        ],
       },
     ],
   },

@@ -4,8 +4,8 @@ const NotFoundPage = () => {
   return (
     <main className="grid min-h-screen w-full place-items-center">
       <div className="text-center">
-        <div className="text-3xl font-semibold">404</div>
-        <h1 className="mt-4 text-7xl font-semibold text-balance text-gray-900">
+        <div className="text-3xl font-semibold text-blue-600">404</div>
+        <h1 className="mt-4 text-7xl font-semibold text-balance">
           Page not found
         </h1>
         <p className="mt-6 text-2xl font-medium text-pretty text-gray-500">
