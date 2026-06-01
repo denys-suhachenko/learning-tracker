@@ -6,7 +6,7 @@ import { toast } from 'sonner';
 import { BookOpenIcon } from 'lucide-react';
 
 import { PageHeader } from '@/shared/ui';
-import { Container } from '@/shared/layout';
+import { Container } from '@/shared/ui/Container';
 import { getErrorMessage } from '@/shared/lib/getErrorMessage';
 import { Separator } from '@/shared/ui/separator';
 import { Badge } from '@/shared/ui/badge';

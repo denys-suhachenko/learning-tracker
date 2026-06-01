@@ -14,7 +14,7 @@ import {
 
 import { cn } from '@/shared/lib/utils';
 import { useCurrentUser } from '@/shared/hooks';
-import { Container } from '@/shared/layout';
+import { Container } from '@/shared/ui/Container';
 import { Separator } from '@/shared/ui/separator';
 import { Button } from '@/shared/ui/button';
 import { Progress } from '@/shared/ui/progress';

@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router';
 
 import CoursesTable from '@/features/courses/ui/CoursesTable/CoursesTable';
 import { PageHeader } from '@/shared/ui';
-import { Container } from '@/shared/layout';
+import { Container } from '@/shared/ui/Container';
 import { Button } from '@/shared/ui/button';
 
 const CoursesListPage = () => {

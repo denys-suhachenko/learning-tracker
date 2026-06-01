@@ -10,9 +10,8 @@ import {
   PencilIcon,
 } from 'lucide-react';
 
-import { PageHeader } from '@/shared/ui';
-import { Container } from '@/shared/layout';
-import { NoteEditor, type TocItem } from '@/widgets';
+import { PageHeader, NoteEditor, type TocItem } from '@/shared/ui';
+import { Container } from '@/shared/ui/Container';
 import {
   useUpdateLessonMutation,
   useGetLessonQuery,

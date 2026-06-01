@@ -10,7 +10,7 @@ import {
 } from 'lucide-react';
 
 import { PageHeader } from '@/shared/ui';
-import { Container } from '@/shared/layout';
+import { Container } from '@/shared/ui/Container';
 import ReviewsListTable from '@/features/reviews/ReviewsListTable';
 import { Button } from '@/shared/ui/button';
 import { Tabs, TabsList, TabsTrigger } from '@/shared/ui/tabs';

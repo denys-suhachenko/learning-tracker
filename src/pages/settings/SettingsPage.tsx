@@ -7,7 +7,7 @@ import {
   CircleUserIcon,
 } from 'lucide-react';
 
-import { Container } from '@/shared/layout';
+import { Container } from '@/shared/ui/Container';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/ui/tabs';
 import ReviewSettings from '@/features/settings/ui/ReviewSettings';
 import AccountSettings from '@/features/settings/ui/AccountSettings';

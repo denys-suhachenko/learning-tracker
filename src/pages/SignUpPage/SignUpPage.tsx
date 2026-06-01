@@ -1,7 +1,7 @@
 import { Link, Navigate, useNavigate } from 'react-router';
 import { useForm } from 'react-hook-form';
 
-import { Container } from '@/shared/layout';
+import { Container } from '@/shared/ui/Container';
 import { AppleIcon, GoogleIcon } from '@/shared/icons';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { useRegisterMutation } from '@/features/auth/api/api';

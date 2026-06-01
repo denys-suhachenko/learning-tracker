@@ -12,7 +12,7 @@ import {
   Progress,
 } from '@/shared/ui';
 import { Button } from '@/shared/ui/button';
-import { Container } from '@/shared/layout';
+import { Container } from '@/shared/ui/Container';
 import { Skeleton } from '@/shared/ui/skeleton';
 import { QueryState } from '@/shared/ui/QueryState/QueryState';
 import CourseModules from '@/features/courses/ui/CourseModules';

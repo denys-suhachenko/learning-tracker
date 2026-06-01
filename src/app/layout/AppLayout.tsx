@@ -2,8 +2,9 @@ import { useState } from 'react';
 import { Outlet, ScrollRestoration } from 'react-router';
 import { Toaster } from 'sonner';
 
-import { Sidebar } from '@/widgets';
 import { useMeQuery } from '@/features/auth/api/api';
+
+import { Sidebar } from './Sidebar/Sidebar';
 
 const AppLayout = () => {
   const { data: user } = useMeQuery();

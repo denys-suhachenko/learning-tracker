@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router';
 
-import { Container } from '@/shared/layout';
+import { Container } from '@/shared/ui/Container';
 import { PageHeader, Progress } from '@/shared/ui';
 import { Button } from '@/shared/ui/button';
 import {

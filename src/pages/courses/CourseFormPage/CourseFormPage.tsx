@@ -7,7 +7,7 @@ import { BookOpenIcon, CircleCheckIcon, LightbulbIcon } from 'lucide-react';
 import { PageHeader } from '@/shared/ui';
 import CourseDetailsForm from '@/features/courses/ui/CourseDetailsForm/CourseDetailsForm';
 import { Button } from '@/shared/ui/button';
-import { Container } from '@/shared/layout';
+import { Container } from '@/shared/ui/Container';
 import { Separator } from '@/shared/ui/separator';
 import { Badge } from '@/shared/ui/badge';
 import type { CreateCourse } from '@/features/courses/model/types';

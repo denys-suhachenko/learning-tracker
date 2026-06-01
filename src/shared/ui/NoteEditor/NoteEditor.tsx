@@ -3,6 +3,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 import rehypeSlug from 'rehype-slug';
+
 import { cn } from '@/shared/lib/utils';
 
 import './NodeEditor.css';

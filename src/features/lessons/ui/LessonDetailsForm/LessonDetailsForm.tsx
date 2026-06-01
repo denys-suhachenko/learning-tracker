@@ -2,6 +2,7 @@ import { Controller, useFormContext } from 'react-hook-form';
 
 import { Input } from '@/shared/ui/input';
 import { Textarea } from '@/shared/ui/textarea';
+import { NoteEditor } from '@/shared/ui';
 import {
   Field,
   FieldDescription,
@@ -11,7 +12,6 @@ import {
   FieldSet,
 } from '@/shared/ui/field';
 import { Separator } from '@/shared/ui/separator';
-import { NoteEditor } from '@/widgets';
 
 import type { CreateLesson } from '../../model/types';
 

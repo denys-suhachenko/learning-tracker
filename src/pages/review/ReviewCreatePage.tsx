@@ -24,7 +24,7 @@ import { Switch } from '@/shared/ui/switch';
 import { Separator } from '@/shared/ui/separator';
 import { Button } from '@/shared/ui/button';
 import { Badge } from '@/shared/ui/badge';
-import { Container } from '@/shared/layout';
+import { Container } from '@/shared/ui/Container';
 
 const ReviewCreatePage = () => {
   return (
