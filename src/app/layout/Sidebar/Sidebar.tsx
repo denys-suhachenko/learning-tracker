@@ -1,5 +1,10 @@
 import { Link, NavLink, useNavigate } from 'react-router';
-import { BookOpenTextIcon, LogOutIcon, SettingsIcon } from 'lucide-react';
+import {
+  BookOpenTextIcon,
+  BrainCircuitIcon,
+  LogOutIcon,
+  SettingsIcon,
+} from 'lucide-react';
 
 import { cn } from '@/shared/lib/utils';
 import { useAppDispatch } from '@/app/store/hooks';
@@ -46,30 +51,30 @@ export const Sidebar = ({
 
   return (
     <aside
-      className="fixed inset-y-0 z-40 w-3xs border-r border-gray-800 bg-gray-900"
+      className="fixed inset-y-0 z-40 w-3xs border-r bg-white px-6"
       style={{ width }}
     >
-      <div className="flex h-full flex-col">
-        <Link
-          to="/"
-          className="flex items-center gap-x-4 px-4 py-6 text-gray-50 select-none"
-        >
-          <BookOpenTextIcon className="size-6" />
-          <div className="text-lg font-medium tracking-wide">
-            Learning Tracker
+      <div className="flex h-full flex-col gap-y-2">
+        <Link to="/" className="flex items-center gap-x-2 py-4 select-none">
+          <div className="bg-primary text-primary-foreground rounded-md p-2">
+            <BrainCircuitIcon className="size-6" />
           </div>
+          <div className="text-xl font-semibold">Learning Tracker</div>
         </Link>
 
         <nav className="flex flex-1 flex-col">
-          <ul role="list" className="flex flex-1 flex-col">
+          <ul role="list" className="-mx-2 flex flex-1 flex-col space-y-1">
             {navItems.map((item) => (
               <li key={item.label}>
                 <NavLink
                   to={item.path}
                   className={({ isActive }) =>
                     cn(
-                      'flex cursor-pointer items-center gap-x-3 px-4 py-3 text-sm font-medium transition-colors duration-100 hover:bg-gray-900 hover:text-white',
-                      isActive ? 'text-white' : 'text-white/70',
+                      'flex cursor-pointer items-center gap-x-3 rounded-md p-2 text-sm font-medium transition-colors duration-200',
+                      'hover:text-accent-foreground hover:bg-accent',
+                      isActive
+                        ? 'text-accent-foreground bg-accent'
+                        : 'text-muted-foreground',
                     )
                   }
                 >
@@ -78,11 +83,11 @@ export const Sidebar = ({
               </li>
             ))}
 
-            <li className="mt-auto">
+            <li className="-mx-4 mt-auto">
               {user && (
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <div className="flex w-full cursor-pointer items-center justify-start gap-x-3 px-3 py-4 text-sm font-medium text-white/70 hover:text-white">
+                    <div className="hover:bg-muted flex w-full cursor-pointer items-center justify-start gap-x-3 px-6 py-3 text-sm font-medium">
                       <Avatar>
                         <AvatarImage
                           src="https://github.com/shadcn.png"
