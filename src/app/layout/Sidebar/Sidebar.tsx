@@ -1,5 +1,6 @@
-import { Link, NavLink, useNavigate } from 'react-router';
-import { BookOpenTextIcon, LogOutIcon, SettingsIcon } from 'lucide-react';
+import { NavLink, useNavigate } from 'react-router';
+import { AcademicCapIcon } from '@heroicons/react/24/outline';
+import { LogOutIcon, SettingsIcon } from 'lucide-react';
 
 import { cn } from '@/shared/lib/utils';
 import { useAppDispatch } from '@/app/store/hooks';
@@ -50,15 +51,20 @@ export const Sidebar = ({
       style={{ width }}
     >
       <div className="flex h-full flex-col">
-        <Link
-          to="/"
-          className="flex items-center gap-x-4 px-4 py-6 text-gray-50 select-none"
+        <a
+          href="#"
+          className="flex items-center gap-x-3 p-4 text-gray-50 select-none"
         >
-          <BookOpenTextIcon className="size-6" />
-          <div className="text-lg font-medium tracking-wide">
-            Learning Tracker
+          <AcademicCapIcon className="size-8" />
+          <div>
+            <div className="text-xl font-semibold tracking-wide">
+              Learning Tracker
+            </div>
+            <div className="text-xs font-medium text-gray-200">
+              Study. Practice. Progress.
+            </div>
           </div>
-        </Link>
+        </a>
 
         <nav className="flex flex-1 flex-col">
           <ul role="list" className="flex flex-1 flex-col">

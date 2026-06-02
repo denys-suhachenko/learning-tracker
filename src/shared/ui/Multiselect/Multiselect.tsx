@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
-import { CheckIcon } from 'lucide-react';
+import { CheckIcon } from '@heroicons/react/16/solid';
 
 type MultiselectProps<T extends { id: string | number; label: string }> = {
   value: T[];

@@ -6,8 +6,8 @@ export { default as CourseFormPage } from './courses/CourseFormPage/CourseFormPa
 export { default as LessonDetailsPage } from './courses/LessonDetailsPage';
 export { default as KnowledgeBasePage } from './KnowledgeBasePage/KnowledgeBasePage';
 export { default as PlannerPage } from './PlannerPage/PlannerPage';
-export { default as SignInPage } from './auth/SignInPage/SignInPage';
-export { default as SignUpPage } from './auth/SignUpPage/SignUpPage';
+export { default as SignInPage } from './SignInPage/SignInPage';
+export { default as SignUpPage } from './SignUpPage/SignUpPage';
 export { default as SettingsPage } from './settings/SettingsPage';
 export { default as ReviewCardsPage } from './review/ReviewCardsPage';
 export { default as LessonFormPage } from './courses/LessonFormPage';
