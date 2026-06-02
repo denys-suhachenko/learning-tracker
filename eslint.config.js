@@ -23,6 +23,9 @@ export default defineConfig([
           varsIgnorePattern: '^_',
         },
       ],
+      'no-console': ['warn', { allow: ['warn', 'error'] }],
+      'react-hooks/rules-of-hooks': 'error',
+      'react-hooks/exhaustive-deps': 'warn',
     },
     languageOptions: {
       ecmaVersion: 2020,
