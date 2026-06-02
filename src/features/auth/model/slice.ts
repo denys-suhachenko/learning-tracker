@@ -24,13 +24,9 @@ const authSlice = createSlice({
     ) => {
       state.accessToken = action.payload.access;
       state.refreshToken = action.payload.refresh;
-
-      localStorage.setItem('accessToken', action.payload.access);
-      localStorage.setItem('refreshToken', action.payload.refresh);
     },
     setAccessToken: (state, action: PayloadAction<string>) => {
       state.accessToken = action.payload;
-      localStorage.setItem('accessToken', action.payload);
     },
     setUser: (state, action: PayloadAction<User | null>) => {
       state.user = action.payload;
@@ -39,9 +35,6 @@ const authSlice = createSlice({
       state.accessToken = null;
       state.refreshToken = null;
       state.user = null;
-
-      localStorage.removeItem('accessToken');
-      localStorage.removeItem('refreshToken');
     },
   },
 });
