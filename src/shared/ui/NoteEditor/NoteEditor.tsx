@@ -6,7 +6,7 @@ import rehypeSlug from 'rehype-slug';
 
 import { cn } from '@/shared/lib/utils';
 
-import './NodeEditor.css';
+import './NoteEditor.css';
 
 export type TocItem = {
   id: string;
@@ -15,9 +15,10 @@ export type TocItem = {
 };
 
 type NoteEditorProps = {
-  value?: string;
+  value: string;
+  mode?: 'edit' | 'split' | 'preview';
   autoFocus?: boolean;
-  readOnly?: boolean;
+  className?: string;
   onChange?: (value: string) => void;
   setToc?: (val: TocItem[]) => void;
 };
@@ -52,7 +53,8 @@ const useTableOfContents = (
 export const NoteEditor = ({
   value = '',
   autoFocus = false,
-  readOnly = false,
+  mode = 'split',
+  className = '',
   onChange,
   setToc,
 }: NoteEditorProps) => {
@@ -67,24 +69,26 @@ export const NoteEditor = ({
   }, [toc, setToc]);
 
   return (
-    <div className="h-full">
-      <div className="overflow-hidden rounded-md text-sm shadow-sm">
-        <div className={cn('grid', readOnly ? 'grid-cols-1' : 'grid-cols-2')}>
-          {!readOnly && (
-            <div className="border-r border-gray-200">
-              <textarea
-                value={value}
-                autoFocus={autoFocus}
-                placeholder="Enter text..."
-                spellCheck={false}
-                className="bg-editor h-full min-h-80 w-full resize-none px-6 py-4 text-[15px] leading-relaxed font-medium text-neutral-900 caret-neutral-800 outline-none selection:bg-neutral-300/60"
-                onChange={(e) => onChange?.(e.target.value)}
-              />
-            </div>
-          )}
+    <div className={cn('overflow-hidden rounded-md text-sm', className)}>
+      <div
+        className={cn('grid', mode === 'split' ? 'grid-cols-2' : 'grid-cols-1')}
+      >
+        {mode !== 'preview' && (
+          <div className={cn(mode === 'split' && 'border-r border-gray-200')}>
+            <textarea
+              value={value}
+              autoFocus={autoFocus}
+              placeholder="Enter text..."
+              spellCheck={false}
+              className="bg-editor h-full min-h-80 w-full resize-none px-6 py-4 text-[15px] leading-relaxed font-medium text-neutral-900 caret-neutral-800 outline-none selection:bg-neutral-300/60"
+              onChange={(e) => onChange?.(e.target.value)}
+            />
+          </div>
+        )}
+        {mode !== 'edit' && (
           <div
             ref={contentRef}
-            className="md-editor overflow-auto bg-white px-6 py-4 text-[15px] leading-relaxed text-neutral-800 shadow-[-3px_0_6px_-1px_rgba(0,0,0,0.08)]"
+            className="md-editor overflow-auto bg-white px-6 py-4 text-[15px] leading-relaxed text-neutral-800"
           >
             <ReactMarkdown
               remarkPlugins={[remarkMath]}
@@ -96,7 +100,7 @@ export const NoteEditor = ({
               {value}
             </ReactMarkdown>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );

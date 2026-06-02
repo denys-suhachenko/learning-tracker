@@ -19,18 +19,28 @@ import {
 } from '@/features/lessons/api/api';
 import type { CreateLesson } from '@/features/lessons/model/types';
 import LessonDetailsForm from '@/features/lessons/ui/LessonDetailsForm/LessonDetailsForm';
+import { useGetCourseQuery } from '@/features/courses/api/api';
 
 const LessonFormPage = () => {
   const { courseId, moduleId, lessonId } = useParams();
   const navigate = useNavigate();
 
   const isEdit = !!lessonId;
-  const methods = useForm<CreateLesson>();
+  const methods = useForm<CreateLesson>({
+    defaultValues: {
+      estimated_minutes: 15,
+      module: moduleId,
+    },
+  });
 
   const { data: lesson } = useGetLessonQuery(lessonId ?? skipToken);
+  const { data: course } = useGetCourseQuery(courseId ?? skipToken);
+
   const [createLesson, { isLoading: isCreating }] = useCreateLessonMutation();
   const [updateLesson, { isLoading: isUpdating }] = useUpdateLessonMutation();
   const isLoading = isCreating || isUpdating;
+
+  const modules = course?.modules ?? [];
 
   const title = useWatch({
     control: methods.control,
@@ -38,14 +48,18 @@ const LessonFormPage = () => {
   });
 
   useEffect(() => {
-    if (!lesson) return;
+    if (!lesson || !modules.length) {
+      return;
+    }
+
     methods.reset({
       title: lesson.title,
       description: lesson.description,
       content: lesson.content,
       estimated_minutes: lesson.estimated_minutes,
+      module: lesson.module_ref.id,
     });
-  }, [lesson, methods]);
+  }, [lesson, modules.length, methods]);
 
   const onSubmit = methods.handleSubmit(async (data) => {
     try {
@@ -54,7 +68,7 @@ const LessonFormPage = () => {
         toast.success('Lesson updated');
         navigate(`/courses/${courseId}/lessons/${lessonId}`);
       } else {
-        await createLesson({ ...data, module: moduleId! }).unwrap();
+        await createLesson(data).unwrap();
         toast.success('Lesson created');
         navigate(`/courses/${courseId}`);
       }
@@ -102,7 +116,7 @@ const LessonFormPage = () => {
           />
 
           <div className="grid grid-cols-[2fr_1fr] gap-x-6">
-            <LessonDetailsForm />
+            <LessonDetailsForm modules={modules} />
 
             <aside className="sticky top-8 self-start">
               <aside className="sticky top-8 self-start">
