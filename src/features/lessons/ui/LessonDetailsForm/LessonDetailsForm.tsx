@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
 import { Input } from '@/shared/ui/input';
@@ -13,9 +14,27 @@ import {
 } from '@/shared/ui/field';
 import { Separator } from '@/shared/ui/separator';
 
+import { Tabs, TabsList, TabsTrigger } from '@/shared/ui/tabs';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/shared/ui/select';
+import type { Module } from '@/features/courses/model/types';
+
 import type { CreateLesson } from '../../model/types';
 
-const LessonDetailsForm = () => {
+type EditorMode = 'edit' | 'preview';
+
+type LessonDetailsFormProps = {
+  modules: Module[];
+};
+
+const LessonDetailsForm = ({ modules }: LessonDetailsFormProps) => {
+  const [editorMode, setEditorMode] = useState<EditorMode>('edit');
+
   const {
     register,
     control,
@@ -37,8 +56,6 @@ const LessonDetailsForm = () => {
             {errors.title && <FieldError>{errors.title.message}</FieldError>}
           </Field>
 
-          <Separator />
-
           <Field>
             <FieldLabel htmlFor="description">Short description</FieldLabel>
             <Textarea
@@ -51,31 +68,75 @@ const LessonDetailsForm = () => {
             </FieldDescription>
           </Field>
 
-          <Separator />
+          <div className="grid grid-cols-2 gap-x-4">
+            <Field>
+              <FieldLabel htmlFor="estimated_minutes">
+                Estimated time (minutes)
+              </FieldLabel>
+              <Input
+                id="estimated_minutes"
+                type="number"
+                min={1}
+                placeholder="0"
+                {...register('estimated_minutes', {
+                  required: 'Estimated time is required',
+                  valueAsNumber: true,
+                })}
+              />
+            </Field>
 
-          <Field className="w-[30%]">
-            <FieldLabel htmlFor="estimated_minutes">
-              Estimated time (minutes)
-            </FieldLabel>
-            <Input
-              id="estimated_minutes"
-              type="number"
-              min={1}
-              placeholder="15"
-              {...register('estimated_minutes', { valueAsNumber: true })}
-            />
-          </Field>
+            <Field>
+              <FieldLabel htmlFor="module">Module</FieldLabel>
+              <Controller
+                name="module"
+                control={control}
+                rules={{ required: 'Module is required' }}
+                render={({ field }) => (
+                  <Select
+                    key={field.value ?? 'empty'}
+                    value={field.value ?? ''}
+                    disabled={true}
+                    onValueChange={field.onChange}
+                  >
+                    <SelectTrigger id="module">
+                      <SelectValue placeholder="Select module" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {modules.map((option) => (
+                        <SelectItem key={option.id} value={option.id}>
+                          {option.title}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                )}
+              />
+            </Field>
+          </div>
 
           <Separator />
 
           <Field>
-            <FieldLabel>Content</FieldLabel>
+            <div className="flex items-center justify-between">
+              <FieldLabel>Content</FieldLabel>
+              <Tabs
+                value={editorMode}
+                onValueChange={(val) => setEditorMode(val as EditorMode)}
+              >
+                <TabsList variant="line">
+                  <TabsTrigger value="edit">Edit</TabsTrigger>
+                  <TabsTrigger value="preview">Preview</TabsTrigger>
+                </TabsList>
+              </Tabs>
+            </div>
             <Controller
               name="content"
               control={control}
               render={({ field }) => (
                 <NoteEditor
                   value={field.value ?? ''}
+                  mode={editorMode}
+                  className="border shadow-xs"
                   onChange={field.onChange}
                 />
               )}
