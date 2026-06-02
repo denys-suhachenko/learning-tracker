@@ -10,26 +10,26 @@ export const navItems = [
   {
     path: '/',
     label: 'Dashboard',
-    icon: <HouseIcon className="size-6" />,
+    icon: <HouseIcon className="size-5" />,
   },
   {
     path: '/courses',
     label: 'Courses',
-    icon: <BookAIcon className="size-6" />,
+    icon: <BookAIcon className="size-5" />,
   },
   // {
   //   path: '/planner',
   //   label: 'Planner',
-  //   icon: <CalendarIcon className="size-6" />,
+  //   icon: <CalendarIcon className="size-5" />,
   // },
   {
     path: '/review',
     label: 'Review',
-    icon: <RefreshCcwIcon className="size-6" />,
+    icon: <RefreshCcwIcon className="size-5" />,
   },
   // {
   //   path: '/knowledge-base',
   //   label: 'Knowledge Base',
-  //   icon: <LibraryBigIcon className="size-6" />,
+  //   icon: <LibraryBigIcon className="size-5" />,
   // },
 ];

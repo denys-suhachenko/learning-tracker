@@ -1,10 +1,10 @@
 import { Link } from 'react-router';
-import { PencilIcon, TrashIcon } from '@heroicons/react/16/solid';
+import { PencilIcon, Trash2Icon } from 'lucide-react';
 
 import { Progress, type TableColumn } from '@/shared/ui';
+import { Badge } from '@/shared/ui/badge';
 
 import type { Course } from '../../model/types';
-import { Badge } from '@/shared/ui/badge';
 
 export const getColumns = (
   onRemove?: (id: string) => void,
@@ -65,13 +65,13 @@ export const getColumns = (
           to={`${row.id}/edit`}
           className="cursor-pointer text-sm font-medium text-gray-400 hover:text-gray-900"
         >
-          <PencilIcon className="size-4" />
+          <PencilIcon fill="currentColor" strokeWidth={0} className="size-4" />
         </Link>
         <button
           className="cursor-pointer text-sm font-medium text-gray-400 hover:text-gray-900"
           onClick={() => onRemove?.(row.id)}
         >
-          <TrashIcon className="size-4" />
+          <Trash2Icon className="size-4" />
         </button>
       </div>
     ),
