@@ -28,6 +28,11 @@ const CourseDetailsPage = () => {
   } = useGetCourseQuery(courseId ?? skipToken);
   const navigate = useNavigate();
 
+  const lessonsList = course?.modules.flatMap((module) => module.lessons) ?? [];
+  const completedLessons = lessonsList.filter(
+    (lesson) => lesson.status === 'completed',
+  ).length;
+
   const is404 = error && 'status' in error && error.status === 404;
 
   useEffect(() => {
@@ -47,7 +52,8 @@ const CourseDetailsPage = () => {
           course && (
             <div className="flex items-center gap-x-4">
               <Button
-                variant="secondary"
+                variant="outline"
+                className="bg-white"
                 onClick={() => navigate(`/courses/${course?.id}/edit`)}
               >
                 Edit Course
@@ -87,10 +93,10 @@ const CourseDetailsPage = () => {
                 <CardContent className="text-sm">
                   <div className="mb-2 flex items-center justify-between font-medium">
                     <div>Overall progress</div>
-                    <div>67%</div>
+                    <div>{course?.progress ?? 0}%</div>
                   </div>
 
-                  <Progress value={67} />
+                  <Progress value={course?.progress ?? 0} />
 
                   <ul className="mt-4 space-y-2">
                     <li className="flex items-center justify-between">
@@ -101,11 +107,11 @@ const CourseDetailsPage = () => {
                     </li>
                     <li className="flex items-center justify-between">
                       <div>Lessons:</div>
-                      <span className="font-medium">-</span>
+                      <span className="font-medium">{lessonsList.length}</span>
                     </li>
                     <li className="flex items-center justify-between">
                       <div>Completed:</div>
-                      <span className="font-medium">-</span>
+                      <span className="font-medium">{completedLessons}</span>
                     </li>
                   </ul>
                 </CardContent>

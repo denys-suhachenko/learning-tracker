@@ -2,13 +2,7 @@ import { useState } from 'react';
 import { Link, useParams } from 'react-router';
 import { skipToken } from '@reduxjs/toolkit/query';
 import { toast } from 'sonner';
-import {
-  ChartNoAxesColumnIncreasingIcon,
-  CheckIcon,
-  ClockIcon,
-  NotebookIcon,
-  PencilIcon,
-} from 'lucide-react';
+import { ClockIcon, NotebookIcon, PencilIcon } from 'lucide-react';
 
 import { PageHeader, NoteEditor, type TocItem } from '@/shared/ui';
 import { Container } from '@/shared/ui/Container';
@@ -20,6 +14,8 @@ import { Button } from '@/shared/ui/button';
 import { getErrorMessage } from '@/shared/lib/getErrorMessage';
 import { cn } from '@/shared/lib/utils';
 import { Separator } from '@/shared/ui/separator';
+import LessonStatusSelector from '@/features/lessons/ui/LessonStatusSelector/LessonStatusSelector';
+import type { LessonStatus } from '@/features/courses/model/types';
 
 const LessonDetailsPage = () => {
   const [isEditMode, setIsEditMode] = useState(false);
@@ -55,6 +51,22 @@ const LessonDetailsPage = () => {
     }
   };
 
+  const updateStatus = async (status: LessonStatus) => {
+    if (isUpdating || !lesson) {
+      return;
+    }
+
+    try {
+      await updateLesson({ id: lesson.id, status }).unwrap();
+
+      toast.success('Lesson updated', {
+        description: 'Lesson status has been updated successfully',
+      });
+    } catch (err) {
+      toast.error(getErrorMessage(err, 'Failed to update status'));
+    }
+  };
+
   return (
     <>
       <PageHeader
@@ -77,10 +89,11 @@ const LessonDetailsPage = () => {
                     Edit Lesson
                   </Link>
                 </Button>
-                <Button data-icon="inline-start">
-                  <CheckIcon />
-                  Mark Complete
-                </Button>
+                <LessonStatusSelector
+                  disabled={isUpdating}
+                  status={lesson?.status ?? 'planned'}
+                  onChange={updateStatus}
+                />
               </>
             )}
           </div>
@@ -130,17 +143,9 @@ const LessonDetailsPage = () => {
                       <div className="text-muted-foreground text-sm">
                         Estimated time
                       </div>
-                      <div className="text-sm font-medium">20 minutes</div>
-                    </div>
-                  </li>
-                  <Separator />
-                  <li className="flex items-center gap-4">
-                    <ChartNoAxesColumnIncreasingIcon />
-                    <div>
-                      <div className="text-muted-foreground text-sm">
-                        Difficulty
+                      <div className="text-sm font-medium">
+                        {lesson?.estimated_minutes ?? 15} minutes
                       </div>
-                      <div className="text-sm font-medium">Beginner</div>
                     </div>
                   </li>
                   <Separator />
@@ -151,7 +156,7 @@ const LessonDetailsPage = () => {
                         Module
                       </div>
                       <div className="text-sm font-medium">
-                        Kinematics Basics
+                        {lesson?.module_ref?.title ?? '-'}
                       </div>
                     </div>
                   </li>
