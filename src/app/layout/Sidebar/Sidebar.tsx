@@ -1,10 +1,5 @@
 import { Link, NavLink, useNavigate } from 'react-router';
-import {
-  BookOpenTextIcon,
-  BrainCircuitIcon,
-  LogOutIcon,
-  SettingsIcon,
-} from 'lucide-react';
+import { BrainCircuitIcon, LogOutIcon, SettingsIcon } from 'lucide-react';
 
 import { cn } from '@/shared/lib/utils';
 import { useAppDispatch } from '@/app/store/hooks';

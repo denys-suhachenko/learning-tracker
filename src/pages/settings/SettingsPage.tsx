@@ -20,6 +20,7 @@ const SettingsPage = () => {
       <PageHeader
         title="Settings"
         description="Customize your learning experience"
+        className="px-8"
       />
 
       <Container>

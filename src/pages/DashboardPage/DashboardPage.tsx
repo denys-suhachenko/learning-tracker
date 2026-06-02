@@ -92,16 +92,16 @@ const DashboardPage = () => {
 
   return (
     <>
-      <Container>
-        <header className="mb-8">
-          <h1 className="mb-2 text-2xl font-semibold">
-            Hello, {user?.first_name}! What are your plans for today?
-          </h1>
-          <p className="text-muted-foreground font-medium">
-            Track your learning progress and stay on top of reviews.
-          </p>
-        </header>
+      <header className="px-8">
+        <h1 className="mb-2 text-2xl font-semibold">
+          Hello, {user?.first_name}! What are your plans for today?
+        </h1>
+        <p className="text-muted-foreground font-medium">
+          Track your learning progress and stay on top of reviews.
+        </p>
+      </header>
 
+      <Container>
         <div className="mb-6 grid grid-cols-4 gap-x-6">
           {metrics.map((metric) => (
             <div

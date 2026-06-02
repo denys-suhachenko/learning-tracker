@@ -102,30 +102,35 @@ const CourseFormPage = () => {
     });
 
   return (
-    <FormProvider {...methods}>
-      <form>
-        <PageHeader
-          title={isEdit ? 'Edit Course' : 'Create Course'}
-          description="Add a new course, organize modules, and prepare lessons"
-          actions={
-            <div className="flex items-center gap-x-4">
-              {!isEdit && (
-                <Button
-                  variant="secondary"
-                  disabled={isLoading}
-                  onClick={onSubmit('draft')}
-                >
-                  Save as Draft
+    <Container>
+      <FormProvider {...methods}>
+        <form>
+          <PageHeader
+            title={isEdit ? 'Edit Course' : 'Create Course'}
+            description={
+              isEdit
+                ? 'Edit a course'
+                : 'Add a new course, organize modules, and prepare lessons'
+            }
+            className="mb-8"
+            actions={
+              <div className="flex items-center gap-x-4">
+                {!isEdit && (
+                  <Button
+                    variant="secondary"
+                    disabled={isLoading}
+                    onClick={onSubmit('draft')}
+                  >
+                    Save as Draft
+                  </Button>
+                )}
+                <Button disabled={isLoading} onClick={onSubmit('active')}>
+                  {isEdit ? 'Save changes' : 'Create Course'}
                 </Button>
-              )}
-              <Button disabled={isLoading} onClick={onSubmit('active')}>
-                {isEdit ? 'Save changes' : 'Create Course'}
-              </Button>
-            </div>
-          }
-        />
+              </div>
+            }
+          />
 
-        <Container>
           <div className="grid grid-cols-[2fr_1fr] gap-x-6">
             <CourseDetailsForm />
 
@@ -192,9 +197,9 @@ const CourseFormPage = () => {
               </div>
             </aside>
           </div>
-        </Container>
-      </form>
-    </FormProvider>
+        </form>
+      </FormProvider>
+    </Container>
   );
 };
 

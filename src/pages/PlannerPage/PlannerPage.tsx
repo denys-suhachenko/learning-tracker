@@ -5,16 +5,15 @@ import { Button } from '@/shared/ui/button';
 
 const PlannerPage = () => {
   return (
-    <>
+    <Container>
       <PageHeader
         title="Planner"
         actions={<Button size="lg">Add topic</Button>}
+        className="mb-8"
       />
 
-      <Container>
-        <PlannerBoard />
-      </Container>
-    </>
+      <PlannerBoard />
+    </Container>
   );
 };
 
