@@ -1,6 +1,5 @@
-import { BookOpenIcon } from 'lucide-react';
-
 import { topicsList } from '../api/mock';
+import { BookOpenIcon } from '@heroicons/react/24/outline';
 
 const DAYS = [
   'Monday',

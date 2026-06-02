@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Outlet, ScrollRestoration } from 'react-router';
+import { Toaster } from 'sonner';
 
 import { useMeQuery } from '@/features/auth/api/api';
 
@@ -18,6 +19,18 @@ const AppLayout = () => {
       >
         <ScrollRestoration />
         <Outlet />
+        <Toaster
+          position="top-center"
+          toastOptions={{
+            classNames: {
+              success:
+                '!bg-emerald-600 !text-white !border-emerald-600 !text-sm',
+              error: '!bg-red-600 !text-white !border-red-600 !text-sm',
+              description: '!text-gray-200',
+            },
+            duration: 2000,
+          }}
+        />
       </div>
     </>
   );
