@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router';
+import { useParams, useNavigate, Link } from 'react-router';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { skipToken } from '@reduxjs/toolkit/query';
 import { toast } from 'sonner';
@@ -52,11 +52,12 @@ const LessonFormPage = () => {
       if (isEdit) {
         await updateLesson({ id: lessonId!, ...data }).unwrap();
         toast.success('Lesson updated');
+        navigate(`/courses/${courseId}/lessons/${lessonId}`);
       } else {
         await createLesson({ ...data, module: moduleId! }).unwrap();
         toast.success('Lesson created');
+        navigate(`/courses/${courseId}`);
       }
-      navigate(`/courses/${courseId}`);
     } catch (err) {
       toast.error(
         getErrorMessage(
@@ -68,28 +69,38 @@ const LessonFormPage = () => {
   });
 
   return (
-    <FormProvider {...methods}>
-      <form onSubmit={onSubmit}>
-        <PageHeader
-          title={isEdit ? 'Edit Lesson' : 'Create Lesson'}
-          description="Add a new lesson to your module."
-          actions={
-            <div className="flex items-center gap-x-4">
-              <Button
-                variant="secondary"
-                type="button"
-                onClick={() => navigate(`/courses/${courseId}`)}
-              >
-                Cancel
-              </Button>
-              <Button type="submit" disabled={isLoading}>
-                Save
-              </Button>
-            </div>
-          }
-        />
+    <Container>
+      <FormProvider {...methods}>
+        <form onSubmit={onSubmit}>
+          <PageHeader
+            title={isEdit ? 'Edit Lesson' : 'Create Lesson'}
+            description="Add a new lesson to your module."
+            className="mb-8"
+            actions={
+              <div className="flex items-center gap-x-4">
+                <Button
+                  asChild
+                  variant="outline"
+                  type="button"
+                  className="bg-white"
+                >
+                  <Link
+                    to={
+                      isEdit
+                        ? `/courses/${courseId}/lessons/${lessonId}`
+                        : `/courses/${courseId}`
+                    }
+                  >
+                    Cancel
+                  </Link>
+                </Button>
+                <Button type="submit" disabled={isLoading}>
+                  Save
+                </Button>
+              </div>
+            }
+          />
 
-        <Container>
           <div className="grid grid-cols-[2fr_1fr] gap-x-6">
             <LessonDetailsForm />
 
@@ -130,9 +141,9 @@ const LessonFormPage = () => {
               </aside>
             </aside>
           </div>
-        </Container>
-      </form>
-    </FormProvider>
+        </form>
+      </FormProvider>
+    </Container>
   );
 };
 

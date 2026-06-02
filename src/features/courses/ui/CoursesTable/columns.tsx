@@ -33,10 +33,10 @@ export const getColumns = (
   {
     key: 'slug',
     header: 'Progress',
-    render: () => (
+    render: (row) => (
       <Progress
-        value={0}
-        label={<span className="ml-2">{0}%</span>}
+        value={row.progress ?? 0}
+        label={<span className="ml-2">{row.progress ?? 0}%</span>}
         className="max-w-32"
       />
     ),

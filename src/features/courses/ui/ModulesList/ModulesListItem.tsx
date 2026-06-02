@@ -22,19 +22,19 @@ type ModulesListitemProps = {
 
 const lessonStatuses: Record<
   LessonStatus,
-  { label: string; color: 'gray' | 'green' | 'yellow' | 'red' }
+  { label: string; className: string }
 > = {
   planned: {
     label: 'Planned',
-    color: 'gray',
+    className: 'bg-gray-200 border-gray-400 text-gray-800',
   },
   in_progress: {
     label: 'In Progress',
-    color: 'yellow',
+    className: 'bg-yellow-200 border-yellow-400 text-yellow-800',
   },
   completed: {
     label: 'Completed',
-    color: 'green',
+    className: 'bg-green-200 border-green-400 text-green-800',
   },
 };
 
@@ -124,7 +124,10 @@ export const ModulesListItem = ({
                 </h3>
                 <div className="flex items-center gap-x-3">
                   {lesson.status && (
-                    <Badge variant="outline">
+                    <Badge
+                      variant="outline"
+                      className={lessonStatuses[lesson.status].className}
+                    >
                       {lessonStatuses[lesson.status ?? '']?.label}
                     </Badge>
                   )}

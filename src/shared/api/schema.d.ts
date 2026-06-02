@@ -233,6 +233,7 @@ export interface components {
             /** Format: uuid */
             study_area: string | null;
             status?: components["schemas"]["CourseStatusEnum"];
+            readonly progress: number;
             /** Format: date-time */
             readonly created_at: string;
             /** Format: date-time */
@@ -246,6 +247,7 @@ export interface components {
             description?: string;
             status?: components["schemas"]["CourseStatusEnum"];
             study_area: components["schemas"]["StudyArea"];
+            readonly progress: number;
             modules: components["schemas"]["ModuleDetail"][];
             /** Format: date-time */
             readonly created_at: string;
@@ -260,6 +262,7 @@ export interface components {
             description?: string;
             study_area: components["schemas"]["StudyArea"];
             status?: components["schemas"]["CourseStatusEnum"];
+            readonly progress: number;
             /** Format: date-time */
             readonly created_at: string;
             /** Format: date-time */
@@ -276,6 +279,7 @@ export interface components {
             readonly id: string;
             /** Format: uuid */
             module: string;
+            readonly module_ref: components["schemas"]["ModuleRef"];
             title: string;
             description?: string;
             content?: string;
@@ -288,6 +292,7 @@ export interface components {
             readonly id: string;
             /** Format: uuid */
             module: string;
+            readonly module_ref: components["schemas"]["ModuleRef"];
             title: string;
             description?: string;
             content?: string;
@@ -324,6 +329,11 @@ export interface components {
             order?: number | null;
             readonly lessons: components["schemas"]["LessonNested"][];
         };
+        ModuleRef: {
+            /** Format: uuid */
+            id: string;
+            title: string;
+        };
         PatchedCourse: {
             /** Format: uuid */
             readonly id?: string;
@@ -333,6 +343,7 @@ export interface components {
             /** Format: uuid */
             study_area?: string | null;
             status?: components["schemas"]["CourseStatusEnum"];
+            readonly progress?: number;
             /** Format: date-time */
             readonly created_at?: string;
             /** Format: date-time */
@@ -343,6 +354,7 @@ export interface components {
             readonly id?: string;
             /** Format: uuid */
             module?: string;
+            readonly module_ref?: components["schemas"]["ModuleRef"];
             title?: string;
             description?: string;
             content?: string;

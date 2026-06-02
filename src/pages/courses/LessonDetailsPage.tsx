@@ -2,13 +2,7 @@ import { useState } from 'react';
 import { Link, useParams } from 'react-router';
 import { skipToken } from '@reduxjs/toolkit/query';
 import { toast } from 'sonner';
-import {
-  ChartNoAxesColumnIncreasingIcon,
-  CheckIcon,
-  ClockIcon,
-  NotebookIcon,
-  PencilIcon,
-} from 'lucide-react';
+import { ClockIcon, NotebookIcon, PencilIcon } from 'lucide-react';
 
 import { PageHeader, NoteEditor, type TocItem } from '@/shared/ui';
 import { Container } from '@/shared/ui/Container';
@@ -18,150 +12,139 @@ import {
 } from '@/features/lessons/api/api';
 import { Button } from '@/shared/ui/button';
 import { getErrorMessage } from '@/shared/lib/getErrorMessage';
-import { cn } from '@/shared/lib/utils';
 import { Separator } from '@/shared/ui/separator';
+import LessonStatusSelector from '@/features/lessons/ui/LessonStatusSelector/LessonStatusSelector';
+import type { LessonStatus } from '@/features/courses/model/types';
+import { Skeleton } from '@/shared/ui/skeleton';
 
 const LessonDetailsPage = () => {
-  const [isEditMode, setIsEditMode] = useState(false);
-  const [draftContent, setDraftContent] = useState('');
   const [tableOfContents, setTableOfContents] = useState<TocItem[]>([]);
 
   const { lessonId } = useParams();
-  const { data: lesson } = useGetLessonQuery(lessonId ?? skipToken);
+  const { data: lesson, isLoading } = useGetLessonQuery(lessonId ?? skipToken);
   const [updateLesson, { isLoading: isUpdating }] = useUpdateLessonMutation();
 
-  const editorContent = isEditMode ? draftContent : (lesson?.content ?? '');
-
-  const handleSave = async () => {
+  const updateStatus = async (status: LessonStatus) => {
     if (isUpdating || !lesson) {
       return;
     }
 
     try {
-      await updateLesson({
-        ...lesson,
-        id: lesson.id,
-        content: draftContent,
-      }).unwrap();
+      await updateLesson({ id: lesson.id, status }).unwrap();
 
-      toast.success('Lesson saved', {
-        description: 'Your changes have been stored successfully.',
+      toast.success('Lesson updated', {
+        description: 'Lesson status has been updated successfully',
       });
-
-      setIsEditMode(false);
-      setDraftContent('');
     } catch (err) {
-      toast.error(getErrorMessage(err, 'Failed to save lesson'));
+      toast.error(getErrorMessage(err, 'Failed to update status'));
     }
   };
 
   return (
-    <>
+    <Container>
       <PageHeader
         title={lesson?.title}
         description={lesson?.description}
+        isLoading={isLoading}
+        className="mb-8"
         actions={
           <div className="flex items-center gap-x-4">
-            {isEditMode ? (
-              <>
-                <Button variant="secondary">Cancel</Button>
-                <Button disabled={isUpdating} onClick={handleSave}>
-                  Save
-                </Button>
-              </>
-            ) : (
-              <>
-                <Button asChild variant="outline" data-icon="inline-start">
-                  <Link to="edit">
-                    <PencilIcon />
-                    Edit Lesson
-                  </Link>
-                </Button>
-                <Button data-icon="inline-start">
-                  <CheckIcon />
-                  Mark Complete
-                </Button>
-              </>
-            )}
+            <Button
+              asChild
+              variant="outline"
+              data-icon="inline-start"
+              className="bg-white"
+            >
+              <Link to="edit">
+                <PencilIcon /> Edit Lesson
+              </Link>
+            </Button>
+
+            <LessonStatusSelector
+              disabled={isUpdating}
+              status={lesson?.status ?? 'planned'}
+              onChange={updateStatus}
+            />
           </div>
         }
       />
 
-      <Container>
-        <div
-          className={cn(
-            'grid gap-x-6',
-            isEditMode ? 'grid-cols-1' : 'grid-cols-[3fr_1fr]',
-          )}
-        >
+      <div className="grid grid-cols-[3fr_1fr] gap-x-6">
+        {isLoading ? (
+          <div className="overflow-hidden rounded-md bg-white px-6 py-4 text-sm shadow-sm">
+            <Skeleton className="mb-4 h-12 w-full" />
+            <Separator />
+            <Skeleton className="mt-4 h-6 w-1/3" />
+            <Skeleton className="mt-2 h-4 w-full" />
+            <Skeleton className="mt-1 h-4 w-full" />
+            <Skeleton className="mt-1 mb-4 h-4 w-1/2" />
+            <Separator />
+            <Skeleton className="mt-4 h-8 w-1/2" />
+            <Skeleton className="mt-2 h-4 w-full" />
+            <Skeleton className="mt-1 h-4 w-full" />
+            <Skeleton className="mt-1 h-4 w-1/3" />
+          </div>
+        ) : (
           <NoteEditor
-            value={editorContent}
-            readOnly={!isEditMode}
-            autoFocus={isEditMode}
+            value={lesson?.content}
+            readOnly={true}
             setToc={setTableOfContents}
-            onChange={setDraftContent}
           />
+        )}
 
-          {!isEditMode && (
-            <aside className="sticky top-6 space-y-6 self-start">
-              <div className="overflow-hidden rounded-md bg-white px-6 py-4 text-sm shadow-sm">
-                <h3 className="mb-4 text-lg font-medium">Table of contents</h3>
-                <ol className="space-y-1">
-                  {tableOfContents.map((item, i) => (
-                    <li
-                      key={i}
-                      style={{
-                        paddingLeft: `${(item.level - 1) * 12}px`,
-                      }}
-                      className="cursor-pointer text-sm font-medium text-gray-500 hover:text-gray-900"
-                    >
-                      <a href={`#${item.id}`}>{item.text}</a>
-                    </li>
-                  ))}
-                </ol>
+        <aside className="sticky top-6 space-y-6 self-start">
+          <div className="overflow-hidden rounded-md bg-white px-6 py-4 text-sm shadow-sm">
+            <h3 className="mb-4 text-lg font-medium">Table of contents</h3>
+            {tableOfContents.length ? (
+              <ol className="space-y-1">
+                {tableOfContents.map((item, i) => (
+                  <li
+                    key={i}
+                    style={{
+                      paddingLeft: `${(item.level - 1) * 12}px`,
+                    }}
+                    className="cursor-pointer text-sm font-medium text-gray-500 hover:text-gray-900"
+                  >
+                    <a href={`#${item.id}`}>{item.text}</a>
+                  </li>
+                ))}
+              </ol>
+            ) : (
+              <div className="text-muted-foreground">
+                Table of contents will appear here
               </div>
+            )}
+          </div>
 
-              <div className="overflow-hidden rounded-md bg-white px-6 py-4 shadow-sm">
-                <h3 className="mb-4 text-lg font-medium">Lesson info</h3>
-                <ul className="space-y-3">
-                  <li className="flex items-center gap-4">
-                    <ClockIcon />
-                    <div>
-                      <div className="text-muted-foreground text-sm">
-                        Estimated time
-                      </div>
-                      <div className="text-sm font-medium">20 minutes</div>
-                    </div>
-                  </li>
-                  <Separator />
-                  <li className="flex items-center gap-4">
-                    <ChartNoAxesColumnIncreasingIcon />
-                    <div>
-                      <div className="text-muted-foreground text-sm">
-                        Difficulty
-                      </div>
-                      <div className="text-sm font-medium">Beginner</div>
-                    </div>
-                  </li>
-                  <Separator />
-                  <li className="flex items-center gap-4">
-                    <NotebookIcon />
-                    <div>
-                      <div className="text-muted-foreground text-sm">
-                        Module
-                      </div>
-                      <div className="text-sm font-medium">
-                        Kinematics Basics
-                      </div>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-            </aside>
-          )}
-        </div>
-      </Container>
-    </>
+          <div className="overflow-hidden rounded-md bg-white px-6 py-4 shadow-sm">
+            <h3 className="mb-4 text-lg font-medium">Lesson info</h3>
+            <ul className="space-y-3">
+              <li className="flex items-center gap-4">
+                <ClockIcon />
+                <div>
+                  <div className="text-muted-foreground text-sm">
+                    Estimated time
+                  </div>
+                  <div className="text-sm font-medium">
+                    {lesson?.estimated_minutes ?? 15} minutes
+                  </div>
+                </div>
+              </li>
+              <Separator />
+              <li className="flex items-center gap-4">
+                <NotebookIcon />
+                <div>
+                  <div className="text-muted-foreground text-sm">Module</div>
+                  <div className="text-sm font-medium">
+                    {lesson?.module_ref?.title ?? '-'}
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </Container>
   );
 };
 
