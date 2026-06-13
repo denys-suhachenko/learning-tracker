@@ -1,31 +1,24 @@
-import { RadioGroup, RadioGroupItem } from '@/shared/ui/radio-group';
-import { cn } from '@/shared/lib/utils';
 import { CheckIcon } from 'lucide-react';
 
-export type AccentColor =
-  | 'violet'
-  | 'blue'
-  | 'cyan'
-  | 'green'
-  | 'orange'
-  | 'red'
-  | 'pink';
+import { RadioGroup, RadioGroupItem } from '@/shared/ui/radio-group';
+import { cn } from '@/shared/lib/utils';
+import type { UserAccentColor } from '../model/types';
 
 type AccentColorRadioProps = {
-  defaultValue?: AccentColor;
-  value: AccentColor;
-  onChange: (value: AccentColor) => void;
+  defaultValue?: UserAccentColor;
+  value: UserAccentColor;
+  onChange: (value: UserAccentColor) => void;
 };
 
-const colorOptions: { value: AccentColor; title: string; bgClass: string }[] = [
-  { value: 'violet', title: 'Violet', bgClass: 'bg-violet-600' },
+const colorOptions = [
+  { value: 'purple', title: 'Purple', bgClass: 'bg-violet-600' },
   { value: 'blue', title: 'Blue', bgClass: 'bg-blue-600' },
   { value: 'cyan', title: 'Cyan', bgClass: 'bg-cyan-600' },
   { value: 'green', title: 'Green', bgClass: 'bg-green-600' },
   { value: 'orange', title: 'Orange', bgClass: 'bg-orange-600' },
   { value: 'red', title: 'Red', bgClass: 'bg-red-600' },
   { value: 'pink', title: 'Pink', bgClass: 'bg-pink-600' },
-];
+] as const;
 
 export const AccentColorRadio = ({
   defaultValue,
@@ -37,7 +30,7 @@ export const AccentColorRadio = ({
       defaultValue={defaultValue}
       value={value}
       className="flex items-center gap-2"
-      onValueChange={(nextValue) => onChange(nextValue as AccentColor)}
+      onValueChange={(nextValue) => onChange(nextValue as UserAccentColor)}
     >
       {colorOptions.map((color) => (
         <label

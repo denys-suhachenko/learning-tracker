@@ -48,12 +48,28 @@ export interface paths {
             cookie?: never;
         };
         get: operations["auth_me_retrieve"];
-        put?: never;
+        put: operations["auth_me_update"];
         post?: never;
         delete?: never;
         options?: never;
         head?: never;
-        patch?: never;
+        patch: operations["auth_me_partial_update"];
+        trace?: never;
+    };
+    "/api/auth/me/settings/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["auth_me_settings_retrieve"];
+        put: operations["auth_me_settings_update"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch: operations["auth_me_settings_partial_update"];
         trace?: never;
     };
     "/api/auth/refresh/": {
@@ -224,6 +240,17 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        /**
+         * @description * `purple` - Purple
+         *     * `blue` - Blue
+         *     * `cyan` - Cyan
+         *     * `green` - Green
+         *     * `orange` - Orange
+         *     * `red` - Red
+         *     * `pink` - Pink
+         * @enum {string}
+         */
+        AccentColorEnum: "purple" | "blue" | "cyan" | "green" | "orange" | "red" | "pink";
         Course: {
             /** Format: uuid */
             readonly id: string;
@@ -274,6 +301,18 @@ export interface components {
          * @enum {string}
          */
         CourseStatusEnum: "draft" | "active";
+        /**
+         * @description * `comfortable` - Comfortable
+         *     * `compact` - Compact
+         * @enum {string}
+         */
+        DensityEnum: "comfortable" | "compact";
+        /**
+         * @description * `en` - English
+         *     * `uk` - Ukrainian
+         * @enum {string}
+         */
+        LanguageEnum: "en" | "uk";
         Lesson: {
             /** Format: uuid */
             readonly id: string;
@@ -377,6 +416,22 @@ export interface components {
             name?: string;
             slug?: string;
         };
+        PatchedUser: {
+            readonly id?: number;
+            /** Format: email */
+            readonly email?: string;
+            first_name?: string;
+            last_name?: string;
+        };
+        PatchedUserSettings: {
+            language?: components["schemas"]["LanguageEnum"];
+            timezone?: string;
+            theme?: components["schemas"]["ThemeEnum"];
+            accent_color?: components["schemas"]["AccentColorEnum"];
+            density?: components["schemas"]["DensityEnum"];
+            sidebar_behavior?: components["schemas"]["SidebarBehaviorEnum"];
+            animations_enabled?: boolean;
+        };
         Register: {
             /** Format: email */
             email: string;
@@ -384,12 +439,25 @@ export interface components {
             first_name?: string;
             last_name?: string;
         };
+        /**
+         * @description * `expanded` - Expanded
+         *     * `collapsed` - Collapsed
+         * @enum {string}
+         */
+        SidebarBehaviorEnum: "expanded" | "collapsed";
         StudyArea: {
             /** Format: uuid */
             readonly id: string;
             name: string;
             slug: string;
         };
+        /**
+         * @description * `light` - Light
+         *     * `dark` - Dark
+         *     * `system` - System
+         * @enum {string}
+         */
+        ThemeEnum: "light" | "dark" | "system";
         TokenObtainPair: {
             email: string;
             password: string;
@@ -403,9 +471,18 @@ export interface components {
         User: {
             readonly id: number;
             /** Format: email */
-            email: string;
+            readonly email: string;
             first_name?: string;
             last_name?: string;
+        };
+        UserSettings: {
+            language?: components["schemas"]["LanguageEnum"];
+            timezone?: string;
+            theme?: components["schemas"]["ThemeEnum"];
+            accent_color?: components["schemas"]["AccentColorEnum"];
+            density?: components["schemas"]["DensityEnum"];
+            sidebar_behavior?: components["schemas"]["SidebarBehaviorEnum"];
+            animations_enabled?: boolean;
         };
     };
     responses: never;
@@ -475,6 +552,125 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["User"];
+                };
+            };
+        };
+    };
+    auth_me_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["User"];
+                "application/x-www-form-urlencoded": components["schemas"]["User"];
+                "multipart/form-data": components["schemas"]["User"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["User"];
+                };
+            };
+        };
+    };
+    auth_me_partial_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["PatchedUser"];
+                "application/x-www-form-urlencoded": components["schemas"]["PatchedUser"];
+                "multipart/form-data": components["schemas"]["PatchedUser"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["User"];
+                };
+            };
+        };
+    };
+    auth_me_settings_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UserSettings"];
+                };
+            };
+        };
+    };
+    auth_me_settings_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["UserSettings"];
+                "application/x-www-form-urlencoded": components["schemas"]["UserSettings"];
+                "multipart/form-data": components["schemas"]["UserSettings"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UserSettings"];
+                };
+            };
+        };
+    };
+    auth_me_settings_partial_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["PatchedUserSettings"];
+                "application/x-www-form-urlencoded": components["schemas"]["PatchedUserSettings"];
+                "multipart/form-data": components["schemas"]["PatchedUserSettings"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UserSettings"];
                 };
             };
         };

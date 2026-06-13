@@ -1,5 +1,6 @@
 import { Link } from 'react-router';
 import { PencilIcon, Trash2Icon } from 'lucide-react';
+import type { TFunction } from 'i18next';
 
 import { Progress, type TableColumn } from '@/shared/ui';
 import { Badge } from '@/shared/ui/badge';
@@ -7,11 +8,12 @@ import { Badge } from '@/shared/ui/badge';
 import type { Course } from '../../model/types';
 
 export const getColumns = (
+  t: TFunction<'courses', 'list.table.columns'>,
   onRemove?: (id: string) => void,
 ): TableColumn<Course>[] => [
   {
     key: 'title',
-    header: 'Name',
+    header: t('name'),
     render: (row) => (
       <Link
         to={`/courses/${row.id}`}
@@ -24,7 +26,7 @@ export const getColumns = (
   },
   {
     key: 'description',
-    header: 'Description',
+    header: t('description'),
     width: '26%',
     render: (row) => (
       <span className="text-xs text-gray-700">{row.description}</span>
@@ -32,7 +34,7 @@ export const getColumns = (
   },
   {
     key: 'slug',
-    header: 'Progress',
+    header: t('progress'),
     render: (row) => (
       <Progress
         value={row.progress ?? 0}
@@ -44,13 +46,13 @@ export const getColumns = (
   },
   {
     key: 'status',
-    header: 'Status',
+    header: t('status'),
     render: (row) => <Badge>{row.status}</Badge>,
     width: '12%',
   },
   {
     key: 'study_area',
-    header: 'Study area',
+    header: t('studyArea'),
     render: (row) => <span>{row.study_area?.name}</span>,
     width: '14%',
   },

@@ -18,6 +18,7 @@ import { Container } from '@/shared/ui/Container';
 import { Separator } from '@/shared/ui/separator';
 import { Button } from '@/shared/ui/button';
 import { Progress } from '@/shared/ui/progress';
+import { useTranslation } from 'react-i18next';
 
 const metrics = [
   {
@@ -89,19 +90,20 @@ const courses = [
 
 const DashboardPage = () => {
   const { user } = useCurrentUser();
+  const { t } = useTranslation();
 
   return (
     <>
-      <header className="px-8">
-        <h1 className="mb-2 text-2xl font-semibold">
-          Hello, {user?.first_name}! What are your plans for today?
-        </h1>
-        <p className="text-muted-foreground font-medium">
-          Track your learning progress and stay on top of reviews.
-        </p>
-      </header>
-
       <Container>
+        <header className="mb-8">
+          <h1 className="mb-2 text-2xl font-semibold">
+            {t('greeting', { name: user?.first_name })}
+          </h1>
+          <p className="text-muted-foreground font-medium">
+            Track your learning progress and stay on top of reviews.
+          </p>
+        </header>
+
         <div className="mb-6 grid grid-cols-4 gap-x-6">
           {metrics.map((metric) => (
             <div

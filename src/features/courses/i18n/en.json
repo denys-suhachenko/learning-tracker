@@ -1,0 +1,125 @@
+{
+  "list": {
+    "title": "Courses",
+    "description": "Manage your courses, track progress, and continue learning.",
+    "actions": {
+      "createCourse": "Create course"
+    },
+    "filter": {
+      "status": {
+        "label": "Statuses",
+        "active": "Active",
+        "draft": "Draft"
+      },
+      "sortBy": {
+        "label": "Sort by",
+        "placeholder": "Select",
+        "name": "Name",
+        "progress": "Progress"
+      }
+    },
+    "table": {
+      "columns": {
+        "name": "Name",
+        "description": "Description",
+        "progress": "Progress",
+        "status": "Status",
+        "studyArea": "Study area"
+      },
+      "emptyList": {
+        "message": "You do not have any courses yet.",
+        "action": "Create your first course"
+      },
+      "alert": {
+        "title": "Delete course?",
+        "description": "This will permanently delete <bold>\"{{ title }}\"</bold>. This action cannot be undone.",
+        "cancel": "Cancel",
+        "delete": "Delete"
+      }
+    }
+  },
+  "details": {
+    "actions": {
+      "edit": "Edit course",
+      "continue": "Continue learning"
+    },
+    "sidebar": {
+      "details": {
+        "title": "Course details",
+        "progress": "Overall progress",
+        "modules": "Modules",
+        "lessons": "Lessons",
+        "completed": "Completed",
+        "studyArea": "Study area"
+      },
+      "nextLesson": {
+        "title": "Next lesson",
+        "action": "Continue lesson",
+        "completed": "Course completed"
+      }
+    },
+    "modules": {
+      "title": "Modules",
+      "actions": {
+        "edit": "Edit modules",
+        "done": "Done",
+        "addLesson": "Add lesson"
+      },
+      "createModule": {
+        "header": "New module",
+        "title": "Module title",
+        "description": "Module description",
+        "add": "Add module"
+      },
+      "deleteAlert": {
+        "title": "Delete lesson?",
+        "description": "This will permanently delete <bold>\"{{ title }}\"</bold>. This action cannot be undone.",
+        "cancel": "Cancel",
+        "delete": "Delete"
+      }
+    }
+  },
+  "create": {
+    "header": {
+      "title": "Create course",
+      "description": "Add a new course, organize modules, and prepare lessons",
+      "actions": {
+        "saveAsDraft": "Save as draft",
+        "create": "Create course"
+      }
+    },
+    "form": {
+      "header": "Course Details",
+      "title": {
+        "label": "Course title",
+        "placeholder": "Enter course title"
+      },
+      "slug": {
+        "label": "Course slug",
+        "placeholder": "Enter course slug",
+        "description": "A unique URL-friendly identifier (e.g. classical-mechanics-fundamentals)."
+      },
+      "description": {
+        "label": "Short description",
+        "placeholder": "Write a description of a course",
+        "description": "Briefly describe what learners will learn in this course."
+      },
+      "studyArea": {
+        "label": "Study area",
+        "placeholder": "Select study area"
+      }
+    },
+    "sidebar": {
+      "preview": {
+        "header": "Course Preview",
+        "status": "Status",
+        "publish": "Ready to publish",
+        "title": "Add a course title",
+        "slug": "Add a course slug",
+        "description": "Add a short description",
+        "studyArea": "Select a study area",
+        "tip": "Tip: A clear structure helps to stay focused and engaged."
+      }
+    }
+  }
+}

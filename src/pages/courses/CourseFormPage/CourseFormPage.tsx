@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { toast } from 'sonner';
 import { BookOpenIcon, CircleCheckIcon, LightbulbIcon } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 import { PageHeader } from '@/shared/ui';
 import CourseDetailsForm from '@/features/courses/ui/CourseDetailsForm/CourseDetailsForm';
@@ -24,6 +25,7 @@ const CourseFormPage = () => {
   const methods = useForm<CreateCourse>();
   const navigate = useNavigate();
   const { courseId } = useParams();
+  const { t } = useTranslation('courses', { keyPrefix: 'create' });
 
   const { data: studyAreas = [] } = useGetStudyAreasQuery();
   const { data: course } = useGetCourseQuery(courseId!, { skip: !courseId });
@@ -46,19 +48,19 @@ const CourseFormPage = () => {
 
   const checklist = [
     {
-      label: 'Add a course title',
+      label: t('sidebar.preview.title'),
       done: !!title,
     },
     {
-      label: 'Add a course slug',
+      label: t('sidebar.preview.slug'),
       done: !!slug,
     },
     {
-      label: 'Add a short description',
+      label: t('sidebar.preview.description'),
       done: !!description,
     },
     {
-      label: 'Select a study area',
+      label: t('sidebar.preview.studyArea'),
       done: !!studyAreaId,
     },
   ];
@@ -136,7 +138,9 @@ const CourseFormPage = () => {
 
             <aside className="sticky top-8 self-start">
               <div className="bg-card rounded-md border p-4">
-                <h2 className="mb-4 text-lg font-medium">Course Preview</h2>
+                <h2 className="mb-4 text-lg font-medium">
+                  {t('sidebar.preview.header')}
+                </h2>
                 <div className="space-y-4">
                   <div className="flex items-center gap-4">
                     <div className="bg-muted flex items-center justify-center rounded-md border p-2">
@@ -156,7 +160,9 @@ const CourseFormPage = () => {
 
                   <div>
                     <div className="flex items-center justify-between">
-                      <div className="text-sm font-medium">Status</div>
+                      <div className="text-sm font-medium">
+                        {t('sidebar.preview.status')}
+                      </div>
                       <Badge
                         variant="secondary"
                         className="border border-gray-300"
@@ -168,7 +174,9 @@ const CourseFormPage = () => {
 
                   <Separator />
 
-                  <div className="text-sm font-medium">Ready to publish</div>
+                  <div className="text-sm font-medium">
+                    {t('sidebar.preview.publish')}
+                  </div>
                   <ul className="space-y-1 text-sm">
                     {checklist.map((item) => (
                       <li
@@ -190,7 +198,7 @@ const CourseFormPage = () => {
                       <LightbulbIcon />
                     </div>
                     <div className="text-muted-foreground text-xs font-medium">
-                      Tip: A clear structure helps to stay focused and engaged.
+                      {t('sidebar.preview.tip')}
                     </div>
                   </div>
                 </div>

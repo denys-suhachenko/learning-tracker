@@ -11,6 +11,7 @@ import {
   CalendarIcon,
   ArrowRightLeftIcon,
 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 import { Button } from '@/shared/ui/button';
 import { RadioGroup, RadioGroupItem } from '@/shared/ui/radio-group';
@@ -26,20 +27,24 @@ const ReviewSettings = () => {
   const [reviewIntensity, setReviewIntensity] =
     useState<ReviewIntensityType>('balanced');
 
+  const { t } = useTranslation('settings', { keyPrefix: 'review' });
+
   return (
     <div className="grid grid-cols-2 gap-6">
       <div className="bg-card rounded-md border p-4">
-        <h2 className="mb-1 text-lg font-medium">Daily Limits</h2>
+        <h2 className="mb-1 text-lg font-medium">{t('dailyLimits.header')}</h2>
         <p className="text-muted-foreground mb-4 text-sm">
-          Control how many items you review each day
+          {t('dailyLimits.description')}
         </p>
         <div className="flex items-center justify-between py-6">
           <div className="flex items-center gap-x-4">
             <Calendar1Icon />
             <div>
-              <div className="text-sm font-medium">Daily review limit</div>
+              <div className="text-sm font-medium">
+                {t('dailyLimits.options.limit.label')}
+              </div>
               <div className="text-muted-foreground text-xs">
-                Maximum number of reviews per day
+                {t('dailyLimits.options.limit.description')}
               </div>
             </div>
           </div>
@@ -50,9 +55,11 @@ const ReviewSettings = () => {
           <div className="flex items-center gap-x-4">
             <StickyNotePlusIcon />
             <div>
-              <div className="text-sm font-medium">New items per day</div>
+              <div className="text-sm font-medium">
+                {t('dailyLimits.options.itemsPerDay.label')}
+              </div>
               <div className="text-muted-foreground text-xs">
-                How many new items to learn each day
+                {t('dailyLimits.options.itemsPerDay.description')}
               </div>
             </div>
           </div>
@@ -61,44 +68,52 @@ const ReviewSettings = () => {
       </div>
 
       <div className="bg-card rounded-md border p-4">
-        <h2 className="mb-1 text-lg font-medium">Review Order</h2>
+        <h2 className="mb-1 text-lg font-medium">{t('order.header')}</h2>
         <p className="text-muted-foreground mb-4 text-sm">
-          Choose the order of your review items
+          {t('order.description')}
         </p>
         <RadioGroup defaultValue="weakest">
           <div className="flex items-center gap-3">
             <RadioGroupItem id="weakest" value="weakest" />
             <label htmlFor="weakest">
-              <div className="text-sm font-medium">Weakest first</div>
+              <div className="text-sm font-medium">
+                {t('order.options.weakest.label')}
+              </div>
               <div className="text-muted-foreground text-xs">
-                Show items you struggle with the most
+                {t('order.options.weakest.description')}
               </div>
             </label>
           </div>
           <div className="flex items-center gap-3">
             <RadioGroupItem id="due" value="due" />
             <label htmlFor="due">
-              <div className="text-sm font-medium">Due first</div>
+              <div className="text-sm font-medium">
+                {t('order.options.due.label')}
+              </div>
               <div className="text-muted-foreground text-xs">
-                Show items that are due for review
+                {t('order.options.due.description')}
               </div>
             </label>
           </div>
           <div className="flex items-center gap-3">
             <RadioGroupItem id="random" value="random" />
             <label htmlFor="random">
-              <div className="text-sm font-medium">Random</div>
+              <div className="text-sm font-medium">
+                {t('order.options.random.label')}
+              </div>
               <div className="text-muted-foreground text-xs">
-                Show items in random order
+                {t('order.options.random.description')}
               </div>
             </label>
           </div>
           <div className="flex items-center gap-3">
             <RadioGroupItem id="new" value="new" />
             <label htmlFor="new">
-              <div className="text-sm font-medium">New first</div>
+              <div className="text-sm font-medium">
+                {t('order.options.new.label')}
+              </div>
               <div className="text-muted-foreground text-xs">
-                Show new items before reviews
+                {t('order.options.random.description')}
               </div>
             </label>
           </div>
@@ -106,9 +121,9 @@ const ReviewSettings = () => {
       </div>
 
       <div className="bg-card rounded-md border p-4">
-        <h2 className="mb-1 text-lg font-medium">Review Behavior</h2>
+        <h2 className="mb-1 text-lg font-medium">{t('behavior.header')}</h2>
         <p className="text-muted-foreground mb-4 text-sm">
-          Customize your review session experience
+          {t('behavior.description')}
         </p>
         <div className="space-y-4">
           <div className="flex items-center justify-between">
@@ -121,10 +136,10 @@ const ReviewSettings = () => {
               </div>
               <div>
                 <div className="text-sm font-medium">
-                  Show answer automatically
+                  {t('behavior.options.showAnswer.label')}
                 </div>
                 <div className="text-muted-foreground text-xs">
-                  Show answer after you rate the difficulty
+                  {t('behavior.options.showAnswer.description')}
                 </div>
               </div>
             </label>
@@ -141,10 +156,10 @@ const ReviewSettings = () => {
               </div>
               <div>
                 <div className="text-sm font-medium">
-                  Auto-advance after rating
+                  {t('behavior.options.autoAdvance.label')}
                 </div>
                 <div className="text-muted-foreground text-xs">
-                  Automatically show next item after rating
+                  {t('behavior.options.autoAdvance.description')}
                 </div>
               </div>
             </label>
@@ -160,9 +175,11 @@ const ReviewSettings = () => {
                 <KeyboardIcon />
               </div>
               <div>
-                <div className="text-sm font-medium">Ask for difficulty</div>
+                <div className="text-sm font-medium">
+                  {t('behavior.options.askForDifficulty.label')}
+                </div>
                 <div className="text-muted-foreground text-xs">
-                  Always ask for difficulty rating (Again/Hard/Good/Easy)
+                  {t('behavior.options.askForDifficulty.description')}
                 </div>
               </div>
             </label>
@@ -172,9 +189,9 @@ const ReviewSettings = () => {
       </div>
 
       <div className="bg-card rounded-md border p-4">
-        <h2 className="mb-1 text-lg font-medium">Review Intensity</h2>
+        <h2 className="mb-1 text-lg font-medium">{t('intensity.header')}</h2>
         <p className="text-muted-foreground mb-4 text-sm">
-          Choose how intense your spaced repetition should be
+          {t('intensity.description')}
         </p>
 
         <ReviewIntensityRadioGroup
@@ -185,31 +202,37 @@ const ReviewSettings = () => {
 
         <div className="mt-4 flex flex-nowrap items-center gap-x-2 rounded-md bg-blue-50 px-3 py-2 text-xs font-medium text-blue-500">
           <InfoIcon className="size-4" />
-          You can change this anytime. It affects how often items appear.
+          {t('intensity.info')}
         </div>
       </div>
 
       <div className="bg-card rounded-md border p-4">
-        <h2 className="mb-1 text-lg font-medium">Summary</h2>
+        <h2 className="mb-1 text-lg font-medium">{t('summary.header')}</h2>
         <p className="text-muted-foreground mb-4 text-sm">
-          Your current review settings
+          {t('summary.description')}
         </p>
 
         <div className="flex items-center gap-2 text-sm md:gap-4">
           <div className="flex items-center gap-x-2">
             <CalendarIcon />
             <div className="flex flex-col gap-1">
-              <span className="font-medium">Daily limit</span>
-              <span className="text-muted-foreground text-xs">20 items</span>
+              <span className="font-medium">
+                {t('summary.options.dailyLimits.label')}
+              </span>
+              <span className="text-muted-foreground text-xs">
+                {t('summary.options.dailyLimits.description')}
+              </span>
             </div>
           </div>
           <Separator orientation="vertical" />
           <div className="flex items-center gap-x-2">
             <StickyNotePlusIcon />
             <div className="flex flex-col gap-1">
-              <span className="font-medium">New per day</span>
+              <span className="font-medium">
+                {t('summary.options.itemsPerDay.label')}
+              </span>
               <span className="text-muted-foreground text-xs">
-                Profile & security
+                {t('summary.options.itemsPerDay.description')}
               </span>
             </div>
           </div>
@@ -217,9 +240,11 @@ const ReviewSettings = () => {
           <div className="flex items-center gap-x-2">
             <ArrowRightLeftIcon />
             <div className="hidden flex-col gap-1 md:flex">
-              <span className="font-medium">Order</span>
+              <span className="font-medium">
+                {t('summary.options.order.label')}
+              </span>
               <span className="text-muted-foreground text-xs">
-                Support & docs
+                {t('summary.options.order.description')}
               </span>
             </div>
           </div>
@@ -227,9 +252,11 @@ const ReviewSettings = () => {
           <div className="flex items-center gap-x-2">
             <FlameIcon />
             <div className="hidden flex-col gap-1 md:flex">
-              <span className="font-medium">Intensity</span>
+              <span className="font-medium">
+                {t('summary.options.intensity.label')}
+              </span>
               <span className="text-muted-foreground text-xs">
-                Support & docs
+                {t('summary.options.intensity.description')}
               </span>
             </div>
           </div>
@@ -238,13 +265,13 @@ const ReviewSettings = () => {
 
       <div className="bg-card flex items-start justify-between rounded-md border p-4">
         <div>
-          <h2 className="mb-1 text-lg font-medium">Reset Settings</h2>
+          <h2 className="mb-1 text-lg font-medium">{t('reset.header')}</h2>
           <p className="text-muted-foreground mb-4 text-sm">
-            Reset all review settings to default
+            {t('reset.description')}
           </p>
         </div>
         <Button variant="destructive" data-icon="inline-start">
-          <RefreshCwIcon /> Reset to default
+          <RefreshCwIcon /> {t('reset.action')}
         </Button>
       </div>
     </div>

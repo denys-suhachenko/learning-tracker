@@ -8,9 +8,10 @@ import { Toaster } from 'sonner';
 import { router } from './app/router/router.tsx';
 import { store } from './app/store/store.ts';
 import { ThemeProvider } from './app/providers/ThemeProvider.tsx';
+import './app/providers/i18n/i18n.ts';
 import { initSentry } from './shared/config/sentry/sentry.tsx';
-
 import { SentryUser } from './shared/config/sentry/SentryUser.tsx';
+
 import './index.css';
 
 initSentry();

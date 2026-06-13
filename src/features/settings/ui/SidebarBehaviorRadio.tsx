@@ -2,6 +2,7 @@ import { PanelLeftDashedIcon, PanelLeftIcon } from 'lucide-react';
 
 import { RadioGroup, RadioGroupItem } from '@/shared/ui/radio-group';
 import { cn } from '@/shared/lib/utils';
+import { useTranslation } from 'react-i18next';
 
 export type SidebarBehaviorType = 'expanded' | 'collapsed';
 
@@ -14,23 +15,23 @@ type SidebarBehaviorRadioProps = {
 const options = [
   {
     value: 'expanded',
-    title: 'Expanded',
-    description: 'Always show full sidebar',
     icon: <PanelLeftIcon />,
   },
   {
     value: 'collapsed',
-    title: 'Collapsed',
-    description: 'Collapse by default',
     icon: <PanelLeftDashedIcon />,
   },
-];
+] as const;
 
 export const SidebarBehaviorRadio = ({
   defaultValue,
   value,
   onChange,
 }: SidebarBehaviorRadioProps) => {
+  const { t } = useTranslation('settings', {
+    keyPrefix: 'appereance.sidebar.options',
+  });
+
   return (
     <RadioGroup
       defaultValue={defaultValue}
@@ -52,10 +53,10 @@ export const SidebarBehaviorRadio = ({
             {option.icon}
             <div>
               <div className="mb-1 text-sm leading-none font-medium">
-                {option.title}
+                {t(`${option.value}.label`)}
               </div>
               <p className="text-muted-foreground text-xs">
-                {option.description}
+                {t(`${option.value}.description`)}
               </p>
             </div>
           </div>

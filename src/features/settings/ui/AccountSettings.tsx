@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import { useCurrentUser } from '@/shared/hooks';
 import { Input } from '@/shared/ui/input';
@@ -23,6 +24,12 @@ import {
 import { Switch } from '@/shared/ui/switch';
 import { AppleIcon, GoogleIcon } from '@/shared/icons';
 import { Badge } from '@/shared/ui/badge';
+import { useUpdateProfileMutation } from '@/features/auth/api/api';
+import { toast } from 'sonner';
+import { getErrorMessage } from '@/shared/lib/getErrorMessage';
+import { useGetSettingsQuery, useUpdateSettingsMutation } from '../api/api';
+import type { UserLanguage } from '../model/types';
+import i18n from '@/app/providers/i18n/i18n';
 
 type UserSettingsFormValues = {
   email: string;
@@ -44,6 +51,11 @@ const userSettingsFormRules = {
 
 const AccountSettings = () => {
   const { user } = useCurrentUser();
+  const { data: preferences } = useGetSettingsQuery();
+  const { t } = useTranslation('settings', { keyPrefix: 'account' });
+
+  const [updateProfile, { isLoading: isUpdating }] = useUpdateProfileMutation();
+  const [updateSettings] = useUpdateSettingsMutation();
 
   const { register, handleSubmit, reset } = useForm<UserSettingsFormValues>({
     defaultValues: {
@@ -53,7 +65,43 @@ const AccountSettings = () => {
     },
   });
 
-  const onSubmit = () => {};
+  const handleTimezoneChange = async (timezone: string) => {
+    try {
+      await updateSettings({
+        timezone,
+      }).unwrap();
+      toast.success('Timezone updated successfully');
+    } catch (err) {
+      toast.error(getErrorMessage(err, 'Failed to change timezone'));
+    }
+  };
+
+  const handleLanguageChange = async (language: UserLanguage) => {
+    try {
+      const updatedSettings = await updateSettings({
+        language,
+      }).unwrap();
+
+      await i18n.changeLanguage(updatedSettings.language);
+      localStorage.setItem('language', updatedSettings.language || 'en');
+      toast.success('Language updated successfully');
+    } catch (err) {
+      toast.error(getErrorMessage(err, 'Failed to change language'));
+    }
+  };
+
+  const onSubmit = async (data: UserSettingsFormValues) => {
+    try {
+      await updateProfile({
+        first_name: data.first_name,
+        last_name: data.last_name,
+      }).unwrap();
+
+      toast.success('Profile updated successfully');
+    } catch (err) {
+      toast.error(getErrorMessage(err, 'Failed to update profile'));
+    }
+  };
 
   useEffect(() => {
     if (user) {
@@ -68,39 +116,46 @@ const AccountSettings = () => {
   return (
     <div className="grid grid-cols-2 gap-6">
       <div className="bg-card rounded-md border p-4">
-        <h2 className="mb-1 text-lg font-medium">Profile Information</h2>
+        <h2 className="mb-1 text-lg font-medium">{t('profile.header')}</h2>
         <p className="text-muted-foreground mb-4 text-sm">
-          Manage your personal information and profile details.
+          {t('profile.description')}
         </p>
 
         <form className="text-sm" onSubmit={handleSubmit(onSubmit)}>
           <FieldGroup className="gap-4">
             <Field>
-              <FieldLabel htmlFor="email">Email</FieldLabel>
+              <FieldLabel htmlFor="email">
+                {t('profile.email.label')}
+              </FieldLabel>
               <Input
                 id="email"
-                placeholder="Enter your email"
+                placeholder={t('profile.email.placeholder')}
                 autoComplete="off"
+                disabled={true}
                 {...register('email', userSettingsFormRules.email)}
               />
             </Field>
 
             <div className="grid grid-cols-2 gap-4">
               <Field>
-                <FieldLabel htmlFor="first_name">First name</FieldLabel>
+                <FieldLabel htmlFor="first_name">
+                  {t('profile.firstName.label')}
+                </FieldLabel>
                 <Input
                   id="first_name"
-                  placeholder="Enter first name"
+                  placeholder={t('profile.firstName.placeholder')}
                   autoComplete="off"
                   {...register('first_name', userSettingsFormRules.first_name)}
                 />
               </Field>
 
               <Field>
-                <FieldLabel htmlFor="last_name">Last name</FieldLabel>
+                <FieldLabel htmlFor="last_name">
+                  {t('profile.lastName.label')}
+                </FieldLabel>
                 <Input
                   id="last_name"
-                  placeholder="Enter last name"
+                  placeholder={t('profile.lastName.placeholder')}
                   autoComplete="off"
                   {...register('last_name', userSettingsFormRules.last_name)}
                 />
@@ -108,28 +163,36 @@ const AccountSettings = () => {
             </div>
 
             <Field orientation="horizontal">
-              <Button type="submit">Update</Button>
+              <Button type="submit" disabled={isUpdating}>
+                {t('profile.actions.update')}
+              </Button>
             </Field>
           </FieldGroup>
         </form>
       </div>
 
       <div className="bg-card rounded-md border p-4">
-        <h2 className="mb-1 text-lg font-medium">Security</h2>
+        <h2 className="mb-1 text-lg font-medium">{t('security.header')}</h2>
         <p className="text-muted-foreground text-sm">
-          Keep your account secure and protected.
+          {t('security.description')}
         </p>
         <div className="flex items-center justify-between py-6">
           <div className="flex items-center gap-x-4">
             <LockIcon />
             <div>
-              <div className="text-sm font-medium">Password</div>
+              <div className="text-sm font-medium">
+                {t('security.password.label')}
+              </div>
               <div className="text-muted-foreground text-xs">
-                Last changed 45 days ago
+                {t('security.password.description', {
+                  days: 45,
+                })}
               </div>
             </div>
           </div>
-          <Button variant="outline">Change Password</Button>
+          <Button variant="outline">
+            {t('security.password.actions.change')}
+          </Button>
         </div>
         <Separator />
         <div className="flex items-center justify-between py-6">
@@ -142,10 +205,10 @@ const AccountSettings = () => {
             </div>
             <div>
               <div className="text-sm font-medium">
-                Two-Factor Authentication
+                {t('security.twoAuth.label')}
               </div>
               <div className="text-muted-foreground text-xs">
-                Add an extra layer of security to your account
+                {t('security.twoAuth.description')}
               </div>
             </div>
           </label>
@@ -154,27 +217,34 @@ const AccountSettings = () => {
       </div>
 
       <div className="bg-card rounded-md border p-4">
-        <h2 className="mb-1 text-lg font-medium">Preferences</h2>
+        <h2 className="mb-1 text-lg font-medium">{t('preferences.header')}</h2>
         <p className="text-muted-foreground mb-4 text-sm">
-          Customize your account preferences.
+          {t('preferences.description')}
         </p>
         <div className="flex items-center justify-between py-6">
           <div className="flex items-center gap-x-4">
             <LanguagesIcon />
             <div>
-              <div className="text-sm font-medium">Language</div>
+              <div className="text-sm font-medium">
+                {t('preferences.language.label')}
+              </div>
               <div className="text-muted-foreground text-xs">
-                Choose your preferred language
+                {t('preferences.language.description')}
               </div>
             </div>
           </div>
-          <Select defaultValue="en">
+          <Select
+            value={preferences?.language ?? 'en'}
+            onValueChange={(value) =>
+              handleLanguageChange(value as UserLanguage)
+            }
+          >
             <SelectTrigger className="bg-white">
               <SelectValue placeholder="Select preferred language" />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="en">English</SelectItem>
-              <SelectItem value="ua">Українська</SelectItem>
+              <SelectItem value="uk">Українська</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -185,35 +255,37 @@ const AccountSettings = () => {
               <ClockIcon />
             </div>
             <div>
-              <div className="text-sm font-medium">Time Zone</div>
+              <div className="text-sm font-medium">
+                {t('preferences.timezone.label')}
+              </div>
               <div className="text-muted-foreground text-xs">
-                Set your local time zone
+                {t('preferences.timezone.description')}
               </div>
             </div>
           </div>
-          <Select defaultValue="eest">
+          <Select
+            value={preferences?.timezone ?? 'UTC'}
+            onValueChange={handleTimezoneChange}
+          >
             <SelectTrigger className="bg-white">
               <SelectValue placeholder="Select your timezone" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="west">
-                (UTC+01:00) Western European Summer Time
-              </SelectItem>
-              <SelectItem value="cest">
-                (UTC+02:00) Central European Summer Time
-              </SelectItem>
-              <SelectItem value="eest">
-                (UTC+03:00) Eastern European Summer Time
-              </SelectItem>
+              <SelectItem value="UTC">UTC</SelectItem>
+              <SelectItem value="Europe/London">Europe/London</SelectItem>
+              <SelectItem value="Europe/Warsaw">Europe/Warsaw</SelectItem>
+              <SelectItem value="Europe/Kyiv">Europe/Kyiv</SelectItem>
             </SelectContent>
           </Select>
         </div>
       </div>
 
       <div className="bg-card rounded-md border p-4">
-        <h2 className="mb-1 text-lg font-medium">Connected Accounts</h2>
+        <h2 className="mb-1 text-lg font-medium">
+          {t('connectedAccounts.header')}
+        </h2>
         <p className="text-muted-foreground mb-4 text-sm">
-          Manage your connected accounts and active sessions.
+          {t('connectedAccounts.description')}
         </p>
         <div className="space-y-4">
           <div className="flex items-center justify-between">
@@ -224,12 +296,14 @@ const AccountSettings = () => {
               <div>
                 <div className="text-sm font-medium">Google</div>
                 <p className="text-muted-foreground text-xs">
-                  Connected on May 12, 2024
+                  {t('connectedAccounts.statuses.connectedDate', {
+                    date: 'May 12, 2024',
+                  })}
                 </p>
               </div>
             </div>
             <Badge className="border border-green-300 bg-green-100 text-green-700">
-              Connected
+              {t('connectedAccounts.statuses.connected')}
             </Badge>
           </div>
           <div className="flex items-center justify-between">
@@ -239,20 +313,24 @@ const AccountSettings = () => {
               </div>
               <div>
                 <div className="text-sm font-medium">Apple</div>
-                <p className="text-muted-foreground text-xs">Not connected</p>
+                <p className="text-muted-foreground text-xs">
+                  {t('connectedAccounts.statuses.notConnected')}
+                </p>
               </div>
             </div>
             <Button variant="outline" size="sm">
-              Connect
+              {t('connectedAccounts.actions.connect')}
             </Button>
           </div>
         </div>
       </div>
 
       <div className="bg-card col-span-2 rounded-md border p-4">
-        <h2 className="mb-1 text-lg font-medium text-red-600">Danger Zone</h2>
+        <h2 className="mb-1 text-lg font-medium text-red-600">
+          {t('danger.header')}
+        </h2>
         <p className="text-muted-foreground mb-4 text-sm">
-          These actions are permanent and cannot be undone.
+          {t('danger.description')}
         </p>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-x-4">
@@ -260,13 +338,17 @@ const AccountSettings = () => {
               <Trash2Icon className="size-6" />
             </div>
             <div>
-              <div className="text-sm font-medium">Delete Account</div>
+              <div className="text-sm font-medium">
+                {t('danger.delete.label')}
+              </div>
               <div className="text-muted-foreground text-xs">
-                Permanently delete your account and all of your data.
+                {t('danger.delete.description')}
               </div>
             </div>
           </div>
-          <Button variant="destructive">Delete Account</Button>
+          <Button variant="destructive" disabled={true}>
+            {t('danger.delete.actions.delete')}
+          </Button>
         </div>
       </div>
     </div>

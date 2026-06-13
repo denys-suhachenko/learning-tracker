@@ -1,13 +1,17 @@
 import { useState } from 'react';
 import { RotateCcwIcon } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import { toast } from 'sonner';
 
 import { Button } from '@/shared/ui/button';
 import { Switch } from '@/shared/ui/switch';
 import { Separator } from '@/shared/ui/separator';
-import { useTheme } from '@/shared/hooks';
+import { getErrorMessage } from '@/shared/lib/getErrorMessage';
+import type { UserAccentColor, UserTheme } from '../model/types';
+import { useGetSettingsQuery, useUpdateSettingsMutation } from '../api/api';
 
 import { ThemeSwitcherRadio } from './ThemeSwitherRadio';
-import { type AccentColor, AccentColorRadio } from './AccentColorRadio';
+import { AccentColorRadio } from './AccentColorRadio';
 import { FocusModeRadio, type FocusModeType } from './FocusModeRadio';
 import {
   SidebarBehaviorRadio,
@@ -15,33 +19,58 @@ import {
 } from './SidebarBehaviorRadio';
 
 const AppereanceSettings = () => {
-  const [accentColor, setAccentColor] = useState<AccentColor>('cyan');
   const [focusMode, setFocusMode] = useState<FocusModeType>('comfortable');
   const [sidebarBehavior, setSidebarBehavior] =
     useState<SidebarBehaviorType>('expanded');
 
-  const { theme, setTheme } = useTheme();
+  const { t } = useTranslation('settings', { keyPrefix: 'appereance' });
+
+  const { data: userSettings } = useGetSettingsQuery();
+  const [updateSettings] = useUpdateSettingsMutation();
+
+  const handleThemeChange = async (theme: UserTheme) => {
+    try {
+      await updateSettings({
+        theme,
+      }).unwrap();
+      toast.success(`Theme successfully changed to ${theme}`);
+    } catch (err) {
+      toast.error(getErrorMessage(err, 'Failed to change theme'));
+    }
+  };
+
+  const handleAccentChange = async (accent_color: UserAccentColor) => {
+    try {
+      await updateSettings({
+        accent_color,
+      }).unwrap();
+      toast.success(`Accent color successfully changed to ${accent_color}`);
+    } catch (err) {
+      toast.error(getErrorMessage(err, 'Failed to change theme'));
+    }
+  };
 
   return (
     <>
       <div className="mb-6 grid grid-cols-2 gap-6">
         <div className="space-y-6">
           <div className="bg-card rounded-md border p-4">
-            <h2 className="mb-1 text-lg font-medium">Study environment</h2>
+            <h2 className="mb-1 text-lg font-medium">{t('theme.header')}</h2>
             <p className="text-muted-foreground mb-4 text-sm">
-              Choose the look that helps you focus and stay productive.
+              {t('theme.description')}
             </p>
             <ThemeSwitcherRadio
-              defaultValue="light"
-              value={theme}
-              onChange={(val) => setTheme(val)}
+              value={userSettings?.theme ?? 'system'}
+              onChange={handleThemeChange}
             />
           </div>
 
           <div className="bg-card rounded-md border p-4">
-            <h2 className="mb-1 text-lg font-medium">Focus mode (density)</h2>
+            <h2 className="mb-1 text-lg font-medium">
+              {t('focusMode.header')}
+            </h2>
             <p className="text-muted-foreground mb-4 text-sm">
-              Adjust how much content is visible on screen.
+              {t('focusMode.description')}
             </p>
             <FocusModeRadio
               value={focusMode}
@@ -52,20 +81,22 @@ const AppereanceSettings = () => {
 
         <div className="space-y-6">
           <div className="bg-card rounded-md border p-4">
-            <h2 className="mb-1 text-lg font-medium">Accent color</h2>
+            <h2 className="mb-1 text-lg font-medium">
+              {t('accentColor.header')}
+            </h2>
             <p className="text-muted-foreground mb-4 text-sm">
-              Pick a color that represents your study journey.
+              {t('accentColor.description')}
             </p>
             <AccentColorRadio
-              value={accentColor}
-              onChange={(val) => setAccentColor(val)}
+              value={userSettings?.accent_color ?? 'cyan'}
+              onChange={handleAccentChange}
             />
           </div>
 
           <div className="bg-card rounded-md border p-4">
-            <h2 className="mb-1 text-lg font-medium">Sidebar behavior</h2>
+            <h2 className="mb-1 text-lg font-medium">{t('sidebar.header')}</h2>
             <p className="text-muted-foreground mb-4 text-sm">
-              Choose how the sidebar works.
+              {t('sidebar.description')}
             </p>
             <div className="space-y-4">
               <SidebarBehaviorRadio
@@ -75,9 +106,11 @@ const AppereanceSettings = () => {
               <Separator />
               <div className="flex items-center justify-between">
                 <label htmlFor="animate-sidebar" className="flex-1 select-none">
-                  <div className="text-sm font-medium">Animations</div>
+                  <div className="text-sm font-medium">
+                    {t('sidebar.options.animations.label')}
+                  </div>
                   <div className="text-muted-foreground text-xs">
-                    Enable subtle animations across the app.
+                    {t('sidebar.options.animations.description')}
                   </div>
                 </label>
                 <Switch id="animate-sidebar" />
@@ -90,23 +123,22 @@ const AppereanceSettings = () => {
       <div className="grid grid-cols-2 gap-6">
         <div className="rounded-md border border-yellow-300/50 bg-yellow-300/10 p-4">
           <h2 className="mb-1 text-sm font-medium text-yellow-700">
-            Why personalize?
+            {t('info.label')}
           </h2>
           <p className="text-muted-foreground mb-4 text-xs">
-            A comfortable environment helps your brain focus better, so you can
-            learn more in less time.
+            {t('info.description')}
           </p>
         </div>
 
         <div className="bg-card flex items-start justify-between rounded-md border p-4">
           <div>
-            <h2 className="mb-1 text-sm font-medium">Reset appearance</h2>
+            <h2 className="mb-1 text-sm font-medium">{t('reset.label')}</h2>
             <p className="text-muted-foreground mb-4 text-xs">
-              Revert all appenance settings to default.
+              {t('reset.description')}
             </p>
           </div>
           <Button variant="outline" data-icon="inline-start">
-            <RotateCcwIcon /> Reset to default
+            <RotateCcwIcon /> {t('reset.action')}
           </Button>
         </div>
       </div>

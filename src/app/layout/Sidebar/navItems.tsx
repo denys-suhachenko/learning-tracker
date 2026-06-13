@@ -9,27 +9,27 @@ import {
 export const navItems = [
   {
     path: '/',
-    label: 'Dashboard',
+    label: 'dashboard',
     icon: <HouseIcon className="size-6" />,
   },
   {
     path: '/courses',
-    label: 'Courses',
+    label: 'courses',
     icon: <BookAIcon className="size-6" />,
   },
   // {
   //   path: '/planner',
-  //   label: 'Planner',
+  //   label: 'planner',
   //   icon: <CalendarIcon className="size-6" />,
   // },
   {
     path: '/review',
-    label: 'Review',
+    label: 'review',
     icon: <RefreshCcwIcon className="size-6" />,
   },
   // {
   //   path: '/knowledge-base',
-  //   label: 'Knowledge Base',
+  //   label: 'knowledgeBase',
   //   icon: <LibraryBigIcon className="size-6" />,
   // },
-];
+] as const;

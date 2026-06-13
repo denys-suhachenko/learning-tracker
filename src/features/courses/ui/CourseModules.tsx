@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { toast } from 'sonner';
+import { Trans, useTranslation } from 'react-i18next';
 
 import { Button } from '@/shared/ui/button';
 import { Input } from '@/shared/ui/input';
@@ -32,6 +33,8 @@ const CourseModules = ({ courseId, modules }: CourseModulesProps) => {
   const [newModuleDescription, setNewModuleDescription] = useState('');
   const [moduleToDelete, setModuleToDelete] = useState<Module | null>(null);
   const [lessonToDelete, setLessonToDelete] = useState<Lesson | null>(null);
+
+  const { t } = useTranslation('courses', { keyPrefix: 'details.modules' });
 
   const [createModule, { isLoading }] = useCreateModuleMutation();
   const [removeModule] = useRemoveModuleMutation();
@@ -90,9 +93,9 @@ const CourseModules = ({ courseId, modules }: CourseModulesProps) => {
   return (
     <div>
       <div className="mb-4 flex items-center justify-between">
-        <h2 className="text-xl font-semibold">Modules</h2>
+        <h2 className="text-xl font-semibold">{t('title')}</h2>
         <Button variant="ghost" onClick={() => setIsEditMode((mode) => !mode)}>
-          {isEditMode ? 'Done' : 'Edit modules'}
+          {t(isEditMode ? 'actions.done' : 'actions.edit')}
         </Button>
       </div>
 
@@ -138,10 +141,18 @@ const CourseModules = ({ courseId, modules }: CourseModulesProps) => {
       >
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Delete lesson?</AlertDialogTitle>
+            <AlertDialogTitle>{t('deleteAlert.title')}</AlertDialogTitle>
             <AlertDialogDescription>
-              This will permanently delete{' '}
-              <span className="font-bold">{lessonToDelete?.title}</span>.
+              <Trans
+                i18nKey="details.modules.deleteAlert.description"
+                ns="courses"
+                values={{
+                  title: lessonToDelete?.title,
+                }}
+                components={{
+                  bold: <span className="text-primary font-medium" />,
+                }}
+              />
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
@@ -158,25 +169,25 @@ const CourseModules = ({ courseId, modules }: CourseModulesProps) => {
 
       {isEditMode && (
         <div className="mt-6 rounded-md border bg-white px-6 py-4 shadow-sm">
-          <div className="mb-4 font-medium">New module</div>
+          <div className="mb-4 font-medium">{t('createModule.header')}</div>
 
           <Input
             value={newModuleTitle}
-            placeholder="Module title"
+            placeholder={t('createModule.title')}
             className="mb-4 bg-white"
             onChange={(e) => setNewModuleTitle(e.target.value)}
           />
 
           <Input
             value={newModuleDescription}
-            placeholder="Module description"
+            placeholder={t('createModule.description')}
             className="mb-4 bg-white"
             onChange={(e) => setNewModuleDescription(e.target.value)}
           />
 
           <div className="text-right">
             <Button disabled={isLoading} onClick={handleAddModule}>
-              Add module
+              {t('createModule.add')}
             </Button>
           </div>
         </div>
