@@ -1,4 +1,4 @@
-export { default as DashboardPage } from './DashboardPage/DashboardPage';
+export { default as DashboardPage } from './DashboardPage/DahboardPage';
 export { default as NotFoundPage } from './NotFoundPage/NotFoundPage';
 export { default as CoursesListPage } from './courses/CoursesListPage';
 export { default as CourseDetailsPage } from './courses/CourseDetailsPage';
@@ -11,3 +11,4 @@ export { default as SignUpPage } from './auth/SignUpPage/SignUpPage';
 export { default as SettingsPage } from './settings/SettingsPage';
 export { default as ReviewCardsPage } from './review/ReviewCardsPage';
 export { default as LessonFormPage } from './courses/LessonFormPage';
+export { default as UsersPage } from './users/UsersPage';

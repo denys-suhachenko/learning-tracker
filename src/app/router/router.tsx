@@ -15,6 +15,7 @@ import {
   SignInPage,
   SignUpPage,
   ReviewCardsPage,
+  UsersPage,
 } from '@/pages';
 
 import ProtectedRoute from './ProtectedRoute';
@@ -22,6 +23,10 @@ import ReviewCreatePage from '@/pages/review/ReviewCreatePage';
 import ReviewSessionPage from '@/pages/review/ReviewSessionPage';
 
 export const router = createBrowserRouter([
+  {
+    path: '/users',
+    Component: UsersPage,
+  },
   {
     path: '/sign-in',
     Component: SignInPage,

@@ -11,6 +11,7 @@ import {
   FlameIcon,
   SigmaIcon,
 } from 'lucide-react';
+import { z } from 'zod';
 
 import { cn } from '@/shared/lib/utils';
 import { useCurrentUser } from '@/shared/hooks';
@@ -19,6 +20,11 @@ import { Separator } from '@/shared/ui/separator';
 import { Button } from '@/shared/ui/button';
 import { Progress } from '@/shared/ui/progress';
 import { useTranslation } from 'react-i18next';
+
+const MetricsSchema = z.object({
+  id: z.string(),
+  title: z.string(),
+});
 
 const metrics = [
   {
