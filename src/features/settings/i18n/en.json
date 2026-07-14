@@ -1,0 +1,261 @@
+{
+  "header": {
+    "title": "Settings",
+    "description": "Customize your learning experience"
+  },
+  "tabs": {
+    "account": "Account",
+    "appereance": "Appereance",
+    "review": "Review",
+    "learning": "Learning",
+    "ai": "AI",
+    "notifications": "Notifications"
+  },
+  "account": {
+    "profile": {
+      "header": "Profile Information",
+      "description": "Manage your personal information and profile details.",
+      "email": {
+        "label": "Email",
+        "placeholder": "Enter email"
+      },
+      "firstName": {
+        "label": "First name",
+        "placeholder": "Enter first name"
+      },
+      "lastName": {
+        "label": "Last name",
+        "placeholder": "Enter last name"
+      },
+      "actions": {
+        "update": "Update"
+      }
+    },
+    "security": {
+      "header": "Security",
+      "description": "Keep your account secure and protected.",
+      "password": {
+        "label": "Password",
+        "description": "Last changed {{ days }} days ago",
+        "actions": {
+          "change": "Change password"
+        }
+      },
+      "twoAuth": {
+        "label": "Two-Factor Authentication",
+        "description": "Add an extra layer of security to your account"
+      }
+    },
+    "preferences": {
+      "header": "Preferences",
+      "description": "Customize your account preferences.",
+      "language": {
+        "label": "Language",
+        "description": "Choose your preferred language"
+      },
+      "timezone": {
+        "label": "Time Zone",
+        "description": "Set your local time zone"
+      }
+    },
+    "connectedAccounts": {
+      "header": "Connected Accounts",
+      "description": "Manage your connected accounts and active sessions.",
+      "statuses": {
+        "connected": "Connected",
+        "connectedDate": "Connected on {{ date }}",
+        "notConnected": "Not connected"
+      },
+      "actions": {
+        "connect": "Connect"
+      }
+    },
+    "danger": {
+      "header": "Danger Zone",
+      "description": "These actions are permanent and cannot be undone.",
+      "delete": {
+        "label": "Delete Account",
+        "description": "Permanently delete your account and all of your data.",
+        "actions": {
+          "delete": "Delete Account"
+        }
+      }
+    }
+  },
+  "appereance": {
+    "theme": {
+      "header": "Study environment",
+      "description": "Choose the look that helps you focus and stay productive.",
+      "options": {
+        "light": {
+          "label": "Light",
+          "description": "Clean and bright"
+        },
+        "dark": {
+          "label": "Dark",
+          "description": "Easy on the eyes"
+        },
+        "system": {
+          "label": "System",
+          "description": "Follow system"
+        }
+      }
+    },
+    "accentColor": {
+      "header": "Accent color",
+      "description": "Pick a color that represents your study journey.",
+      "colors": {
+        "purple": "Purple",
+        "blue": "Blue",
+        "cyan": "Cyan",
+        "green": "Green",
+        "orange": "Orange",
+        "red": "Red",
+        "pink": "Pink"
+      }
+    },
+    "focusMode": {
+      "header": "Focus mode (density)",
+      "description": "Adjust how much content is visible on screen.",
+      "options": {
+        "comfortable": {
+          "label": "Comfortable",
+          "description": "More spacing and larger elements"
+        },
+        "compact": {
+          "label": "Compact",
+          "description": "Show more content at once"
+        }
+      }
+    },
+    "sidebar": {
+      "header": "Sidebar behavior",
+      "description": "Choose how the sidebar works.",
+      "options": {
+        "expanded": {
+          "label": "Expanded",
+          "description": "Always show full sidebar"
+        },
+        "collapsed": {
+          "label": "Collapsed",
+          "description": "Collapse by default"
+        },
+        "animations": {
+          "label": "Animations",
+          "description": "Enable subtle animations across the app."
+        }
+      }
+    },
+    "reset": {
+      "label": "Reset appearance",
+      "description": "Revert all appenance settings to default.",
+      "action": "Reset to default"
+    },
+    "info": {
+      "label": "Why personalize?",
+      "description": "A comfortable environment helps your brain focus better, so you can learn more in less time."
+    }
+  },
+  "review": {
+    "dailyLimits": {
+      "header": "Daily Limits",
+      "description": "Control how many items you review each day",
+      "options": {
+        "limit": {
+          "label": "Daily review limit",
+          "description": "Maximum number of reviews per day"
+        },
+        "itemsPerDay": {
+          "label": "New items per day",
+          "description": "How many new items to learn each day"
+        }
+      }
+    },
+    "order": {
+      "header": "Review Order",
+      "description": "Choose the order of your review items",
+      "options": {
+        "weakest": {
+          "label": "Weakest first",
+          "description": "Show items you struggle with the most"
+        },
+        "due": {
+          "label": "Due first",
+          "description": "Show items that are due for review"
+        },
+        "random": {
+          "label": "Random",
+          "description": "Show items in random order"
+        },
+        "new": {
+          "label": "New first",
+          "description": "Show new items before reviews"
+        }
+      }
+    },
+    "behavior": {
+      "header": "Review Behavior",
+      "description": "Customize your review session experience",
+      "options": {
+        "showAnswer": {
+          "label": "Show answer automatically",
+          "description": "Show answer after you rate the difficulty"
+        },
+        "autoAdvance": {
+          "label": "Auto-advance after rating",
+          "description": "Automatically show next item after rating"
+        },
+        "askForDifficulty": {
+          "label": "Ask for difficulty",
+          "description": "Always ask for difficulty rating (Again/Hard/Good/Easy)"
+        }
+      }
+    },
+    "intensity": {
+      "header": "Review Intensity",
+      "description": "Choose how intense your spaced repetition should be",
+      "options": {
+        "light": {
+          "label": "Light",
+          "description": "Slower intervals. More reviews."
+        },
+        "balanced": {
+          "label": "Balanced",
+          "description": "Recommended for most users."
+        },
+        "intense": {
+          "label": "Intense",
+          "description": "Faster intervals. Fewer reviews."
+        }
+      },
+      "info": "You can change this anytime. It affects how often items appear."
+    },
+    "summary": {
+      "header": "Summary",
+      "description": "Your current review settings",
+      "options": {
+        "dailyLimits": {
+          "label": "Daily limit",
+          "description": "20 reviews"
+        },
+        "itemsPerDay": {
+          "label": "New per day",
+          "description": "15 elements"
+        },
+        "order": {
+          "label": "Order",
+          "description": "Random"
+        },
+        "intensity": {
+          "label": "Intensity",
+          "description": "Balanced"
+        }
+      }
+    },
+    "reset": {
+      "header": "Reset Settings",
+      "description": "Reset all review settings to default",
+      "action": "Reset to default"
+    }
+  }
+}

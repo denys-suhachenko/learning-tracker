@@ -1,5 +1,6 @@
 import { Link, NavLink, useNavigate } from 'react-router';
 import { BrainCircuitIcon, LogOutIcon, SettingsIcon } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 import { cn } from '@/shared/lib/utils';
 import { useAppDispatch } from '@/app/store/hooks';
@@ -31,11 +32,12 @@ export const Sidebar = ({
   user = null,
   onResize,
 }: SidebarProps) => {
-  const { onPointerUp, onPointerMove, onPointerDown, onPointerCancel } =
-    useSidebarResize({ value: width, onChange: onResize });
-
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const { t } = useTranslation('layout', { keyPrefix: 'sidebar' });
+
+  const { onPointerUp, onPointerMove, onPointerDown, onPointerCancel } =
+    useSidebarResize({ value: width, onChange: onResize });
 
   // temporary logout implementation
   const handleLogout = () => {
@@ -73,7 +75,7 @@ export const Sidebar = ({
                     )
                   }
                 >
-                  {item.icon} {item.label}
+                  {item.icon} {t(item.label)}
                 </NavLink>
               </li>
             ))}
@@ -96,12 +98,12 @@ export const Sidebar = ({
                   <DropdownMenuContent align="end">
                     <DropdownMenuItem onSelect={() => navigate('/settings')}>
                       <SettingsIcon />
-                      Settings
+                      {t('settings')}
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem onSelect={handleLogout}>
                       <LogOutIcon />
-                      Log Out
+                      {t('logout')}
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>

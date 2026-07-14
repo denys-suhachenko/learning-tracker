@@ -1,4 +1,5 @@
 import { Grid2X2Icon, LayoutGridIcon } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 import { RadioGroup, RadioGroupItem } from '@/shared/ui/radio-group';
 import { cn } from '@/shared/lib/utils';
@@ -14,23 +15,23 @@ type FocusModeRadioProps = {
 const options = [
   {
     value: 'comfortable',
-    title: 'Comfortable',
-    description: 'More spacing and larger elements',
     icon: <LayoutGridIcon />,
   },
   {
     value: 'compact',
-    title: 'Compact',
-    description: 'Show more content at once',
     icon: <Grid2X2Icon />,
   },
-];
+] as const;
 
 export const FocusModeRadio = ({
   defaultValue,
   value,
   onChange,
 }: FocusModeRadioProps) => {
+  const { t } = useTranslation('settings', {
+    keyPrefix: 'appereance.focusMode.options',
+  });
+
   return (
     <RadioGroup
       defaultValue={defaultValue}
@@ -52,10 +53,10 @@ export const FocusModeRadio = ({
             {option.icon}
             <div>
               <div className="mb-1 text-sm leading-none font-medium">
-                {option.title}
+                {t(`${option.value}.label`)}
               </div>
               <p className="text-muted-foreground text-xs">
-                {option.description}
+                {t(`${option.value}.description`)}
               </p>
             </div>
           </div>

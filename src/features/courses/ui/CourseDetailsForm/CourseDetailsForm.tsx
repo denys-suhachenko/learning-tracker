@@ -1,4 +1,5 @@
 import { Controller, useFormContext } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import {
   Select,
@@ -29,17 +30,18 @@ const CourseDetailsForm = () => {
     control,
     formState: { errors },
   } = useFormContext<CreateCourse>();
+  const { t } = useTranslation('courses', { keyPrefix: 'create.form' });
 
   return (
     <div className="bg-card rounded-md border p-4">
-      <h2 className="mb-4 text-lg font-medium">Course Details</h2>
+      <h2 className="mb-4 text-lg font-medium">{t('header')}</h2>
       <FieldSet>
         <FieldGroup className="gap-4">
           <Field>
-            <FieldLabel htmlFor="title">Course title</FieldLabel>
+            <FieldLabel htmlFor="title">{t('title.label')}</FieldLabel>
             <Input
               id="title"
-              placeholder="Enter course title"
+              placeholder={t('title.placeholder')}
               {...register('title', {
                 required: 'Title is required',
               })}
@@ -50,39 +52,36 @@ const CourseDetailsForm = () => {
           <Separator />
 
           <Field>
-            <FieldLabel htmlFor="slug">Course slug</FieldLabel>
+            <FieldLabel htmlFor="slug">{t('slug.label')}</FieldLabel>
             <Input
               id="slug"
-              placeholder="Enter course slug"
+              placeholder={t('slug.placeholder')}
               {...register('slug', {
                 required: 'Slug is required',
               })}
             />
             {errors.slug && <FieldError>{errors.slug.message}</FieldError>}
-            <FieldDescription>
-              A unique URL-friendly identifier (e.g.
-              classical-mechanics-fundamentals).
-            </FieldDescription>
+            <FieldDescription>{t('slug.description')}</FieldDescription>
           </Field>
 
           <Separator />
 
           <Field>
-            <FieldLabel htmlFor="description">Short description</FieldLabel>
+            <FieldLabel htmlFor="description">
+              {t('description.label')}
+            </FieldLabel>
             <Textarea
               id="description"
-              placeholder="Write a description of a course"
+              placeholder={t('description.placeholder')}
               {...register('description')}
             />
-            <FieldDescription>
-              Briefly describe what learners will learn in this course.
-            </FieldDescription>
+            <FieldDescription>{t('description.description')}</FieldDescription>
           </Field>
 
           <Separator />
 
           <Field className="w-[30%]">
-            <FieldLabel htmlFor="study_area">Study area</FieldLabel>
+            <FieldLabel htmlFor="study_area">{t('studyArea.label')}</FieldLabel>
             <Controller
               name="study_area"
               control={control}
@@ -93,7 +92,7 @@ const CourseDetailsForm = () => {
                   onValueChange={field.onChange}
                 >
                   <SelectTrigger id="study_area">
-                    <SelectValue placeholder="Select study area" />
+                    <SelectValue placeholder={t('studyArea.placeholder')} />
                   </SelectTrigger>
                   <SelectContent>
                     {studyAreas.map((option) => (

@@ -1,0 +1,9 @@
+{
+  "sidebar": {
+    "dashboard": "Головна",
+    "courses": "Курси",
+    "review": "Повторення",
+    "settings": "Налаштування",
+    "logout": "Вийти"
+  }
+}

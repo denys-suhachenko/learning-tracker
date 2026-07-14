@@ -1,6 +1,6 @@
 import { baseApi } from '@/shared/api/baseApi';
 
-import type { User } from '../model/types';
+import type { User, UserProfileSettings } from '../model/types';
 
 type LoginRequest = {
   email: string;
@@ -53,7 +53,21 @@ const authApi = baseApi.injectEndpoints({
       }),
       providesTags: ['Me'],
     }),
+
+    updateProfile: create.mutation<User, UserProfileSettings>({
+      query: (body) => ({
+        url: '/auth/me/',
+        method: 'PATCH',
+        body,
+      }),
+      invalidatesTags: ['Me'],
+    }),
   }),
 });
 
-export const { useLoginMutation, useRegisterMutation, useMeQuery } = authApi;
+export const {
+  useLoginMutation,
+  useRegisterMutation,
+  useMeQuery,
+  useUpdateProfileMutation,
+} = authApi;

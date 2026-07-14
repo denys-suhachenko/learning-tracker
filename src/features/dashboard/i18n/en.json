@@ -1,0 +1,111 @@
+{
+  "header": {
+    "greeting": "Welcome back, {{name}}!",
+    "description": "Track your learning progress and stay on top of reviews."
+  },
+  "metrics": {
+    "activeCourses": {
+      "title": "Active Courses",
+      "description": "{{count}} in progress"
+    },
+    "lessonsCompleted": {
+      "title": "Lessons Completed",
+      "description": "{{count}} this week"
+    },
+    "studyStreak": {
+      "title": "Study Streak",
+      "description": "days in a row"
+    },
+    "reviewsDueToday": {
+      "title": "Reviews Due Today",
+      "description": "Stay consistent"
+    }
+  },
+  "continueLearning": {
+    "title": "Continue Learning",
+    "lessonsProgress": "{{completed}} / {{total}} lessons",
+    "courses": {
+      "classicalMechanics": {
+        "title": "Classical Mechanics Fundamentals",
+        "description": "An introductory course on motion, forces, and energy."
+      },
+      "microeconomics": {
+        "title": "Principles of Microeconomics",
+        "description": "Explore how markets work and decisions are made."
+      },
+      "linearAlgebra": {
+        "title": "Linear Algebra Essentials",
+        "description": "Vectors, matrices, and linear transformations."
+      }
+    }
+  },
+  "recentActivity": {
+    "title": "Recent Activity",
+    "items": {
+      "lessonPositionDistance": {
+        "title": "Completed lesson: 1. Position, Distance, and Displacement",
+        "context": "Classical Mechanics Fundamentals",
+        "time": "2 hours ago"
+      },
+      "reviewedItems": {
+        "title": "Reviewed 12 items",
+        "context": "Principles of Microeconomics",
+        "time": "Yesterday"
+      },
+      "lessonVectors": {
+        "title": "Completed lesson: Introduction to Vectors",
+        "context": "Linear Algebra Essentials",
+        "time": "2 days ago"
+      }
+    }
+  },
+  "todaysReview": {
+    "title": "Today's Review",
+    "heading": "You have reviews due today",
+    "description": "Keep your knowledge fresh and stay on track.",
+    "action": "Start Review"
+  },
+  "upcoming": {
+    "title": "Upcoming",
+    "items": {
+      "velocitySpeed": {
+        "title": "2. Velocity and Speed",
+        "context": "Classical Mechanics Fundamentals",
+        "day": "Today",
+        "time": "2:00 PM"
+      },
+      "supplyDemand": {
+        "title": "Supply and Demand",
+        "context": "Principles of Microeconomics",
+        "day": "Tomorrow",
+        "time": "10:00 AM"
+      },
+      "matrixOperations": {
+        "title": "Matrix Operations",
+        "context": "Linear Algebra Essentials",
+        "day": "May 29",
+        "time": "3:00 PM"
+      }
+    }
+  },
+  "notifications": {
+    "title": "Notifications",
+    "items": {
+      "lessonCompleted": {
+        "title": "Lesson completed",
+        "description": "Classical Mechanics Fundamentals",
+        "time": "2 hours ago"
+      },
+      "reviewScheduled": {
+        "title": "Review scheduled",
+        "description": "Linear Algebra Essentials",
+        "time": "Today, 2:00 PM"
+      },
+      "newReminder": {
+        "title": "New reminder",
+        "description": "5 reviews due today",
+        "time": "Yesterday"
+      }
+    }
+  }
+}

@@ -2,6 +2,7 @@ import { MonitorIcon, MoonIcon, SunIcon } from 'lucide-react';
 
 import { RadioGroup, RadioGroupItem } from '@/shared/ui/radio-group';
 import { cn } from '@/shared/lib/utils';
+import { useTranslation } from 'react-i18next';
 
 type ThemeValue = 'light' | 'dark' | 'system';
 
@@ -14,29 +15,27 @@ type ThemeSwitcherRadioProps = {
 const options = [
   {
     value: 'light',
-    title: 'Light',
-    description: 'Clean and bright',
     icon: <SunIcon />,
   },
   {
     value: 'dark',
-    title: 'Dark',
-    description: 'Easy on the eyes',
     icon: <MoonIcon />,
   },
   {
     value: 'system',
-    title: 'System',
-    description: 'Follow system',
     icon: <MonitorIcon />,
   },
-];
+] as const;
 
 export const ThemeSwitcherRadio = ({
   defaultValue,
   value,
   onChange,
 }: ThemeSwitcherRadioProps) => {
+  const { t } = useTranslation('settings', {
+    keyPrefix: 'appereance.theme.options',
+  });
+
   return (
     <RadioGroup
       defaultValue={defaultValue}
@@ -56,9 +55,9 @@ export const ThemeSwitcherRadio = ({
           )}
         >
           {option.icon}
-          <div className="font-medium">{option.title}</div>
+          <div className="font-medium">{t(`${option.value}.label`)}</div>
           <div className="text-muted-foreground text-xs">
-            {option.description}
+            {t(`${option.value}.description`)}
           </div>
           <RadioGroupItem id={option.value} value={option.value} />
         </label>

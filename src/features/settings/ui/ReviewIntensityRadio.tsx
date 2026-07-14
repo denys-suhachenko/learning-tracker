@@ -1,4 +1,5 @@
 import { FlameIcon, LeafIcon, ScaleIcon } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 import { RadioGroup, RadioGroupItem } from '@/shared/ui/radio-group';
 import { cn } from '@/shared/lib/utils';
@@ -14,29 +15,27 @@ type ReviewIntensityRadioGroupProps = {
 const options = [
   {
     value: 'light',
-    title: 'Light',
-    description: 'Slower intervals. More reviews.',
     icon: <LeafIcon className="text-green-600" />,
   },
   {
     value: 'balanced',
-    title: 'Balanced',
-    description: 'Recommended for most users.',
     icon: <ScaleIcon className="text-blue-600" />,
   },
   {
     value: 'intense',
-    title: 'Intense',
-    description: 'Faster intervals. Fewer reviews.',
     icon: <FlameIcon className="text-orange-600" />,
   },
-];
+] as const;
 
 export const ReviewIntensityRadioGroup = ({
   defaultValue,
   value,
   onChange,
 }: ReviewIntensityRadioGroupProps) => {
+  const { t } = useTranslation('settings', {
+    keyPrefix: 'review.intensity.options',
+  });
+
   return (
     <RadioGroup
       defaultValue={defaultValue}
@@ -55,9 +54,9 @@ export const ReviewIntensityRadioGroup = ({
           )}
         >
           {option.icon}
-          <div className="font-medium">{option.title}</div>
+          <div className="font-medium">{t(`${option.value}.label`)}</div>
           <div className="text-muted-foreground text-xs">
-            {option.description}
+            {t(`${option.value}.description`)}
           </div>
           <RadioGroupItem id={option.value} value={option.value} />
         </label>

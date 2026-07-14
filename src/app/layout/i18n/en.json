@@ -1,0 +1,9 @@
+{
+  "sidebar": {
+    "dashboard": "Dashboard",
+    "courses": "Courses",
+    "review": "Review",
+    "settings": "Settings",
+    "logout": "Log out"
+  }
+}

@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router';
 import { skipToken } from '@reduxjs/toolkit/query';
 import { ArrowRightIcon, MicroscopeIcon, PlayIcon } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 import { useGetCourseQuery } from '@/features/courses/api/api';
 import {
@@ -27,6 +28,7 @@ const CourseDetailsPage = () => {
     refetch,
   } = useGetCourseQuery(courseId ?? skipToken);
   const navigate = useNavigate();
+  const { t } = useTranslation('courses', { keyPrefix: 'details' });
 
   const lessonsList = course?.modules.flatMap((module) => module.lessons) ?? [];
   const completedLessons = lessonsList.filter(
@@ -61,9 +63,9 @@ const CourseDetailsPage = () => {
                 className="bg-white"
                 onClick={() => navigate(`/courses/${course?.id}/edit`)}
               >
-                Edit Course
+                {t('actions.edit')}
               </Button>
-              <Button>Continue Learning</Button>
+              <Button>{t('actions.continue')}</Button>
             </div>
           )
         }
@@ -90,11 +92,11 @@ const CourseDetailsPage = () => {
           <aside className="sticky top-6 space-y-6 self-start">
             <Card className="mb-6">
               <CardHeader bordered className="font-medium">
-                Course details
+                {t('sidebar.details.title')}
               </CardHeader>
               <CardContent className="text-sm">
                 <div className="mb-2 flex items-center justify-between font-medium">
-                  <div>Overall progress</div>
+                  <div>{t('sidebar.details.progress')}</div>
                   <div>{course?.progress ?? 0}%</div>
                 </div>
 
@@ -102,15 +104,15 @@ const CourseDetailsPage = () => {
 
                 <ul className="mt-4 space-y-2">
                   <li className="flex items-center justify-between">
-                    <div>Modules:</div>
+                    <div>{t('sidebar.details.modules')}:</div>
                     <div className="font-medium">{course?.modules?.length}</div>
                   </li>
                   <li className="flex items-center justify-between">
-                    <div>Lessons:</div>
+                    <div>{t('sidebar.details.lessons')}:</div>
                     <span className="font-medium">{lessonsList.length}</span>
                   </li>
                   <li className="flex items-center justify-between">
-                    <div>Completed:</div>
+                    <div>{t('sidebar.details.completed')}:</div>
                     <span className="font-medium">{completedLessons}</span>
                   </li>
                 </ul>
@@ -125,7 +127,7 @@ const CourseDetailsPage = () => {
                   </div>
                   <div>
                     <div className="text-muted-foreground text-sm font-medium">
-                      Study area
+                      {t('sidebar.details.studyArea')}
                     </div>
                     <div className="text-sm font-semibold">
                       {course?.study_area?.name}
@@ -136,7 +138,9 @@ const CourseDetailsPage = () => {
             </Card>
 
             <Card>
-              <CardHeader className="font-medium">Next lesson</CardHeader>
+              <CardHeader className="font-medium">
+                {t('sidebar.nextLesson.title')}
+              </CardHeader>
               <CardContent>
                 {nextLesson ? (
                   <>
@@ -157,12 +161,12 @@ const CourseDetailsPage = () => {
                       to={`lessons/${nextLesson.id}`}
                       className="mt-3 flex flex-nowrap items-center gap-x-1 text-sm font-medium text-blue-600"
                     >
-                      Continue lesson
+                      {t('sidebar.nextLesson.action')}
                       <ArrowRightIcon className="size-4" />
                     </Link>
                   </>
                 ) : (
-                  <div>Course completed</div>
+                  <div>{t('sidebar.nextLesson.completed')}</div>
                 )}
               </CardContent>
             </Card>

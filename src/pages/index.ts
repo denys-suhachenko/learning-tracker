@@ -1,4 +1,4 @@
-export { default as DashboardPage } from './DashboardPage/DashboardPage';
+export { default as DashboardPage } from './DashboardPage/DahboardPage';
 export { default as NotFoundPage } from './NotFoundPage/NotFoundPage';
 export { default as CoursesListPage } from './courses/CoursesListPage';
 export { default as CourseDetailsPage } from './courses/CourseDetailsPage';
