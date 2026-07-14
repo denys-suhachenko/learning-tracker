@@ -1,0 +1,111 @@
+{
+  "header": {
+    "greeting": "Раді бачити тебе знову, {{name}}!",
+    "description": "Відстежуй свій прогрес у навчанні та не пропускай повторення."
+  },
+  "metrics": {
+    "activeCourses": {
+      "title": "Активні курси",
+      "description": "{{count}} у процесі"
+    },
+    "lessonsCompleted": {
+      "title": "Пройдено уроків",
+      "description": "{{count}} цього тижня"
+    },
+    "studyStreak": {
+      "title": "Серія навчання",
+      "description": "днів поспіль"
+    },
+    "reviewsDueToday": {
+      "title": "Повторень сьогодні",
+      "description": "Зберігай послідовність"
+    }
+  },
+  "continueLearning": {
+    "title": "Продовжити навчання",
+    "lessonsProgress": "{{completed}} / {{total}} уроків",
+    "courses": {
+      "classicalMechanics": {
+        "title": "Основи класичної механіки",
+        "description": "Вступний курс про рух, сили та енергію."
+      },
+      "microeconomics": {
+        "title": "Основи мікроекономіки",
+        "description": "Дізнайся, як працюють ринки та приймаються рішення."
+      },
+      "linearAlgebra": {
+        "title": "Основи лінійної алгебри",
+        "description": "Вектори, матриці та лінійні перетворення."
+      }
+    }
+  },
+  "recentActivity": {
+    "title": "Остання активність",
+    "items": {
+      "lessonPositionDistance": {
+        "title": "Завершено урок: 1. Положення, відстань і переміщення",
+        "context": "Основи класичної механіки",
+        "time": "2 години тому"
+      },
+      "reviewedItems": {
+        "title": "Повторено 12 елементів",
+        "context": "Основи мікроекономіки",
+        "time": "Вчора"
+      },
+      "lessonVectors": {
+        "title": "Завершено урок: Вступ до векторів",
+        "context": "Основи лінійної алгебри",
+        "time": "2 дні тому"
+      }
+    }
+  },
+  "todaysReview": {
+    "title": "Сьогоднішнє повторення",
+    "heading": "У тебе є повторення на сьогодні",
+    "description": "Підтримуй знання свіжими та не втрачай темп.",
+    "action": "Почати повторення"
+  },
+  "upcoming": {
+    "title": "Найближче",
+    "items": {
+      "velocitySpeed": {
+        "title": "2. Швидкість і швидкість руху",
+        "context": "Основи класичної механіки",
+        "day": "Сьогодні",
+        "time": "14:00"
+      },
+      "supplyDemand": {
+        "title": "Попит і пропозиція",
+        "context": "Основи мікроекономіки",
+        "day": "Завтра",
+        "time": "10:00"
+      },
+      "matrixOperations": {
+        "title": "Операції з матрицями",
+        "context": "Основи лінійної алгебри",
+        "day": "29 травня",
+        "time": "15:00"
+      }
+    }
+  },
+  "notifications": {
+    "title": "Сповіщення",
+    "items": {
+      "lessonCompleted": {
+        "title": "Урок завершено",
+        "description": "Основи класичної механіки",
+        "time": "2 години тому"
+      },
+      "reviewScheduled": {
+        "title": "Заплановано повторення",
+        "description": "Основи лінійної алгебри",
+        "time": "Сьогодні, 14:00"
+      },
+      "newReminder": {
+        "title": "Нове нагадування",
+        "description": "5 повторень на сьогодні",
+        "time": "Вчора"
+      }
+    }
+  }
+}

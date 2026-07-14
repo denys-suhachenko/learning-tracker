@@ -14,12 +14,15 @@ import settingsUk from '@/features/settings/i18n/uk.json';
 import coursesEn from '@/features/courses/i18n/en.json';
 import coursesUk from '@/features/courses/i18n/uk.json';
 
+import dashboardEn from '@/features/dashboard/i18n/en.json';
+import dashboardUk from '@/features/dashboard/i18n/uk.json';
+
 i18n
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
     fallbackLng: 'en',
-    ns: ['common', 'layout', 'settings', 'courses'],
+    ns: ['common', 'layout', 'settings', 'courses', 'dashboard'],
     interpolation: {
       escapeValue: false,
     },
@@ -29,12 +32,14 @@ i18n
         layout: layoutEn,
         settings: settingsEn,
         courses: coursesEn,
+        dashboard: dashboardEn,
       },
       uk: {
         common: commonUk,
         layout: layoutUk,
         settings: settingsUk,
         courses: coursesUk,
+        dashboard: dashboardUk,
       },
     },
   });

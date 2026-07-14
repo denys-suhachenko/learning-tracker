@@ -11,7 +11,6 @@ import {
   FlameIcon,
   SigmaIcon,
 } from 'lucide-react';
-import { z } from 'zod';
 
 import { cn } from '@/shared/lib/utils';
 import { useCurrentUser } from '@/shared/hooks';
@@ -20,52 +19,71 @@ import { Separator } from '@/shared/ui/separator';
 import { Button } from '@/shared/ui/button';
 import { Progress } from '@/shared/ui/progress';
 import { useTranslation } from 'react-i18next';
+import NotificationsWidget from '@/features/dashboard/ui/NotificationsWidget';
 
-const MetricsSchema = z.object({
-  id: z.string(),
-  title: z.string(),
-});
+const formatSignedCount = (count: number) =>
+  count > 0 ? `+${count}` : `${count}`;
 
-const metrics = [
+type MetricKey =
+  | 'activeCourses'
+  | 'lessonsCompleted'
+  | 'studyStreak'
+  | 'reviewsDueToday';
+
+type CourseKey = 'classicalMechanics' | 'microeconomics' | 'linearAlgebra';
+
+const metrics: {
+  id: string;
+  key: MetricKey;
+  value: number;
+  count?: number | string;
+  bgClass: string;
+  icon: React.ReactNode;
+}[] = [
   {
     id: '1',
-    title: 'Active Courses',
+    key: 'activeCourses',
     value: 5,
-    description: '2 in progress',
+    count: 2,
     bgClass: 'bg-blue-100',
     icon: <BookOpenIcon className="size-8 text-blue-600" />,
   },
   {
     id: '2',
-    title: 'Lessons Completed',
+    key: 'lessonsCompleted',
     value: 28,
-    description: '+6 this week',
+    count: formatSignedCount(6),
     bgClass: 'bg-green-100',
     icon: <CircleCheck className="size-8 text-green-600" />,
   },
   {
     id: '3',
-    title: 'Study Streak',
+    key: 'studyStreak',
     value: 7,
-    description: 'days in a row',
     bgClass: 'bg-violet-100',
     icon: <FlameIcon className="size-8 text-violet-600" />,
   },
   {
     id: '4',
-    title: 'Reviews Due Today',
+    key: 'reviewsDueToday',
     value: 5,
-    description: 'Stay consistent',
     bgClass: 'bg-orange-100',
     icon: <ClockIcon className="size-8 text-orange-600" />,
   },
 ];
 
-const courses = [
+const courses: {
+  id: number;
+  key: CourseKey;
+  progress: number;
+  completed: number;
+  total: number;
+  bgClass: string;
+  icon: React.ReactNode;
+}[] = [
   {
     id: 1,
-    title: 'Classical Mechanics Fundamentals',
-    description: 'An introductory course on motion, forces, and energy.',
+    key: 'classicalMechanics',
     progress: 67,
     completed: 12,
     total: 18,
@@ -74,8 +92,7 @@ const courses = [
   },
   {
     id: 2,
-    title: 'Principles of Microeconomics',
-    description: 'Explore how markets work and decisions are made.',
+    key: 'microeconomics',
     progress: 42,
     completed: 8,
     total: 19,
@@ -84,8 +101,7 @@ const courses = [
   },
   {
     id: 3,
-    title: 'Linear Algebra Essentials',
-    description: 'Vectors, matrices, and linear transformations.',
+    key: 'linearAlgebra',
     progress: 25,
     completed: 5,
     total: 20,
@@ -96,17 +112,17 @@ const courses = [
 
 const DashboardPage = () => {
   const { user } = useCurrentUser();
-  const { t } = useTranslation();
+  const { t } = useTranslation('dashboard');
 
   return (
     <>
       <Container>
         <header className="mb-8">
           <h1 className="mb-2 text-2xl font-semibold">
-            {t('greeting', { name: user?.first_name })}
+            {t('header.greeting', { name: user?.first_name })}
           </h1>
           <p className="text-muted-foreground font-medium">
-            Track your learning progress and stay on top of reviews.
+            {t('header.description')}
           </p>
         </header>
 
@@ -125,10 +141,14 @@ const DashboardPage = () => {
                 {metric.icon}
               </div>
               <div>
-                <div className="text-sm font-medium">{metric.title}</div>
+                <div className="text-sm font-medium">
+                  {t(`metrics.${metric.key}.title`)}
+                </div>
                 <div className="text-2xl font-semibold">{metric.value}</div>
                 <div className="text-muted-foreground text-xs font-medium">
-                  {metric.description}
+                  {t(`metrics.${metric.key}.description`, {
+                    count: metric.count,
+                  })}
                 </div>
               </div>
             </div>
@@ -138,7 +158,9 @@ const DashboardPage = () => {
         <div className="grid grid-cols-2 gap-6">
           <div className="space-y-6">
             <div className="bg-card rounded-md border p-4">
-              <h2 className="mb-4 text-lg font-medium">Continue Learning</h2>
+              <h2 className="mb-4 text-lg font-medium">
+                {t('continueLearning.title')}
+              </h2>
               <div className="space-y-4">
                 {courses.map((course, idx) => (
                   <React.Fragment key={course.id}>
@@ -154,10 +176,16 @@ const DashboardPage = () => {
                       <div className="flex w-full items-center justify-between gap-2">
                         <div>
                           <div className="font-medium">
-                            <Link to="/">{course.title}</Link>
+                            <Link to="/">
+                              {t(
+                                `continueLearning.courses.${course.key}.title`,
+                              )}
+                            </Link>
                           </div>
                           <p className="text-muted-foreground mt-1 text-sm font-medium">
-                            {course.description}
+                            {t(
+                              `continueLearning.courses.${course.key}.description`,
+                            )}
                           </p>
                         </div>
                         <div className="space-y-1 text-right text-xs font-medium">
@@ -167,7 +195,10 @@ const DashboardPage = () => {
                             className="w-[120px]"
                           />
                           <div className="text-muted-foreground">
-                            {course.completed} / {course.total} lessons
+                            {t('continueLearning.lessonsProgress', {
+                              completed: course.completed,
+                              total: course.total,
+                            })}
                           </div>
                         </div>
                       </div>
@@ -179,7 +210,9 @@ const DashboardPage = () => {
             </div>
 
             <div className="bg-card rounded-md border p-4">
-              <h2 className="mb-4 text-lg font-medium">Recent Activity</h2>
+              <h2 className="mb-4 text-lg font-medium">
+                {t('recentActivity.title')}
+              </h2>
               <div className="space-y-4">
                 <div className="flex w-full items-center gap-4">
                   <div className="flex size-6 shrink-0 items-center justify-center rounded-full bg-green-700 text-white">
@@ -189,16 +222,19 @@ const DashboardPage = () => {
                     <div>
                       <div className="text-sm font-medium">
                         <Link to="/">
-                          Completed lesson: 1. Position, Distance, and
-                          Displacement
+                          {t(
+                            'recentActivity.items.lessonPositionDistance.title',
+                          )}
                         </Link>
                       </div>
                       <p className="text-muted-foreground mt-1 text-xs font-medium">
-                        Classical Mechanics Fundamentals
+                        {t(
+                          'recentActivity.items.lessonPositionDistance.context',
+                        )}
                       </p>
                     </div>
                     <div className="text-muted-foreground text-xs font-medium">
-                      2 hours ago
+                      {t('recentActivity.items.lessonPositionDistance.time')}
                     </div>
                   </div>
                 </div>
@@ -210,14 +246,16 @@ const DashboardPage = () => {
                   <div className="flex w-full items-center justify-between gap-2">
                     <div>
                       <div className="text-sm font-medium">
-                        <Link to="/">Reviewed 12 items</Link>
+                        <Link to="/">
+                          {t('recentActivity.items.reviewedItems.title')}
+                        </Link>
                       </div>
                       <p className="text-muted-foreground mt-1 text-xs font-medium">
-                        Principles of Microeconomics
+                        {t('recentActivity.items.reviewedItems.context')}
                       </p>
                     </div>
                     <div className="text-muted-foreground text-xs font-medium">
-                      Yesterday
+                      {t('recentActivity.items.reviewedItems.time')}
                     </div>
                   </div>
                 </div>
@@ -230,15 +268,15 @@ const DashboardPage = () => {
                     <div>
                       <div className="text-sm font-medium">
                         <Link to="/">
-                          Completed lesson: Introduction to Vectors
+                          {t('recentActivity.items.lessonVectors.title')}
                         </Link>
                       </div>
                       <p className="text-muted-foreground mt-1 text-xs font-medium">
-                        Linear Algebra Essentials
+                        {t('recentActivity.items.lessonVectors.context')}
                       </p>
                     </div>
                     <div className="text-muted-foreground text-xs font-medium">
-                      2 days ago
+                      {t('recentActivity.items.lessonVectors.time')}
                     </div>
                   </div>
                 </div>
@@ -247,40 +285,48 @@ const DashboardPage = () => {
           </div>
 
           <div className="space-y-6">
+            <NotificationsWidget />
+
             <div className="bg-card rounded-md border p-4">
-              <h2 className="mb-4 text-lg font-medium">Today's Review</h2>
+              <h2 className="mb-4 text-lg font-medium">
+                {t('todaysReview.title')}
+              </h2>
               <div className="bg-muted flex items-start gap-x-4 rounded-md border p-4">
                 <ClockIcon className="size-8 text-orange-400" />
                 <div className="space-y-1">
                   <div className="text-sm leading-none font-medium">
-                    You have reviews due today
+                    {t('todaysReview.heading')}
                   </div>
                   <div className="text-2xl font-semibold">5</div>
                   <div className="text-muted-foreground text-xs font-medium">
-                    Keep your knowledge fresh and stay on track.
+                    {t('todaysReview.description')}
                   </div>
-                  <Button className="mt-4">Start Review</Button>
+                  <Button className="mt-4">{t('todaysReview.action')}</Button>
                 </div>
               </div>
             </div>
 
             <div className="bg-card rounded-md border p-4">
-              <h2 className="mb-4 text-lg font-medium">Upcoming</h2>
+              <h2 className="mb-4 text-lg font-medium">
+                {t('upcoming.title')}
+              </h2>
               <div className="space-y-4">
                 <div className="flex items-center gap-4">
                   <CalendarClockIcon className="size-5 text-blue-600" />
                   <div className="flex w-full items-center justify-between gap-2">
                     <div>
                       <div className="text-sm font-medium">
-                        <Link to="/">2. Velocity and Speed</Link>
+                        <Link to="/">
+                          {t('upcoming.items.velocitySpeed.title')}
+                        </Link>
                       </div>
                       <p className="text-muted-foreground mt-1 text-xs font-medium">
-                        Classical Mechanics Fundamentals
+                        {t('upcoming.items.velocitySpeed.context')}
                       </p>
                     </div>
                     <div className="text-muted-foreground text-right text-xs font-medium">
-                      <div>Today</div>
-                      <div>2:00 PM</div>
+                      <div>{t('upcoming.items.velocitySpeed.day')}</div>
+                      <div>{t('upcoming.items.velocitySpeed.time')}</div>
                     </div>
                   </div>
                 </div>
@@ -290,15 +336,17 @@ const DashboardPage = () => {
                   <div className="flex w-full items-center justify-between gap-2">
                     <div>
                       <div className="text-sm font-medium">
-                        <Link to="/">Supply and Demand</Link>
+                        <Link to="/">
+                          {t('upcoming.items.supplyDemand.title')}
+                        </Link>
                       </div>
                       <p className="text-muted-foreground mt-1 text-xs font-medium">
-                        Principles of Microeconomics
+                        {t('upcoming.items.supplyDemand.context')}
                       </p>
                     </div>
                     <div className="text-muted-foreground text-right text-xs font-medium">
-                      <div>Tomorrow</div>
-                      <div>10:00 AM</div>
+                      <div>{t('upcoming.items.supplyDemand.day')}</div>
+                      <div>{t('upcoming.items.supplyDemand.time')}</div>
                     </div>
                   </div>
                 </div>
@@ -308,15 +356,17 @@ const DashboardPage = () => {
                   <div className="flex w-full items-center justify-between gap-2">
                     <div>
                       <div className="text-sm font-medium">
-                        <Link to="/">Matrix Operations</Link>
+                        <Link to="/">
+                          {t('upcoming.items.matrixOperations.title')}
+                        </Link>
                       </div>
                       <p className="text-muted-foreground mt-1 text-xs font-medium">
-                        Linear Algebra Essentials
+                        {t('upcoming.items.matrixOperations.context')}
                       </p>
                     </div>
                     <div className="text-muted-foreground text-right text-xs font-medium">
-                      <div>May 29</div>
-                      <div>3:00 PM</div>
+                      <div>{t('upcoming.items.matrixOperations.day')}</div>
+                      <div>{t('upcoming.items.matrixOperations.time')}</div>
                     </div>
                   </div>
                 </div>

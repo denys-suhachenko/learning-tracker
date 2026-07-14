@@ -11,4 +11,3 @@ export { default as SignUpPage } from './auth/SignUpPage/SignUpPage';
 export { default as SettingsPage } from './settings/SettingsPage';
 export { default as ReviewCardsPage } from './review/ReviewCardsPage';
 export { default as LessonFormPage } from './courses/LessonFormPage';
-export { default as UsersPage } from './users/UsersPage';
