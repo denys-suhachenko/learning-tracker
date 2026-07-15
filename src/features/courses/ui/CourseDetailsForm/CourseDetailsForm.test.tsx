@@ -1,34 +1,29 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { FormProvider, useForm } from 'react-hook-form';
-import { Provider } from 'react-redux';
-import { configureStore } from '@reduxjs/toolkit';
-
-import { baseApi } from '@/shared/api/baseApi';
 
 import CourseDetailsForm from './CourseDetailsForm';
 
-const renderForm = () => {
-  const store = configureStore({
-    reducer: {
-      [baseApi.reducerPath]: baseApi.reducer,
-    },
-    middleware: (gDM) => gDM().concat(baseApi.middleware),
-  });
+vi.mock('react-i18next', () => ({
+  useTranslation: () => ({ t: (key: string) => key }),
+}));
 
+vi.mock('../../api/api', () => ({
+  useGetStudyAreasQuery: () => ({ data: [] }),
+}));
+
+const renderForm = () => {
   const Wrapper = ({ children }: { children: React.ReactNode }) => {
     const methods = useForm();
 
     return (
-      <Provider store={store}>
-        <FormProvider {...methods}>
-          <form onSubmit={methods.handleSubmit(() => {})}>
-            {children}
-            <button type="submit">submit</button>
-          </form>
-        </FormProvider>
-      </Provider>
+      <FormProvider {...methods}>
+        <form onSubmit={methods.handleSubmit(() => {})}>
+          {children}
+          <button type="submit">submit</button>
+        </form>
+      </FormProvider>
     );
   };
 
@@ -38,20 +33,22 @@ const renderForm = () => {
 };
 
 describe('CourseDetailsForm', () => {
-  it.each(['Course title', 'Course slug', 'Short description', 'Study area'])(
-    'renders the %s field',
-    (label) => {
-      renderForm();
+  it.each([
+    'title.label',
+    'slug.label',
+    'description.label',
+    'studyArea.label',
+  ])('renders the %s field', (label) => {
+    renderForm();
 
-      expect(screen.getByLabelText(label)).toBeInTheDocument();
-    },
-  );
+    expect(screen.getByLabelText(label)).toBeInTheDocument();
+  });
 
   it('updates the title field as the user types', async () => {
     const user = userEvent.setup();
     renderForm();
 
-    const titleInput = screen.getByLabelText('Course title');
+    const titleInput = screen.getByLabelText('title.label');
     await user.type(titleInput, 'My new course');
     expect(titleInput).toHaveValue('My new course');
   });
@@ -66,10 +63,22 @@ describe('CourseDetailsForm', () => {
       }),
     );
 
-    expect(await screen.findByText('Title is required')).toBeInTheDocument();
-    expect(await screen.findByText('Slug is required')).toBeInTheDocument();
     expect(
-      await screen.findByText('Study area is required'),
+      await screen.findByText('title.validation.required'),
+    ).toBeInTheDocument();
+    expect(
+      await screen.findByText('slug.validation.required'),
+    ).toBeInTheDocument();
+    expect(
+      await screen.findByText('studyArea.validation.required'),
+    ).toBeInTheDocument();
+  });
+
+  it('renders the study area select', () => {
+    renderForm();
+
+    expect(
+      screen.getByRole('combobox', { name: 'studyArea.label' }),
     ).toBeInTheDocument();
   });
 });

@@ -1,5 +1,5 @@
 import { http, HttpResponse } from 'msw';
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Provider } from 'react-redux';
@@ -14,6 +14,10 @@ import type { Course } from '@/features/courses/model/types';
 import { env } from '@/shared/config/env';
 
 import CourseFormPage from './CourseFormPage';
+
+vi.mock('react-i18next', () => ({
+  useTranslation: () => ({ t: (key: string) => key }),
+}));
 
 const COURSE_URL = `${env.apiUrl}/courses/course-123`;
 
@@ -64,17 +68,14 @@ describe('CourseFormPage: Create', () => {
 
     renderCreatepage();
 
+    await user.type(screen.getByLabelText('title.label'), 'New Physics Course');
+    await user.type(screen.getByLabelText('slug.label'), 'new-physics-course');
     await user.type(
-      screen.getByLabelText('Course title'),
-      'New Physics Course',
-    );
-    await user.type(screen.getByLabelText('Course slug'), 'new-physics-course');
-    await user.type(
-      screen.getByLabelText('Short description'),
+      screen.getByLabelText('description.label'),
       'A great course',
     );
 
-    await user.click(screen.getByLabelText('Study area'));
+    await user.click(screen.getByLabelText('studyArea.label'));
     await user.click(
       await screen.findByRole('option', {
         name: 'Physics',
@@ -105,10 +106,10 @@ describe('CourseFormPage: Create', () => {
 
     renderCreatepage();
 
-    await user.type(screen.getByLabelText('Course title'), 'Duplicate Course');
-    await user.type(screen.getByLabelText('Course slug'), 'existing-slug');
-    await user.type(screen.getByLabelText('Short description'), 'A course');
-    await user.click(screen.getByLabelText('Study area'));
+    await user.type(screen.getByLabelText('title.label'), 'Duplicate Course');
+    await user.type(screen.getByLabelText('slug.label'), 'existing-slug');
+    await user.type(screen.getByLabelText('description.label'), 'A course');
+    await user.click(screen.getByLabelText('studyArea.label'));
     await user.click(await screen.findByRole('option', { name: 'Physics' }));
     await user.click(screen.getByRole('button', { name: /create course/i }));
 
@@ -161,7 +162,7 @@ describe('CourseFormPage: Create', () => {
       await screen.findByDisplayValue('Original title'),
     ).toBeInTheDocument();
 
-    const titleInput = screen.getByLabelText('Course title');
+    const titleInput = screen.getByLabelText('title.label');
     await user.clear(titleInput);
     await user.type(titleInput, 'Updated title');
     await user.click(screen.getByRole('button', { name: /save changes/i }));

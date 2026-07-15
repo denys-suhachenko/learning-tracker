@@ -92,12 +92,18 @@
       "header": "Course Details",
       "title": {
         "label": "Course title",
-        "placeholder": "Enter course title"
+        "placeholder": "Enter course title",
+        "validation": {
+          "required": "Title is required"
+        }
       },
       "slug": {
         "label": "Course slug",
         "placeholder": "Enter course slug",
-        "description": "A unique URL-friendly identifier (e.g. classical-mechanics-fundamentals)."
+        "description": "A unique URL-friendly identifier (e.g. classical-mechanics-fundamentals).",
+        "validation": {
+          "required": "Slug is required"
+        }
       },
       "description": {
         "label": "Short description",
@@ -106,7 +112,10 @@
       },
       "studyArea": {
         "label": "Study area",
-        "placeholder": "Select study area"
+        "placeholder": "Select study area",
+        "validation": {
+          "required": "Study area is required"
+        }
       }
     },
     "sidebar": {

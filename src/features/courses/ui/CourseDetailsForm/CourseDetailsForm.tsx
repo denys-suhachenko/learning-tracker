@@ -43,7 +43,7 @@ const CourseDetailsForm = () => {
               id="title"
               placeholder={t('title.placeholder')}
               {...register('title', {
-                required: 'Title is required',
+                required: t('title.validation.required'),
               })}
             />
             {errors.title && <FieldError>{errors.title.message}</FieldError>}
@@ -57,7 +57,7 @@ const CourseDetailsForm = () => {
               id="slug"
               placeholder={t('slug.placeholder')}
               {...register('slug', {
-                required: 'Slug is required',
+                required: t('slug.validation.required'),
               })}
             />
             {errors.slug && <FieldError>{errors.slug.message}</FieldError>}
@@ -85,7 +85,7 @@ const CourseDetailsForm = () => {
             <Controller
               name="study_area"
               control={control}
-              rules={{ required: 'Study area is required' }}
+              rules={{ required: t('studyArea.validation.required') }}
               render={({ field }) => (
                 <Select
                   value={field.value ?? ''}
