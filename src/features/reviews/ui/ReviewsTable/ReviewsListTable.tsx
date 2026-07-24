@@ -1,6 +1,6 @@
 import { Table } from '@/shared/ui';
 
-import type { Review } from './model/types';
+import type { Review } from '../../model/types';
 import { getColumns } from './columns';
 
 const ReviewsListTable = () => {

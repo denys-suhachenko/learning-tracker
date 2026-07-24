@@ -1,17 +1,8 @@
 import { useNavigate } from 'react-router';
-import {
-  CheckIcon,
-  FlameIcon,
-  ListFilterIcon,
-  PlayIcon,
-  PlusIcon,
-  SearchIcon,
-  ThumbsUpIcon,
-} from 'lucide-react';
+import { ListFilterIcon, PlusIcon, SearchIcon } from 'lucide-react';
 
-import { PageHeader } from '@/shared/ui';
+import { PageHeader } from '@/shared/ui/PageHeader';
 import { Container } from '@/shared/ui/Container';
-import ReviewsListTable from '@/features/reviews/ReviewsListTable';
 import { Button } from '@/shared/ui/button';
 import { Tabs, TabsList, TabsTrigger } from '@/shared/ui/tabs';
 import {
@@ -26,6 +17,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/shared/ui/select';
+
+import ReviewsListTable from '@/features/reviews/ui/ReviewsTable/ReviewsListTable';
+import ReviewsSummaryCard from '@/features/reviews/ui/ReviewsSummaryCard';
+import StudyStreakCard from '@/features/reviews/ui/StudyStreakCard';
 
 const ReviewCardsPage = () => {
   const navigate = useNavigate();
@@ -76,10 +71,11 @@ const ReviewCardsPage = () => {
               </Select>
             </div>
 
-            <Button size="lg" variant="outline" data-icon="inline-end">
+            <Button size="lg" variant="ghost" data-icon="inline-end">
               <ListFilterIcon className="size-3" /> Filter
             </Button>
           </div>
+
           <div className="mb-4">
             <Tabs defaultValue="all">
               <TabsList variant="line">
@@ -92,97 +88,13 @@ const ReviewCardsPage = () => {
               </TabsList>
             </Tabs>
           </div>
+
           <ReviewsListTable />
         </div>
 
         <aside className="sticky top-6 space-y-6 self-start">
-          <div className="overflow-hidden rounded-md bg-white px-6 py-4 text-sm shadow-sm">
-            <h3 className="mb-4 text-lg font-medium">Today's Summary</h3>
-
-            <ul className="space-y-1">
-              <li className="flex items-center justify-between">
-                <div>Due today</div>
-                <div>18</div>
-              </li>
-              <li className="flex items-center justify-between">
-                <div>Reviewed today</div>
-                <div>24</div>
-              </li>
-              <li className="flex items-center justify-between">
-                <div>New cards</div>
-                <div>7</div>
-              </li>
-              <li className="flex items-center justify-between">
-                <div>Learning</div>
-                <div>9</div>
-              </li>
-              <li className="flex items-center justify-between">
-                <div>Mastered cards</div>
-                <div>82</div>
-              </li>
-            </ul>
-
-            <Button
-              size="lg"
-              className="mt-6 flex w-full items-center justify-center gap-x-3"
-              onClick={() => navigate('123')}
-            >
-              Start Review Session <PlayIcon className="size-4" />
-            </Button>
-          </div>
-
-          <div className="overflow-hidden rounded-md bg-white px-6 py-4 shadow-sm">
-            <h3 className="mb-4 text-lg font-medium">Study Streak</h3>
-
-            <div className="mb-6 flex items-center gap-x-2">
-              <FlameIcon className="size-8 text-orange-500" />
-              <span className="text-lg font-semibold">12 days</span>
-            </div>
-
-            <div className="mb-4 flex items-center gap-x-2">
-              <span className="font-medium">Keep it up!</span>
-              <ThumbsUpIcon className="size-5" />
-            </div>
-
-            <ul className="flex flex-nowrap items-center justify-between">
-              <li className="flex flex-col justify-center text-center">
-                <div className="mb-1 text-sm">M</div>
-                <div className="flex size-5 items-center justify-center rounded-full bg-green-300">
-                  <CheckIcon className="size-3" />
-                </div>
-              </li>
-              <li className="flex flex-col justify-center text-center">
-                <div className="mb-1 text-sm">T</div>
-                <div className="flex size-5 items-center justify-center rounded-full bg-green-300">
-                  <CheckIcon className="size-3" />
-                </div>
-              </li>
-              <li className="flex flex-col justify-center text-center">
-                <div className="mb-1 text-sm">W</div>
-                <div className="flex size-5 items-center justify-center rounded-full bg-green-300">
-                  <CheckIcon className="size-3" />
-                </div>
-              </li>
-              <li className="flex flex-col justify-center text-center">
-                <div className="mb-1 text-sm">T</div>
-                <div className="flex size-5 items-center justify-center rounded-full bg-green-300">
-                  <CheckIcon className="size-3" />
-                </div>
-              </li>
-              <li className="flex flex-col justify-center text-center">
-                <div className="mb-1 text-sm">F</div>
-                <div className="size-5 rounded-full bg-gray-300" />
-              </li>
-              <li className="flex flex-col justify-center text-center">
-                <div className="mb-1 text-sm">S</div>
-                <div className="size-5 rounded-full bg-gray-300" />
-              </li>
-              <li className="flex flex-col justify-center text-center">
-                <div className="mb-1 text-sm">S</div>
-                <div className="size-5 rounded-full bg-gray-300" />
-              </li>
-            </ul>
-          </div>
+          <ReviewsSummaryCard />
+          <StudyStreakCard />
         </aside>
       </div>
     </Container>

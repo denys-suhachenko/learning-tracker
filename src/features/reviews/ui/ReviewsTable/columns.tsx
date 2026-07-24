@@ -13,7 +13,7 @@ import {
 import { Button } from '@/shared/ui/button';
 import { Badge } from '@/shared/ui/badge';
 
-import type { Review } from './model/types';
+import type { Review } from '../../model/types';
 
 export const getColumns = (): TableColumn<Review>[] => [
   {

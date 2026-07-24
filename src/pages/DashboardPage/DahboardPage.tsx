@@ -25,10 +25,7 @@ const formatSignedCount = (count: number) =>
   count > 0 ? `+${count}` : `${count}`;
 
 type MetricKey =
-  | 'activeCourses'
-  | 'lessonsCompleted'
-  | 'studyStreak'
-  | 'reviewsDueToday';
+  'activeCourses' | 'lessonsCompleted' | 'studyStreak' | 'reviewsDueToday';
 
 type CourseKey = 'classicalMechanics' | 'microeconomics' | 'linearAlgebra';
 
@@ -190,10 +187,7 @@ const DashboardPage = () => {
                         </div>
                         <div className="space-y-1 text-right text-xs font-medium">
                           <div>{course.progress}%</div>
-                          <Progress
-                            value={course.progress}
-                            className="w-[120px]"
-                          />
+                          <Progress value={course.progress} className="w-30" />
                           <div className="text-muted-foreground">
                             {t('continueLearning.lessonsProgress', {
                               completed: course.completed,
@@ -209,84 +203,10 @@ const DashboardPage = () => {
               </div>
             </div>
 
-            <div className="bg-card rounded-md border p-4">
-              <h2 className="mb-4 text-lg font-medium">
-                {t('recentActivity.title')}
-              </h2>
-              <div className="space-y-4">
-                <div className="flex w-full items-center gap-4">
-                  <div className="flex size-6 shrink-0 items-center justify-center rounded-full bg-green-700 text-white">
-                    <CheckIcon className="size-4" />
-                  </div>
-                  <div className="flex w-full items-center justify-between gap-2">
-                    <div>
-                      <div className="text-sm font-medium">
-                        <Link to="/">
-                          {t(
-                            'recentActivity.items.lessonPositionDistance.title',
-                          )}
-                        </Link>
-                      </div>
-                      <p className="text-muted-foreground mt-1 text-xs font-medium">
-                        {t(
-                          'recentActivity.items.lessonPositionDistance.context',
-                        )}
-                      </p>
-                    </div>
-                    <div className="text-muted-foreground text-xs font-medium">
-                      {t('recentActivity.items.lessonPositionDistance.time')}
-                    </div>
-                  </div>
-                </div>
-                <Separator />
-                <div className="flex items-center gap-4">
-                  <div className="flex size-8 shrink-0 items-center justify-center rounded-sm border bg-violet-100 text-violet-700">
-                    <BookOpenIcon className="size-5" />
-                  </div>
-                  <div className="flex w-full items-center justify-between gap-2">
-                    <div>
-                      <div className="text-sm font-medium">
-                        <Link to="/">
-                          {t('recentActivity.items.reviewedItems.title')}
-                        </Link>
-                      </div>
-                      <p className="text-muted-foreground mt-1 text-xs font-medium">
-                        {t('recentActivity.items.reviewedItems.context')}
-                      </p>
-                    </div>
-                    <div className="text-muted-foreground text-xs font-medium">
-                      {t('recentActivity.items.reviewedItems.time')}
-                    </div>
-                  </div>
-                </div>
-                <Separator />
-                <div className="flex items-center gap-4">
-                  <div className="flex size-6 shrink-0 items-center justify-center rounded-full bg-green-700 text-white">
-                    <CheckIcon className="size-4" />
-                  </div>
-                  <div className="flex w-full items-center justify-between gap-2">
-                    <div>
-                      <div className="text-sm font-medium">
-                        <Link to="/">
-                          {t('recentActivity.items.lessonVectors.title')}
-                        </Link>
-                      </div>
-                      <p className="text-muted-foreground mt-1 text-xs font-medium">
-                        {t('recentActivity.items.lessonVectors.context')}
-                      </p>
-                    </div>
-                    <div className="text-muted-foreground text-xs font-medium">
-                      {t('recentActivity.items.lessonVectors.time')}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <NotificationsWidget />
           </div>
 
           <div className="space-y-6">
-            <NotificationsWidget />
-
             <div className="bg-card rounded-md border p-4">
               <h2 className="mb-4 text-lg font-medium">
                 {t('todaysReview.title')}
