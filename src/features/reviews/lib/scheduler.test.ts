@@ -60,6 +60,19 @@ describe('scheduleCard', () => {
     },
   );
 
+  it('never lets interval increase more than 1 year', () => {
+    const card = makeSchedule({
+      intervalMinutes: 400_000,
+      repetitions: 5,
+      easeFactor: 2.5,
+    });
+
+    const res = scheduleCard(card, 'easy', at());
+
+    expect(res.intervalMinutes).toBe(525_600);
+    expect(res.repetitions).toBe(6);
+  });
+
   it('schedules the first review one day ahead', () => {
     const card = makeSchedule({
       repetitions: 1,
@@ -103,7 +116,7 @@ describe('scheduleCard', () => {
 
     const res = scheduleCard(card, 'hard', at());
 
-    expect(res.intervalMinutes).toBe(10368);
+    expect(res.intervalMinutes).toBe(10_368);
     expect(res.easeFactor).toBeCloseTo(2.35);
     expect(res.repetitions).toBe(4);
   });
@@ -117,7 +130,7 @@ describe('scheduleCard', () => {
 
     const res = scheduleCard(card, 'easy', at());
 
-    expect(res.intervalMinutes).toBe(28080);
+    expect(res.intervalMinutes).toBe(28_080);
     expect(res.easeFactor).toBeCloseTo(2.65);
     expect(res.repetitions).toBe(4);
   });

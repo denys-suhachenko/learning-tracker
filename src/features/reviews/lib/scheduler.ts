@@ -9,6 +9,10 @@ const EASE_DELTA: Record<Grade, number> = {
 
 export const GRADES: Grade[] = ['again', 'hard', 'good', 'easy'];
 
+const FIRST_REVIEW_MINUTES = 1440; //  1 day
+const SECOND_REVIEW_MINUTES = 8640; // 6 days
+const MAX_INTERVAL_MINUTES = 365 * 24 * 60; // 1 year
+
 function getIntervalFactor(interval: number, easeFactor: number, grade: Grade) {
   if (grade === 'hard') {
     return interval * 1.2; // hard multiplier = 1.2
@@ -25,19 +29,21 @@ function nextEaseFactor(current: number, grade: Grade) {
   return Math.max(1.3, current + EASE_DELTA[grade]);
 }
 
-function getScheduleInterval(
+function nextInterval(
   repetitions: number, // schedule repetition before increment
   intervalMinutes: number,
   easeFactor: number,
   grade: Grade,
 ) {
   if (repetitions > 2) {
-    const interval = getIntervalFactor(intervalMinutes, easeFactor, grade);
-    return Math.round(interval);
+    const interval = Math.round(
+      getIntervalFactor(intervalMinutes, easeFactor, grade),
+    );
+    return Math.min(MAX_INTERVAL_MINUTES, interval);
   } else if (repetitions > 1) {
-    return 8640; // second review minutes (6 days)
+    return SECOND_REVIEW_MINUTES;
   } else {
-    return 1440; // first review minutes (1 day)
+    return FIRST_REVIEW_MINUTES;
   }
 }
 
@@ -67,7 +73,7 @@ export function scheduleCard(
   } else if (schedule.repetitions > 0) {
     next = {
       ...next,
-      intervalMinutes: getScheduleInterval(
+      intervalMinutes: nextInterval(
         next.repetitions,
         next.intervalMinutes,
         next.easeFactor,
