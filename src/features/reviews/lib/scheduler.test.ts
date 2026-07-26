@@ -1,21 +1,8 @@
 import { describe, expect, it } from 'vitest';
 
-import { CardSchedule } from '../model/types';
+import { at, makeSchedule } from '../test/factories';
 
 import { GRADES, previewIntervals, scheduleCard } from './scheduler';
-
-const NOW = '2026-07-24T00:00:00.000Z';
-
-const at = (iso: string = NOW) => new Date(iso);
-
-const makeSchedule = (options: Partial<CardSchedule> = {}): CardSchedule => ({
-  intervalMinutes: 0,
-  repetitions: 0,
-  easeFactor: 2.5,
-  dueDate: '2026-07-24T00:00:00.000Z',
-  lapses: 0,
-  ...options,
-});
 
 describe('scheduleCard', () => {
   it('schedules a new card 10 minutes ahead when graded good', () => {

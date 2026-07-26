@@ -48,10 +48,10 @@ export const PageHeader = ({
             <div>{children}</div>
           ) : (
             <div>
-              <h1 className="text-2xl font-semibold tracking-tight">{title}</h1>
+              <h1 className="text-3xl font-semibold tracking-tight">{title}</h1>
 
               {description ? (
-                <p className="text-muted-foreground mt-1 text-sm">
+                <p className="text mt-1 leading-6 text-gray-600">
                   {description}
                 </p>
               ) : null}

@@ -4,7 +4,7 @@ import { Button } from '@/shared/ui/button';
 import { PageHeader } from '@/shared/ui/PageHeader';
 import { Container } from '@/shared/ui/Container';
 
-import ReviewSession from '@/features/reviews/ui/ReviewSession';
+import ReviewSession from '@/features/reviews/ui/ReviewSession/ReviewSession';
 
 const ReviewSessionPage = () => {
   const navigate = useNavigate();
