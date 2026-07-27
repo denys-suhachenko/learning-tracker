@@ -5,13 +5,26 @@ import { useMeQuery } from '@/features/auth/api/api';
 
 import { Sidebar } from './Sidebar/Sidebar';
 
+const SIDEBAR_COLLAPSED_WIDTH = 72;
+const SIDEBAR_EXPANDED_WIDTH = 256;
+
 const AppLayout = () => {
+  const [sidebarCollapsed, isSidebarCollapsed] = useState(false);
+
+  const sidebarWidth = sidebarCollapsed
+    ? SIDEBAR_COLLAPSED_WIDTH
+    : SIDEBAR_EXPANDED_WIDTH;
+
   const { data: user } = useMeQuery();
-  const [sidebarWidth] = useState(256);
 
   return (
     <>
-      <Sidebar user={user} />
+      <Sidebar
+        width={sidebarWidth}
+        user={user}
+        collapsed={sidebarCollapsed}
+        toggle={() => isSidebarCollapsed((prev) => !prev)}
+      />
       <div
         className="h-full min-h-screen"
         style={{ paddingLeft: sidebarWidth }}

@@ -115,12 +115,10 @@ const DashboardPage = () => {
     <>
       <Container>
         <header className="mb-8">
-          <h1 className="mb-2 text-2xl font-semibold">
+          <h1 className="mb-2 text-3xl font-semibold">
             {t('header.greeting', { name: user?.first_name })}
           </h1>
-          <p className="text-muted-foreground font-medium">
-            {t('header.description')}
-          </p>
+          <p className="text-muted-foreground">{t('header.description')}</p>
         </header>
 
         <div className="mb-6 grid grid-cols-4 gap-x-6">

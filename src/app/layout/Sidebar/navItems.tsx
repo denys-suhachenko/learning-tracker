@@ -1,7 +1,7 @@
 import {
   RefreshCcwIcon,
-  // CalendarIcon,
-  // LibraryBigIcon,
+  CalendarIcon,
+  LibraryBigIcon,
   BookAIcon,
   HouseIcon,
 } from 'lucide-react';
@@ -10,26 +10,26 @@ export const navItems = [
   {
     path: '/',
     label: 'dashboard',
-    icon: <HouseIcon className="size-6" />,
+    icon: HouseIcon,
   },
   {
     path: '/courses',
     label: 'courses',
-    icon: <BookAIcon className="size-6" />,
+    icon: BookAIcon,
   },
   // {
   //   path: '/planner',
   //   label: 'planner',
-  //   icon: <CalendarIcon className="size-6" />,
+  //   icon: CalendarIcon,
   // },
   {
     path: '/review',
     label: 'review',
-    icon: <RefreshCcwIcon className="size-6" />,
+    icon: RefreshCcwIcon,
   },
   // {
   //   path: '/knowledge-base',
-  //   label: 'knowledgeBase',
-  //   icon: <LibraryBigIcon className="size-6" />,
+  //   label: 'knowledge_base',
+  //   icon: LibraryBigIcon,
   // },
 ] as const;
