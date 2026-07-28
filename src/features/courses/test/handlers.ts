@@ -1,25 +1,18 @@
 import { http, HttpResponse } from 'msw';
 
-import type { CreateCourse } from '@/features/courses/model/types';
 import { env } from '@/shared/config/env';
+import type { Course, CreateCourse } from '../model/types';
+
+import { COURSES } from './mocks';
 
 const BASE_API_URL = env.apiUrl;
 
-export const handlers = [
-  http.get(`${BASE_API_URL}/study-areas`, () => {
-    return HttpResponse.json([
-      {
-        id: 'area-1',
-        name: 'Physics',
-        slug: 'physics',
-      },
-      {
-        id: 'area-2',
-        name: 'Math',
-        slug: 'math',
-      },
-    ]);
-  }),
+export const courseHandlers = [
+  http.get(`${BASE_API_URL}/courses`, () =>
+    HttpResponse.json<Course[]>(COURSES, {
+      status: 200,
+    }),
+  ),
   http.post(`${BASE_API_URL}/courses/`, async ({ request }) => {
     const body = (await request.json()) as CreateCourse;
     return HttpResponse.json(
@@ -33,4 +26,8 @@ export const handlers = [
       },
     );
   }),
+  http.delete(
+    `${BASE_API_URL}/courses/:id/`,
+    () => new HttpResponse(null, { status: 204 }),
+  ),
 ];

@@ -23,7 +23,5 @@ export type Review = {
   id: string;
   cardId: string;
   grade: Grade;
-  reviewedDate: string;
-  intervalBefore: string;
-  intervalAfter: string;
+  reviewedAt: string;
 };

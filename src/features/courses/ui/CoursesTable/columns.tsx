@@ -64,12 +64,14 @@ export const getColumns = (
     render: (row) => (
       <div className="flex items-center justify-end gap-x-4">
         <Link
+          aria-label="Edit"
           to={`${row.id}/edit`}
           className="cursor-pointer text-sm font-medium text-gray-400 hover:text-gray-900"
         >
           <PencilIcon fill="currentColor" strokeWidth={0} className="size-4" />
         </Link>
         <button
+          aria-label={`Remove course ${row.title}`}
           className="cursor-pointer text-sm font-medium text-gray-400 hover:text-gray-900"
           onClick={() => onRemove?.(row.id)}
         >

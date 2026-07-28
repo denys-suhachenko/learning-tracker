@@ -10,10 +10,9 @@ describe('ReviewCard', () => {
     expect(screen.getByText('What is mitochondria?')).toBeInTheDocument();
   });
 
-  // TODO: update when i18n is added - will need t() mock
   it.each(['front', 'back'] as const)('shows the %s badge', (side) => {
     render(<ReviewCard side={side}>Review Card Data</ReviewCard>);
 
-    expect(screen.getByText(side)).toBeInTheDocument();
+    expect(screen.getByText(`sides.${side}`)).toBeInTheDocument();
   });
 });

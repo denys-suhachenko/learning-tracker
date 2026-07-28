@@ -2,7 +2,12 @@ import { describe, expect, it } from 'vitest';
 
 import { at, makeSchedule } from '../test/factories';
 
-import { GRADES, previewIntervals, scheduleCard } from './scheduler';
+import {
+  formatInterval,
+  GRADES,
+  previewIntervals,
+  scheduleCard,
+} from './scheduler';
 
 describe('scheduleCard', () => {
   it('schedules a new card 10 minutes ahead when graded good', () => {
@@ -137,10 +142,9 @@ describe('scheduleCard', () => {
     });
   });
 
-  it('preview matches for schedules graded again and good', () => {
+  it('previews the same first learning step for every grade', () => {
     const card = makeSchedule({
       repetitions: 0,
-      intervalMinutes: 8640,
     });
 
     const preview = previewIntervals(card, at());
@@ -148,5 +152,20 @@ describe('scheduleCard', () => {
     GRADES.forEach((grade) => {
       expect(preview[grade]).toBe(10);
     });
+  });
+
+  it.each([
+    [0, '0 min'],
+    [10, '10 min'],
+    [59, '59 min'],
+    [60, '1 hour'],
+    [80, '1 hour'],
+    [1440, '1 day'],
+    [1500, '1 day'],
+    [8640, '6 days'],
+    [43200, '1 month'],
+    [525600, '1 year'],
+  ])('formats %i minutes as %s', (input, expected) => {
+    expect(formatInterval(input)).toBe(expected);
   });
 });

@@ -46,7 +46,7 @@ const ReviewStep = ({
             </div>
 
             <div className="mt-4">
-              <IntervalPreview />
+              <IntervalPreview schedule={card.schedule} />
             </div>
           </ReviewCard>
 

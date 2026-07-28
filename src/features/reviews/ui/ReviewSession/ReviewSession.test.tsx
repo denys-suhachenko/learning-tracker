@@ -3,13 +3,16 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { CARDS } from '../../test/mocks';
+import { createLocalStorageRepository } from '../../model/repository';
 
 import ReviewSession from './ReviewSession';
+
+const reviewRepository = createLocalStorageRepository();
 
 const renderSession = () => {
   const user = userEvent.setup();
 
-  render(<ReviewSession cards={CARDS} />);
+  render(<ReviewSession initialCards={CARDS} repository={reviewRepository} />);
 
   return { user };
 };

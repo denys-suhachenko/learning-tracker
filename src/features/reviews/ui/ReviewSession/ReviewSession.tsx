@@ -1,28 +1,45 @@
 import { useState } from 'react';
 
 import type { Card, Grade } from '../../model/types';
-import { CARDS } from '../../test/mocks';
+import type { ReviewRepository } from '../../model/repository';
 
 import SessionProgress from '../SessionProgress';
 import ReviewStep from '../ReviewStep/ReviewStep';
+import { scheduleCard } from '../../lib/scheduler';
 
 type ReviewSessionProps = {
-  cards: Card[];
+  initialCards: Card[];
+  repository: ReviewRepository;
 };
 
-const ReviewSession = ({ cards = CARDS }: ReviewSessionProps) => {
+const ReviewSession = ({ initialCards, repository }: ReviewSessionProps) => {
+  const [cards, setCards] = useState(initialCards);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isRevealed, setIsRevealed] = useState(false);
 
   const card = cards[currentIndex];
 
   const onGrade = (grade: Grade) => {
-    // TODO: call scheduleCard and persist
-    // TODO: end session after last card graded
+    const now = new Date();
+
+    setCards((prev) =>
+      prev.map((c) =>
+        card.id === c.id
+          ? {
+              ...c,
+              schedule: scheduleCard(card.schedule, grade, now),
+            }
+          : c,
+      ),
+    );
+
+    repository.saveReview(card.id, grade, now);
 
     setIsRevealed(false);
     if (currentIndex < cards.length - 1) {
       setCurrentIndex((prev) => prev + 1);
+    } else {
+      // TODO: end session after last card graded
     }
   };
 

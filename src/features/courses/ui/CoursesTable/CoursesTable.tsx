@@ -96,7 +96,7 @@ const CoursesTable = () => {
         errorMessage="Failed to load courses."
         onRetry={refetch}
         skeleton={
-          <div className="space-y-2">
+          <div role="status" aria-label="Loading" className="space-y-2">
             {Array.from({ length: 5 }).map((_, i) => (
               <Skeleton key={i} className="h-14 w-full" />
             ))}

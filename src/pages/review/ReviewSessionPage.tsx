@@ -5,6 +5,10 @@ import { PageHeader } from '@/shared/ui/PageHeader';
 import { Container } from '@/shared/ui/Container';
 
 import ReviewSession from '@/features/reviews/ui/ReviewSession/ReviewSession';
+import { CARDS } from '@/features/reviews/test/mocks';
+import { createLocalStorageRepository } from '@/features/reviews/model/repository';
+
+const reviewRepository = createLocalStorageRepository();
 
 const ReviewSessionPage = () => {
   const navigate = useNavigate();
@@ -20,7 +24,7 @@ const ReviewSessionPage = () => {
         }
       />
 
-      <ReviewSession />
+      <ReviewSession initialCards={CARDS} repository={reviewRepository} />
     </Container>
   );
 };
