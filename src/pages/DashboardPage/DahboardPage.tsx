@@ -1,11 +1,10 @@
 import React from 'react';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import {
   AtomIcon,
   BookOpenIcon,
   CalendarClockIcon,
   ChartNoAxesCombinedIcon,
-  CheckIcon,
   CircleCheck,
   ClockIcon,
   FlameIcon,
@@ -20,6 +19,13 @@ import { Button } from '@/shared/ui/button';
 import { Progress } from '@/shared/ui/progress';
 import { useTranslation } from 'react-i18next';
 import NotificationsWidget from '@/features/dashboard/ui/NotificationsWidget';
+import { useGetReviewSummaryQuery } from '@/features/reviews/api/api';
+import { Skeleton } from '@/shared/ui/skeleton';
+import DashboardSkeleton from '@/features/dashboard/ui/DashboardSkeleton';
+import {
+  useGetContinueLearningQuery,
+  useGetCourseSummaryQuery,
+} from '@/features/courses/api/api';
 
 const formatSignedCount = (count: number) =>
   count > 0 ? `+${count}` : `${count}`;
@@ -36,6 +42,7 @@ const metrics: {
   count?: number | string;
   bgClass: string;
   icon: React.ReactNode;
+  isLoading?: boolean;
 }[] = [
   {
     id: '1',
@@ -44,6 +51,7 @@ const metrics: {
     count: 2,
     bgClass: 'bg-blue-100',
     icon: <BookOpenIcon className="size-8 text-blue-600" />,
+    isLoading: false,
   },
   {
     id: '2',
@@ -52,6 +60,7 @@ const metrics: {
     count: formatSignedCount(6),
     bgClass: 'bg-green-100',
     icon: <CircleCheck className="size-8 text-green-600" />,
+    isLoading: false,
   },
   {
     id: '3',
@@ -59,6 +68,7 @@ const metrics: {
     value: 7,
     bgClass: 'bg-violet-100',
     icon: <FlameIcon className="size-8 text-violet-600" />,
+    isLoading: false,
   },
   {
     id: '4',
@@ -66,10 +76,11 @@ const metrics: {
     value: 5,
     bgClass: 'bg-orange-100',
     icon: <ClockIcon className="size-8 text-orange-600" />,
+    isLoading: false,
   },
 ];
 
-const courses: {
+const continueLearning: {
   id: number;
   key: CourseKey;
   progress: number;
@@ -108,8 +119,65 @@ const courses: {
 ];
 
 const DashboardPage = () => {
+  const { data: reviewSummary, isLoading: isReviewSummaryLoading } =
+    useGetReviewSummaryQuery();
+  const { data: continueLearning = [], isLoading: isContinueLearningLoading } =
+    useGetContinueLearningQuery();
+  const { data: courseSummary, isLoading: isCourseSummaryLoading } =
+    useGetCourseSummaryQuery();
+
   const { user } = useCurrentUser();
   const { t } = useTranslation('dashboard');
+  const navigate = useNavigate();
+
+  const studyStreak = reviewSummary?.current_streak ?? 0;
+  const reviewsDueToday = reviewSummary?.due_today ?? 0;
+  const reviewsDueNow = reviewSummary?.due_now ?? 0;
+
+  const dashboardMetrics = metrics.map((metric) => {
+    if (metric.key === 'activeCourses') {
+      return {
+        ...metric,
+        value: courseSummary?.active_courses ?? 0,
+        count: courseSummary?.courses_in_progress ?? 0,
+      };
+    }
+
+    if (metric.key === 'lessonsCompleted') {
+      return {
+        ...metric,
+        value: courseSummary?.lessons_completed ?? 0,
+        count: formatSignedCount(
+          courseSummary?.lessons_completed_this_week ?? 0,
+        ),
+      };
+    }
+
+    if (metric.key === 'studyStreak') {
+      return {
+        ...metric,
+        value: studyStreak,
+        isLoading: isReviewSummaryLoading,
+      };
+    }
+
+    if (metric.key === 'reviewsDueToday') {
+      return {
+        ...metric,
+        value: reviewsDueToday,
+        isLoading: isReviewSummaryLoading,
+      };
+    }
+
+    return metric;
+  });
+
+  const isDashboardLoading =
+    isReviewSummaryLoading || isContinueLearningLoading;
+
+  if (isDashboardLoading) {
+    return <DashboardSkeleton />;
+  }
 
   return (
     <>
@@ -122,7 +190,7 @@ const DashboardPage = () => {
         </header>
 
         <div className="mb-6 grid grid-cols-4 gap-x-6">
-          {metrics.map((metric) => (
+          {dashboardMetrics.map((metric) => (
             <div
               key={metric.id}
               className="bg-card flex items-center gap-x-4 rounded-md border p-4"
@@ -139,12 +207,22 @@ const DashboardPage = () => {
                 <div className="text-sm font-medium">
                   {t(`metrics.${metric.key}.title`)}
                 </div>
-                <div className="text-2xl font-semibold">{metric.value}</div>
-                <div className="text-muted-foreground text-xs font-medium">
-                  {t(`metrics.${metric.key}.description`, {
-                    count: metric.count,
-                  })}
-                </div>
+                {metric.isLoading ? (
+                  <>
+                    <Skeleton className="mt-1 h-7 w-10" />
+                    <Skeleton className="mt-1 h-3 w-20" />
+                  </>
+                ) : (
+                  <>
+                    <div className="text-2xl font-semibold">{metric.value}</div>
+
+                    <div className="text-muted-foreground text-xs font-medium">
+                      {t(`metrics.${metric.key}.description`, {
+                        count: metric.count,
+                      })}
+                    </div>
+                  </>
+                )}
               </div>
             </div>
           ))}
@@ -157,45 +235,39 @@ const DashboardPage = () => {
                 {t('continueLearning.title')}
               </h2>
               <div className="space-y-4">
-                {courses.map((course, idx) => (
+                {continueLearning.map((course, idx) => (
                   <React.Fragment key={course.id}>
-                    <div className="flex items-center gap-4">
-                      <div
-                        className={cn(
-                          'flex items-center justify-center rounded-md border p-2',
-                          course.bgClass,
-                        )}
-                      >
-                        {course.icon}
-                      </div>
+                    <Link
+                      to={`/courses/${course.id}`}
+                      className="group flex items-center gap-4"
+                    >
                       <div className="flex w-full items-center justify-between gap-2">
                         <div>
-                          <div className="font-medium">
-                            <Link to="/">
-                              {t(
-                                `continueLearning.courses.${course.key}.title`,
-                              )}
-                            </Link>
+                          <div className="block font-medium transition-colors duration-200 group-hover:text-blue-600">
+                            {course.title}
                           </div>
-                          <p className="text-muted-foreground mt-1 text-sm font-medium">
-                            {t(
-                              `continueLearning.courses.${course.key}.description`,
-                            )}
-                          </p>
+
+                          {course.next_lesson && (
+                            <p className="text-muted-foreground mt-1 text-sm font-medium">
+                              Next: {course.next_lesson.title}
+                            </p>
+                          )}
                         </div>
+
                         <div className="space-y-1 text-right text-xs font-medium">
                           <div>{course.progress}%</div>
+
                           <Progress value={course.progress} className="w-30" />
+
                           <div className="text-muted-foreground">
-                            {t('continueLearning.lessonsProgress', {
-                              completed: course.completed,
-                              total: course.total,
-                            })}
+                            {course.completed_lessons} / {course.total_lessons}{' '}
+                            lessons
                           </div>
                         </div>
                       </div>
-                    </div>
-                    {idx !== courses.length - 1 && <Separator />}
+                    </Link>
+
+                    {idx !== continueLearning.length - 1 && <Separator />}
                   </React.Fragment>
                 ))}
               </div>
@@ -207,19 +279,35 @@ const DashboardPage = () => {
           <div className="space-y-6">
             <div className="bg-card rounded-md border p-4">
               <h2 className="mb-4 text-lg font-medium">
-                {t('todaysReview.title')}
+                {t('currentReview.title')}
               </h2>
-              <div className="bg-muted flex items-start gap-x-4 rounded-md border p-4">
+              <div className="bg-muted flex h-40 items-start gap-x-4 rounded-md border p-4">
                 <ClockIcon className="size-8 text-orange-400" />
                 <div className="space-y-1">
-                  <div className="text-sm leading-none font-medium">
-                    {t('todaysReview.heading')}
-                  </div>
-                  <div className="text-2xl font-semibold">5</div>
-                  <div className="text-muted-foreground text-xs font-medium">
-                    {t('todaysReview.description')}
-                  </div>
-                  <Button className="mt-4">{t('todaysReview.action')}</Button>
+                  {reviewsDueNow === 0 ? (
+                    <div className="text-xl leading-none font-medium">
+                      {t('currentReview.done')}
+                    </div>
+                  ) : (
+                    <>
+                      <div className="text-sm leading-none font-medium">
+                        {t('currentReview.heading')}
+                      </div>
+                      <div className="text-2xl font-semibold">
+                        {reviewsDueNow}
+                      </div>
+                      <div className="text-muted-foreground text-xs font-medium">
+                        {t('currentReview.description')}
+                      </div>
+                      <Button
+                        className="mt-4"
+                        disabled={isReviewSummaryLoading || reviewsDueNow === 0}
+                        onClick={() => navigate('/review/session')}
+                      >
+                        {t('currentReview.action')}
+                      </Button>
+                    </>
+                  )}
                 </div>
               </div>
             </div>

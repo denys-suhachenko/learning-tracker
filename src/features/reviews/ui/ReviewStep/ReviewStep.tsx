@@ -1,10 +1,10 @@
-import { EyeIcon, MoveDownIcon } from 'lucide-react';
+import { useEffect } from 'react';
+import { EyeIcon } from 'lucide-react';
 
 import { Button } from '@/shared/ui/button';
 import type { Card, Grade } from '../../model/types';
 
 import ReviewCard from '../ReviewCard/ReviewCard';
-import IntervalPreview from '../IntervalPreview';
 import GradeButtonGroup from '../GradeButtonGroup';
 
 export type ReviewStepProps = {
@@ -20,40 +20,65 @@ const ReviewStep = ({
   onReveal,
   onGrade,
 }: ReviewStepProps) => {
+  useEffect(() => {
+    const handleSpace = (event: KeyboardEvent) => {
+      if (event.code === 'Space') {
+        onReveal();
+      }
+    };
+
+    window.addEventListener('keydown', handleSpace);
+
+    return () => window.removeEventListener('keydown', handleSpace);
+  }, []);
+
   return (
-    <>
-      <ReviewCard side="front">
-        <div className="flex min-h-50 items-center justify-center text-center text-2xl font-medium">
-          {card.question}
+    <div className="overflow-hidden rounded-md border shadow-xs">
+      <ReviewCard
+        side="front"
+        metadata={card.metadata}
+        className="min-h-60 bg-white"
+      >
+        <div className="max-w-2/3">
+          <div className="mb-4 text-3xl font-semibold">
+            {card.question.title}
+          </div>
+
+          {card.question.description && (
+            <div className="text-xl font-medium text-gray-500">
+              {card.question.description}
+            </div>
+          )}
         </div>
       </ReviewCard>
 
-      {!isRevealed && (
-        <div className="text-center">
-          <Button role="button" size="lg" onClick={onReveal}>
-            <EyeIcon /> Show answer
-          </Button>
-        </div>
-      )}
-
-      {isRevealed && (
+      {isRevealed ? (
         <div>
-          <MoveDownIcon className="mx-auto my-6 text-gray-400" />
+          <ReviewCard side="back" className="min-h-50 border-t bg-gray-50">
+            <div className="max-w-2/3">
+              <div className="text-2xl font-semibold">{card.answer.title}</div>
 
-          <ReviewCard side="back">
-            <div className="flex min-h-50 items-center justify-center text-center text-2xl font-medium">
-              {card.answer}
-            </div>
-
-            <div className="mt-4">
-              <IntervalPreview schedule={card.schedule} />
+              {card.answer.description && (
+                <div className="mt-6 text-gray-500">
+                  {card.answer.description}
+                </div>
+              )}
             </div>
           </ReviewCard>
 
-          <GradeButtonGroup className="mt-8" onGrade={onGrade} />
+          <div className="border-t bg-white px-8 py-4">
+            <GradeButtonGroup onGrade={onGrade} />
+          </div>
+        </div>
+      ) : (
+        <div className="flex items-center justify-center gap-x-4 border-t bg-white px-8 py-4 text-center">
+          <Button role="button" size="lg" onClick={onReveal}>
+            <EyeIcon /> Show answer
+          </Button>
+          <span className="text-sm text-gray-600">or press Space</span>
         </div>
       )}
-    </>
+    </div>
   );
 };
 

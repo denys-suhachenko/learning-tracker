@@ -1,4 +1,4 @@
-import { MemoryRouter } from 'react-router';
+import { MemoryRouter, type InitialEntry } from 'react-router';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import { render } from '@testing-library/react';
@@ -16,14 +16,15 @@ export const createTestStore = () =>
     middleware: (gDM) => gDM().concat(baseApi.middleware),
   });
 
-export const renderWithProviders = (ui: React.ReactElement) => {
+export const renderWithProviders = (
+  ui: React.ReactElement,
+  { route = '/' } = {},
+) => {
   const store = createTestStore();
   return render(
     <Provider store={store}>
-      <MemoryRouter>
-        {ui}
-        <Toaster />
-      </MemoryRouter>
+      <MemoryRouter initialEntries={[route]}>{ui}</MemoryRouter>
+      <Toaster />
     </Provider>,
   );
 };

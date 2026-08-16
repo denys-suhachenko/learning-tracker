@@ -1,6 +1,8 @@
 import { useTranslation } from 'react-i18next';
 
-import { formatInterval, GRADES, previewIntervals } from '../lib/scheduler';
+import { formatInterval } from '@/shared/lib/formatInterval';
+
+import { GRADES, previewIntervals } from '../lib/scheduler';
 import type { CardSchedule, Grade } from '../model/types';
 
 type IntervalPreviewProps = {

@@ -86,7 +86,10 @@ export function scheduleCard(
 
   return {
     ...next,
-    dueDate: new Date(
+    dueAt: new Date(
+      now.getTime() + next.intervalMinutes * 60_000,
+    ).toISOString(),
+    lastReviewedAt: new Date(
       now.getTime() + next.intervalMinutes * 60_000,
     ).toISOString(),
   };
@@ -106,29 +109,4 @@ export function previewIntervals(
       scheduleCard(schedule, grade, now).intervalMinutes,
     ]),
   ) as Record<Grade, number>;
-}
-
-const HOUR_MINUTES = 60;
-const DAY_MINUES = HOUR_MINUTES * 24;
-const MONTH_MINUTES = DAY_MINUES * 30;
-const YEAR_MINUTES = MONTH_MINUTES * 12;
-
-const plural = (n: number, unit: string) => `${n} ${unit}${n === 1 ? '' : 's'}`;
-
-export function formatInterval(interval: number) {
-  if (interval < HOUR_MINUTES) {
-    return `${interval} min`;
-  } else if (interval < DAY_MINUES) {
-    const hour = Math.round(interval / HOUR_MINUTES);
-    return plural(hour, 'hour');
-  } else if (interval < MONTH_MINUTES) {
-    const day = Math.round(interval / DAY_MINUES);
-    return plural(day, 'day');
-  } else if (interval < YEAR_MINUTES) {
-    const month = Math.round(interval / MONTH_MINUTES);
-    return plural(month, 'month');
-  } else {
-    const year = Math.round(interval / YEAR_MINUTES);
-    return plural(year, 'year');
-  }
 }

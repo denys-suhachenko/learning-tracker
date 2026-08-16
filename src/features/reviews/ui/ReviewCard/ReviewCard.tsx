@@ -1,21 +1,30 @@
 import { useTranslation } from 'react-i18next';
 
 import { Badge } from '@/shared/ui/badge';
+import { cn } from '@/shared/lib/utils';
 
 type ReviewCardProps = {
   side: 'front' | 'back';
+  metadata?: string;
+  className?: string;
   children: React.ReactNode;
 };
 
-const ReviewCard = ({ side, children }: ReviewCardProps) => {
+const ReviewCard = ({
+  side,
+  metadata,
+  className,
+  children,
+}: ReviewCardProps) => {
   const { t } = useTranslation('reviews');
 
   return (
-    <div className="mx-auto max-w-4xl rounded-md border bg-white p-10 shadow-lg">
-      <div className="mb-2 text-center">
-        <Badge variant={side === 'front' ? 'default' : 'secondary'}>
+    <div className={cn('p-8', className)}>
+      <div className="mb-6 flex items-center gap-x-3">
+        <Badge variant={side === 'front' ? 'secondary' : 'default'}>
           {t(`sides.${side}`)}
         </Badge>
+        {metadata && <div className="text-xs text-gray-500">{metadata}</div>}
       </div>
 
       {children}

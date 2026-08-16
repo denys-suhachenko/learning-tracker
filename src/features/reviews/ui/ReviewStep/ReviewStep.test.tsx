@@ -31,13 +31,13 @@ describe('ReviewStep', () => {
   it('hides the answer when not revealed', () => {
     const { card } = renderStep();
 
-    expect(screen.queryByText(card.answer)).not.toBeInTheDocument();
+    expect(screen.queryByText(card.answer.title)).not.toBeInTheDocument();
   });
 
   it('shows the answer when revealed', () => {
     const { card } = renderStep({ isRevealed: true });
 
-    expect(screen.getByText(card.answer)).toBeInTheDocument();
+    expect(screen.getByText(card.answer.title)).toBeInTheDocument();
   });
 
   it('calls onReveal when the show answer button is clicked', async () => {

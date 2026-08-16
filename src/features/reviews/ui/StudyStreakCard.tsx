@@ -1,51 +1,29 @@
 import { FlameIcon, ThumbsUpIcon, CheckIcon } from 'lucide-react';
 
-const streak = [
-  {
-    day: 'Monday',
-    label: 'M',
-    completed: true,
-  },
-  {
-    day: 'Tuesday',
-    label: 'T',
-    completed: true,
-  },
-  {
-    day: 'Wednesday',
-    label: 'W',
-    completed: true,
-  },
-  {
-    day: 'Thursday',
-    label: 'T',
-    completed: true,
-  },
-  {
-    day: 'Friday',
-    label: 'F',
-    completed: false,
-  },
-  {
-    day: 'Saturday',
-    label: 'S',
-    completed: false,
-  },
-  {
-    day: 'Sunday',
-    label: 'S',
-    completed: false,
-  },
-];
+import { cn } from '@/shared/lib/utils';
 
-const StudyStreakCard = () => {
+import type { WeekActivityDay } from '../model/types';
+
+type StudyStreakCardProps = {
+  currentStreak: number;
+  weekActivity: WeekActivityDay[];
+};
+
+const WEEK_LABELS = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+
+const StudyStreakCard = ({
+  currentStreak,
+  weekActivity,
+}: StudyStreakCardProps) => {
   return (
     <div className="overflow-hidden rounded-md bg-white px-6 py-4 shadow-sm">
       <h3 className="mb-4 text-lg font-medium">Study Streak</h3>
 
       <div className="mb-6 flex items-center gap-x-2">
         <FlameIcon className="size-8 text-orange-500" />
-        <span className="text-lg font-semibold">12 days</span>
+        <span className="text-lg font-semibold">
+          {currentStreak} {currentStreak === 1 ? 'day' : 'days'}
+        </span>
       </div>
 
       <div className="mb-4 flex items-center gap-x-2">
@@ -53,23 +31,24 @@ const StudyStreakCard = () => {
         <ThumbsUpIcon className="size-5" />
       </div>
 
-      <ul className="flex flex-nowrap items-center justify-between">
-        {streak.map((item) => (
-          <li
-            key={item.day}
-            className="flex flex-col justify-center text-center"
-          >
-            <div className="mb-1 text-sm">{item.label}</div>
-            {item.completed ? (
-              <div className="flex size-5 items-center justify-center rounded-full bg-green-300">
-                <CheckIcon className="size-3" />
-              </div>
-            ) : (
-              <div className="size-5 rounded-full bg-gray-300" />
-            )}
-          </li>
+      <div className="flex justify-between">
+        {weekActivity.map((day, index) => (
+          <div key={day.date} className="flex flex-col items-center gap-2">
+            <span className="text-sm">{WEEK_LABELS[index]}</span>
+
+            <div
+              className={cn(
+                'flex size-8 items-center justify-center rounded-full',
+                day.is_active && 'bg-green-300',
+                !day.is_active && !day.is_future && 'bg-gray-300',
+                day.is_future && 'bg-gray-200',
+              )}
+            >
+              {day.is_active && <CheckIcon className="size-4" />}
+            </div>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 };

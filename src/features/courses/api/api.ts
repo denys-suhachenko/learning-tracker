@@ -1,8 +1,10 @@
 import { baseApi } from '@/shared/api/baseApi';
 
 import {
+  type ContinueLearningCourse,
   type Course,
   type CourseDetail,
+  type CourseSummary,
   type CreateCourse,
   type CreateModule,
   type Module,
@@ -60,6 +62,12 @@ const coursesApi = baseApi.injectEndpoints({
     getStudyAreas: create.query<StudyArea[], void>({
       query: () => '/study-areas',
     }),
+    getContinueLearning: create.query<ContinueLearningCourse[], void>({
+      query: () => '/courses/continue-learning/',
+    }),
+    getCourseSummary: create.query<CourseSummary, void>({
+      query: () => '/courses/summary/',
+    }),
   }),
   overrideExisting: true,
 });
@@ -73,4 +81,6 @@ export const {
   useCreateModuleMutation,
   useRemoveModuleMutation,
   useGetStudyAreasQuery,
+  useGetContinueLearningQuery,
+  useGetCourseSummaryQuery,
 } = coursesApi;

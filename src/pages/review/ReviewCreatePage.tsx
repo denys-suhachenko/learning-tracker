@@ -1,3 +1,5 @@
+import { useMemo, useState } from 'react';
+import { useNavigate } from 'react-router';
 import {
   BracesIcon,
   EyeIcon,
@@ -7,6 +9,12 @@ import {
   MessageCircleQuestionMarkIcon,
   WalletCardsIcon,
 } from 'lucide-react';
+
+import {
+  useCreateReviewCardMutation,
+  useGetReviewDecksQuery,
+  useGetReviewTopicsQuery,
+} from '@/features/reviews/api/api';
 
 import { PageHeader } from '@/shared/ui';
 import {
@@ -27,6 +35,65 @@ import { Badge } from '@/shared/ui/badge';
 import { Container } from '@/shared/ui/Container';
 
 const ReviewCreatePage = () => {
+  const navigate = useNavigate();
+
+  const [topic, setTopic] = useState('');
+  const [deck, setDeck] = useState('');
+
+  const [question, setQuestion] = useState('');
+  const [questionDescription, setQuestionDescription] = useState('');
+
+  const [answer, setAnswer] = useState('');
+  const [answerDescription, setAnswerDescription] = useState('');
+
+  const [hint, setHint] = useState('');
+
+  const [difficulty, setDifficulty] = useState<'easy' | 'medium' | 'hard'>(
+    'medium',
+  );
+
+  const [reviewNextSession, setReviewNextSession] = useState(false);
+  const { data: topics = [] } = useGetReviewTopicsQuery();
+  const { data: decks = [] } = useGetReviewDecksQuery();
+
+  const [createReviewCard, { isLoading: isSaving }] =
+    useCreateReviewCardMutation();
+
+  const availableDecks = useMemo(() => {
+    if (!topic) {
+      return [];
+    }
+    return decks.filter((deck) => deck.topic_id === topic);
+  }, [decks, topic]);
+
+  const handleSave = async () => {
+    if (!deck || !question.trim() || !answer.trim()) {
+      return;
+    }
+
+    try {
+      await createReviewCard({
+        deck_id: deck,
+        card_type: 'basic',
+
+        question: question.trim(),
+        question_description: questionDescription.trim(),
+
+        answer: answer.trim(),
+        answer_description: answerDescription.trim(),
+
+        hint: hint.trim(),
+
+        difficulty,
+        review_next_session: reviewNextSession,
+      }).unwrap();
+
+      navigate('/review');
+    } catch (error) {
+      console.error('Failed to create review card:', error);
+    }
+  };
+
   return (
     <Container>
       <PageHeader
@@ -36,27 +103,37 @@ const ReviewCreatePage = () => {
       />
 
       <div className="mb-6 flex items-center gap-4">
-        <Select defaultValue="biology">
+        <Select
+          value={topic}
+          onValueChange={(value) => {
+            setTopic(value);
+            setDeck('');
+          }}
+        >
           <SelectTrigger className="w-full max-w-3xs bg-white">
             <SelectValue placeholder="Select a topic" />
           </SelectTrigger>
+
           <SelectContent>
-            <SelectItem value="biology">Biology</SelectItem>
-            <SelectItem value="math">Math</SelectItem>
-            <SelectItem value="english">English</SelectItem>
+            {topics.map((topic) => (
+              <SelectItem key={topic.id} value={topic.id}>
+                {topic.name}
+              </SelectItem>
+            ))}
           </SelectContent>
         </Select>
 
-        <Select defaultValue="cell-biology">
+        <Select value={deck} onValueChange={setDeck} disabled={!topic}>
           <SelectTrigger className="w-full max-w-3xs bg-white">
             <SelectValue placeholder="Select a deck" />
           </SelectTrigger>
+
           <SelectContent>
-            <SelectItem value="cell-biology">Cell Biology Basics</SelectItem>
-            <SelectItem value="calculus">Calculus</SelectItem>
-            <SelectItem value="english-past-perfect">
-              English Past Perfect Tense
-            </SelectItem>
+            {availableDecks.map((deck) => (
+              <SelectItem key={deck.id} value={deck.id}>
+                {deck.name}
+              </SelectItem>
+            ))}
           </SelectContent>
         </Select>
       </div>
@@ -66,13 +143,13 @@ const ReviewCreatePage = () => {
           <TabsTrigger value="basic">
             <WalletCardsIcon /> Basic
           </TabsTrigger>
-          <TabsTrigger value="cloze">
+          <TabsTrigger value="cloze" disabled>
             <BracesIcon /> Cloze
           </TabsTrigger>
-          <TabsTrigger value="image">
+          <TabsTrigger value="image" disabled>
             <ImageIcon /> Image occlusion
           </TabsTrigger>
-          <TabsTrigger value="questions">
+          <TabsTrigger value="questions" disabled>
             <MessageCircleQuestionMarkIcon /> Q&A
           </TabsTrigger>
         </TabsList>
@@ -85,6 +162,18 @@ const ReviewCreatePage = () => {
             <Textarea
               id="front-side"
               placeholder="Type your front side message here."
+              value={question}
+              onChange={(event) => {
+                setQuestion(event.target.value);
+              }}
+            />
+            <Textarea
+              placeholder="Optional question description..."
+              value={questionDescription}
+              onChange={(event) => {
+                setQuestionDescription(event.target.value);
+              }}
+              className="mt-3"
             />
           </Field>
           <Field>
@@ -92,16 +181,38 @@ const ReviewCreatePage = () => {
             <Textarea
               id="back-side"
               placeholder="Type your back side message here."
+              value={answer}
+              onChange={(event) => {
+                setAnswer(event.target.value);
+              }}
+            />
+            <Textarea
+              placeholder="Optional answer description..."
+              value={answerDescription}
+              onChange={(event) => {
+                setAnswerDescription(event.target.value);
+              }}
+              className="mt-3"
             />
           </Field>
           <Field>
             <FieldLabel htmlFor="hint">Hint / Notes</FieldLabel>
-            <Textarea id="hint" placeholder="Type your hint." />
+            <Textarea
+              id="hint"
+              placeholder="Type your hint."
+              value={hint}
+              onChange={(event) => {
+                setHint(event.target.value);
+              }}
+            />
           </Field>
           <Field>
             <FieldLabel>Difficulty</FieldLabel>
             <RadioGroup
-              defaultValue="medium"
+              value={difficulty}
+              onValueChange={(value) => {
+                setDifficulty(value as 'easy' | 'medium' | 'hard');
+              }}
               className="flex items-center gap-x-6"
             >
               <div className="flex items-center gap-3">
@@ -121,7 +232,11 @@ const ReviewCreatePage = () => {
           <Field>
             <FieldLabel>Add to review queue</FieldLabel>
             <div className="flex items-center space-x-2">
-              <Switch id="add-to-review" />
+              <Switch
+                id="add-to-review"
+                checked={reviewNextSession}
+                onCheckedChange={setReviewNextSession}
+              />
               <label htmlFor="add-to-review">
                 Review this card in the next session
               </label>
@@ -132,8 +247,13 @@ const ReviewCreatePage = () => {
             <Button variant="outline" data-icon="inline-start">
               <EyeIcon /> Preview
             </Button>
-            <Button data-icon="inline-start">
-              <FolderBookmarkIcon /> Save card
+            <Button
+              data-icon="inline-start"
+              onClick={handleSave}
+              disabled={isSaving || !deck || !question.trim() || !answer.trim()}
+            >
+              <FolderBookmarkIcon />
+              {isSaving ? 'Saving...' : 'Save card'}
             </Button>
           </div>
         </div>
@@ -148,8 +268,13 @@ const ReviewCreatePage = () => {
                     <Badge>Front</Badge>
                   </div>
                   <div className="text-[15px] font-medium">
-                    What is the function of mitochondria in a cell?
+                    {question || 'Your question will appear here.'}
                   </div>
+                  {questionDescription && (
+                    <div className="mt-3 text-sm text-gray-500">
+                      {questionDescription}
+                    </div>
+                  )}
                 </div>
                 <Separator />
                 <div className="p-4">
@@ -157,10 +282,13 @@ const ReviewCreatePage = () => {
                     <Badge variant="secondary">Back</Badge>
                   </div>
                   <div className="text-[15px] font-medium">
-                    Mitochondria are the powerhouse of the cel. They produce ATP
-                    (adenosine triphosphate) through cellular respiration,
-                    providing energy for various cellular processes.
+                    {answer || 'Your answer will appear here.'}
                   </div>
+                  {answerDescription && (
+                    <div className="mt-3 text-sm text-gray-500">
+                      {answerDescription}
+                    </div>
+                  )}
                 </div>
               </div>
 

@@ -18,3 +18,23 @@ export type Module = Schemas['ModuleDetail'];
 export type Lesson = Schemas['Lesson'];
 
 export type CreateModule = Omit<Schemas['Module'], 'id'>;
+
+export type ContinueLearningCourse = {
+  id: string;
+  title: string;
+  description: string;
+  progress: number;
+  completed_lessons: number;
+  total_lessons: number;
+  next_lesson: {
+    id: string;
+    title: string;
+  } | null;
+};
+
+export type CourseSummary = {
+  active_courses: number;
+  courses_in_progress: number;
+  lessons_completed: number;
+  lessons_completed_this_week: number;
+};

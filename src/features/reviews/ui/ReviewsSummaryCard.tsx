@@ -3,7 +3,13 @@ import { PlayIcon } from 'lucide-react';
 
 import { Button } from '@/shared/ui/button';
 
-const ReviewsSummaryCard = () => {
+import type { ReviewSummary } from '../model/types';
+
+type ReviewsSummaryCardProps = {
+  summary?: ReviewSummary;
+};
+
+const ReviewsSummaryCard = ({ summary }: ReviewsSummaryCardProps) => {
   const navigate = useNavigate();
 
   return (
@@ -13,23 +19,23 @@ const ReviewsSummaryCard = () => {
       <ul className="space-y-1">
         <li className="flex items-center justify-between">
           <div>Due today</div>
-          <div>18</div>
+          <div>{summary?.due_today ?? 0}</div>
         </li>
         <li className="flex items-center justify-between">
           <div>Reviewed today</div>
-          <div>24</div>
+          <div>{summary?.reviewed_today ?? 0}</div>
         </li>
         <li className="flex items-center justify-between">
           <div>New cards</div>
-          <div>7</div>
+          <div>{summary?.new_cards ?? 0}</div>
         </li>
         <li className="flex items-center justify-between">
           <div>Learning</div>
-          <div>9</div>
+          <div>{summary?.learning ?? 0}</div>
         </li>
         <li className="flex items-center justify-between">
           <div>Mastered cards</div>
-          <div>82</div>
+          <div>{summary?.mastered_cards ?? 0}</div>
         </li>
       </ul>
 

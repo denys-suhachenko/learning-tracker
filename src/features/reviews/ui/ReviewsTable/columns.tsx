@@ -13,42 +13,36 @@ import {
 import { Button } from '@/shared/ui/button';
 import { Badge } from '@/shared/ui/badge';
 
-import type { Review } from '../../model/types';
+import type { ReviewCardApi } from '../../model/types';
+import { formatDueDate, formatStatus } from '../../lib/format';
 
-export const getColumns = (): TableColumn<Review>[] => [
+export const getColumns = (): TableColumn<ReviewCardApi>[] => [
   {
-    key: 'title',
+    key: 'question',
     header: 'Name',
-    render: (row: Review) => (
-      <Link
-        to={`/courses/${row.id}`}
-        className="text-sm font-medium text-gray-700 hover:text-gray-900"
-      >
-        {row.title}
-      </Link>
+    render: (row: ReviewCardApi) => (
+      <span className="text-sm font-medium text-gray-700 hover:text-gray-900">
+        {row.question}
+      </span>
     ),
     width: '22%',
   },
   {
-    key: 'deck',
+    key: 'deck_name',
     header: 'Deck',
     width: '26%',
-    render: (row: Review) => (
-      <Link to={`/courses/${row.id}`} className="text-sm text-blue-600">
-        {row.deck}
-      </Link>
-    ),
+    render: (row: ReviewCardApi) => <span>{row.deck_name}</span>,
   },
   {
     key: 'status',
     header: 'Status',
-    render: (row: Review) => <Badge>{row.status}</Badge>,
+    render: (row: ReviewCardApi) => <Badge>{formatStatus(row)}</Badge>,
     width: '17%',
   },
   {
-    key: 'due_date',
+    key: 'due_at',
     header: 'Due date',
-    render: (row: Review) => <span>{row.due_date}</span>,
+    render: (row: ReviewCardApi) => <span>{formatDueDate(row.due_at)}</span>,
     width: '14%',
   },
   {

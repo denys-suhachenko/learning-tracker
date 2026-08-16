@@ -1,4 +1,4 @@
-import type { Course } from '../model/types';
+import type { Course, StudyArea } from '../model/types';
 
 export const COURSES: Course[] = [
   {
@@ -32,5 +32,28 @@ export const COURSES: Course[] = [
     progress: 0,
     created_at: '2026-07-29T00:00:00.000Z',
     updated_at: '2026-07-30T00:00:00.000Z',
+  },
+];
+
+export const STUDY_AREAS: StudyArea[] = [
+  {
+    id: 'area-1',
+    name: 'Computer Science',
+    slug: 'computer-science',
+  },
+  {
+    id: 'area-2',
+    name: 'Economics',
+    slug: 'economics',
+  },
+  {
+    id: 'area-3',
+    name: 'History',
+    slug: 'history',
+  },
+  {
+    id: 'area-4',
+    name: 'Physics',
+    slug: 'physics',
   },
 ];

@@ -1,13 +1,9 @@
 import { describe, expect, it } from 'vitest';
 
-import { at, makeSchedule } from '../test/factories';
+import { formatInterval } from '@/shared/lib/formatInterval';
 
-import {
-  formatInterval,
-  GRADES,
-  previewIntervals,
-  scheduleCard,
-} from './scheduler';
+import { at, makeSchedule } from '../test/factories';
+import { GRADES, previewIntervals, scheduleCard } from './scheduler';
 
 describe('scheduleCard', () => {
   it('schedules a new card 10 minutes ahead when graded good', () => {
@@ -16,7 +12,7 @@ describe('scheduleCard', () => {
     const result = scheduleCard(card, 'good', at());
 
     expect(result.intervalMinutes).toBe(10);
-    expect(result.dueDate).toBe('2026-07-24T00:10:00.000Z');
+    expect(result.dueAt).toBe('2026-07-24T00:10:00.000Z');
     expect(result.repetitions).toBe(1);
   });
 
@@ -32,7 +28,7 @@ describe('scheduleCard', () => {
     expect(result.repetitions).toBe(0);
     expect(result.lapses).toBe(1);
     expect(result.easeFactor).toBeCloseTo(2.3);
-    expect(result.dueDate).toBe('2026-07-24T00:10:00.000Z');
+    expect(result.dueAt).toBe('2026-07-24T00:10:00.000Z');
   });
 
   it.each(['again', 'hard'] as const)(
@@ -163,8 +159,8 @@ describe('scheduleCard', () => {
     [1440, '1 day'],
     [1500, '1 day'],
     [8640, '6 days'],
-    [43200, '1 month'],
-    [525600, '1 year'],
+    [43_800, '1 month'],
+    [525_600, '1 year'],
   ])('formats %i minutes as %s', (input, expected) => {
     expect(formatInterval(input)).toBe(expected);
   });

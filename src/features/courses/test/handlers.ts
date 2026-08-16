@@ -1,9 +1,9 @@
 import { http, HttpResponse } from 'msw';
 
 import { env } from '@/shared/config/env';
-import type { Course, CreateCourse } from '../model/types';
+import type { Course, CreateCourse, StudyArea } from '../model/types';
 
-import { COURSES } from './mocks';
+import { COURSES, STUDY_AREAS } from './mocks';
 
 const BASE_API_URL = env.apiUrl;
 
@@ -29,5 +29,10 @@ export const courseHandlers = [
   http.delete(
     `${BASE_API_URL}/courses/:id/`,
     () => new HttpResponse(null, { status: 204 }),
+  ),
+  http.get(`${BASE_API_URL}/study-areas`, () =>
+    HttpResponse.json<StudyArea[]>(STUDY_AREAS, {
+      status: 200,
+    }),
   ),
 ];

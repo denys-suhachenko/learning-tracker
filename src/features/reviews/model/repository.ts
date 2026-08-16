@@ -1,20 +1,32 @@
 import type { CardSchedule, Grade, Review } from './types';
 
-const STORAGE_KEY = 'reviewCardsStorage';
+const REVIEWS_KEY = 'reviewCardsStorage';
+const SCHEDULES_KEY = 'reviewSchedulesStorage';
 
 export type ReviewRepository = {
   saveReview: (cardId: string, grade: Grade, reviewedAt: Date) => Promise<void>;
   saveSchedule: (cardId: string, schedule: CardSchedule) => Promise<void>;
-  loadSchedules: () => Promise<void>;
+  loadSchedules: () => Promise<Record<string, CardSchedule>>;
 };
 
 const readReviews = (): Review[] => {
   try {
-    const reviews = localStorage.getItem(STORAGE_KEY) || '[]';
+    const reviews = localStorage.getItem(REVIEWS_KEY) || '[]';
     const parsed = JSON.parse(reviews);
     return Array.isArray(parsed) ? parsed : [];
   } catch {
     return [];
+  }
+};
+
+const readSchedules = (): Record<string, CardSchedule> => {
+  try {
+    const parsed = JSON.parse(localStorage.getItem(SCHEDULES_KEY) || '{}');
+    const isPlainObject =
+      parsed !== null && typeof parsed === 'object' && !Array.isArray(parsed);
+    return isPlainObject ? parsed : {};
+  } catch {
+    return {};
   }
 };
 
@@ -32,11 +44,25 @@ export const createLocalStorageRepository = (): ReviewRepository => {
         },
       ];
 
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(res));
+      localStorage.setItem(REVIEWS_KEY, JSON.stringify(res));
     } catch (error) {
       console.error('Review storage error: ', error);
     }
   };
 
-  return { saveReview };
+  const saveSchedule = async (cardId: string, schedule: CardSchedule) => {
+    try {
+      const next: Record<string, CardSchedule> = {
+        ...readSchedules(),
+        [cardId]: schedule,
+      };
+      localStorage.setItem(SCHEDULES_KEY, JSON.stringify(next));
+    } catch (error) {
+      console.error('Failed to save schedule:', error);
+    }
+  };
+
+  const loadSchedules = async () => readSchedules();
+
+  return { saveReview, saveSchedule, loadSchedules };
 };

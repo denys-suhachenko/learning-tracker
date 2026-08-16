@@ -6,7 +6,7 @@
     "easy": "Easy"
   },
   "sides": {
-    "front": "Front",
-    "back": "Back"
+    "front": "Question",
+    "back": "Answer"
   }
 }
