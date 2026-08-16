@@ -17,6 +17,9 @@ import coursesUk from '@/features/courses/i18n/uk.json';
 import dashboardEn from '@/features/dashboard/i18n/en.json';
 import dashboardUk from '@/features/dashboard/i18n/uk.json';
 
+import reviewsEn from '@/features/reviews/i18n/en.json';
+import reviewsUk from '@/features/reviews/i18n/uk.json';
+
 i18n
   .use(LanguageDetector)
   .use(initReactI18next)
@@ -33,6 +36,7 @@ i18n
         settings: settingsEn,
         courses: coursesEn,
         dashboard: dashboardEn,
+        reviews: reviewsEn,
       },
       uk: {
         common: commonUk,
@@ -40,6 +44,7 @@ i18n
         settings: settingsUk,
         courses: coursesUk,
         dashboard: dashboardUk,
+        reviews: reviewsUk,
       },
     },
   });

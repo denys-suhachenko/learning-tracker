@@ -6,6 +6,7 @@ import { Progress, type TableColumn } from '@/shared/ui';
 import { Badge } from '@/shared/ui/badge';
 
 import type { Course } from '../../model/types';
+import { cn } from '@/shared/lib/utils';
 
 export const getColumns = (
   t: TFunction<'courses', 'list.table.columns'>,
@@ -46,8 +47,22 @@ export const getColumns = (
   },
   {
     key: 'status',
-    header: t('status'),
-    render: (row) => <Badge>{row.status}</Badge>,
+    header: t('status.title'),
+    render: (row) =>
+      row.status && (
+        <Badge
+          className={cn(
+            row.status === 'draft' &&
+              'border-gray-400 bg-gray-200 text-gray-800',
+            row.status === 'active' &&
+              'border-yellow-400 bg-yellow-200 text-yellow-800',
+            row.status === 'completed' &&
+              'border-green-400 bg-green-200 text-green-800',
+          )}
+        >
+          {t(`status.${row.status}`)}
+        </Badge>
+      ),
     width: '12%',
   },
   {
@@ -64,12 +79,14 @@ export const getColumns = (
     render: (row) => (
       <div className="flex items-center justify-end gap-x-4">
         <Link
+          aria-label="Edit"
           to={`${row.id}/edit`}
           className="cursor-pointer text-sm font-medium text-gray-400 hover:text-gray-900"
         >
           <PencilIcon fill="currentColor" strokeWidth={0} className="size-4" />
         </Link>
         <button
+          aria-label={`Remove course ${row.title}`}
           className="cursor-pointer text-sm font-medium text-gray-400 hover:text-gray-900"
           onClick={() => onRemove?.(row.id)}
         >

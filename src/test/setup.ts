@@ -1,5 +1,5 @@
-import '@testing-library/jest-dom';
-import { afterAll, afterEach, beforeAll } from 'vitest';
+import '@testing-library/jest-dom/vitest';
+import { afterAll, afterEach, beforeAll, vi } from 'vitest';
 
 import { server } from './server';
 
@@ -26,6 +26,20 @@ beforeAll(() =>
   }),
 );
 
-afterEach(() => server.restoreHandlers());
+afterEach(() => server.resetHandlers());
 
 afterAll(() => server.close());
+
+vi.mock('react-i18next', () => ({
+  useTranslation: () => ({
+    t: (key: string) => key,
+    i18n: {
+      changeLanguage: () => Promise.resolve(),
+    },
+  }),
+  Trans: ({ children }: { children: React.ReactNode }) => children,
+  initReactI18next: {
+    type: '3rdParty',
+    init: () => {},
+  },
+}));

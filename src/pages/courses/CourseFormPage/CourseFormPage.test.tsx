@@ -1,90 +1,67 @@
+import { describe, expect, it } from 'vitest';
+import { Route, Routes } from 'react-router';
 import { http, HttpResponse } from 'msw';
-import { describe, it, expect, vi } from 'vitest';
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import { Provider } from 'react-redux';
-import { configureStore } from '@reduxjs/toolkit';
-import { MemoryRouter, Routes, Route } from 'react-router';
-import { Toaster } from 'sonner';
+import { screen } from '@testing-library/react';
+import userEvent, { type UserEvent } from '@testing-library/user-event';
 
-import { baseApi } from '@/shared/api/baseApi';
+import { renderWithProviders } from '@/test/renderWithProviders';
 import { server } from '@/test/server';
-import authReducer from '@/features/auth/model/slice';
-import type { Course } from '@/features/courses/model/types';
 import { env } from '@/shared/config/env';
+import type { Course, CreateCourse } from '@/features/courses/model/types';
 
 import CourseFormPage from './CourseFormPage';
 
-vi.mock('react-i18next', () => ({
-  useTranslation: () => ({ t: (key: string) => key }),
-}));
-
 const COURSE_URL = `${env.apiUrl}/courses/course-123`;
 
-const createTestStore = () =>
-  configureStore({
-    reducer: {
-      [baseApi.reducerPath]: baseApi.reducer,
-      auth: authReducer,
-    },
-    middleware: (gDM) => gDM().concat(baseApi.middleware),
-  });
-
-const renderCreatepage = () => {
-  const store = createTestStore();
-
-  return render(
-    <Provider store={store}>
-      <MemoryRouter initialEntries={['/courses/create']}>
-        <Routes>
-          <Route path="/courses/create" element={<CourseFormPage />} />
-          <Route path="/courses" element={<div>Courses list page</div>} />
-        </Routes>
-      </MemoryRouter>
-      <Toaster />
-    </Provider>,
+const renderPage = () =>
+  renderWithProviders(
+    <Routes>
+      <Route path="/courses/create" element={<CourseFormPage />} />
+      <Route path="/courses" element={<div>Courses list page</div>} />
+    </Routes>,
+    { route: '/courses/create' },
   );
+
+const renderEditPage = () =>
+  renderWithProviders(
+    <Routes>
+      <Route path="/courses/:courseId/edit" element={<CourseFormPage />} />
+      <Route path="/courses" element={<div>Courses list page</div>} />
+    </Routes>,
+    { route: '/courses/course-123/edit' },
+  );
+
+const fillCourseForm = async (
+  user: UserEvent,
+  values: Partial<CreateCourse> = {},
+) => {
+  await user.type(
+    screen.getByLabelText('title.label'),
+    values.title ?? 'New Physics Course',
+  );
+  await user.type(
+    screen.getByLabelText('slug.label'),
+    values.slug ?? 'new-physics-course',
+  );
+  await user.type(
+    screen.getByLabelText('description.label'),
+    values.description ?? 'Course about classical physics basics',
+  );
+  await user.click(screen.getByLabelText('studyArea.label'));
+  await user.click(await screen.findByRole('option', { name: 'Physics' }));
 };
 
-const renderEditPage = () => {
-  const store = createTestStore();
-
-  return render(
-    <Provider store={store}>
-      <MemoryRouter initialEntries={['/courses/course-123/edit']}>
-        <Routes>
-          <Route path="/courses/:courseId/edit" element={<CourseFormPage />} />
-          <Route path="/courses" element={<div>Courses list page</div>} />
-        </Routes>
-      </MemoryRouter>
-      <Toaster />
-    </Provider>,
-  );
-};
-
-describe('CourseFormPage: Create', () => {
-  it('creates a course and navigates to the course list', async () => {
+describe('CourseFormPage', () => {
+  it('creates a course and navigates to the list', async () => {
     const user = userEvent.setup();
 
-    renderCreatepage();
+    renderPage();
 
-    await user.type(screen.getByLabelText('title.label'), 'New Physics Course');
-    await user.type(screen.getByLabelText('slug.label'), 'new-physics-course');
-    await user.type(
-      screen.getByLabelText('description.label'),
-      'A great course',
-    );
-
-    await user.click(screen.getByLabelText('studyArea.label'));
-    await user.click(
-      await screen.findByRole('option', {
-        name: 'Physics',
-      }),
-    );
+    await fillCourseForm(user);
 
     await user.click(screen.getByRole('button', { name: /create course/i }));
 
-    expect(await screen.findByText('Course created')).toBeInTheDocument();
+    expect(await screen.findByText(/course created/i)).toBeInTheDocument();
     expect(await screen.findByText('Courses list page')).toBeInTheDocument();
   });
 
@@ -104,13 +81,10 @@ describe('CourseFormPage: Create', () => {
 
     const user = userEvent.setup();
 
-    renderCreatepage();
+    renderPage();
 
-    await user.type(screen.getByLabelText('title.label'), 'Duplicate Course');
-    await user.type(screen.getByLabelText('slug.label'), 'existing-slug');
-    await user.type(screen.getByLabelText('description.label'), 'A course');
-    await user.click(screen.getByLabelText('studyArea.label'));
-    await user.click(await screen.findByRole('option', { name: 'Physics' }));
+    await fillCourseForm(user);
+
     await user.click(screen.getByRole('button', { name: /create course/i }));
 
     expect(
@@ -121,6 +95,8 @@ describe('CourseFormPage: Create', () => {
   });
 
   it('prefills the form, updates the course, and navigates after save', async () => {
+    let sentBody: Course | undefined;
+
     server.use(
       http.get(COURSE_URL, () =>
         HttpResponse.json(
@@ -145,9 +121,9 @@ describe('CourseFormPage: Create', () => {
         ),
       ),
       http.put(COURSE_URL, async ({ request }) => {
-        const body = (await request.json()) as Course;
+        sentBody = (await request.json()) as Course;
         return HttpResponse.json({
-          ...body,
+          ...sentBody,
           id: 'course-123',
         });
       }),
@@ -157,7 +133,6 @@ describe('CourseFormPage: Create', () => {
 
     renderEditPage();
 
-    // check prefill
     expect(
       await screen.findByDisplayValue('Original title'),
     ).toBeInTheDocument();
@@ -167,7 +142,9 @@ describe('CourseFormPage: Create', () => {
     await user.type(titleInput, 'Updated title');
     await user.click(screen.getByRole('button', { name: /save changes/i }));
 
-    expect(await screen.findByText('Course updated')).toBeInTheDocument();
+    expect(await screen.findByText(/course updated/i)).toBeInTheDocument();
     expect(await screen.findByText('Courses list page')).toBeInTheDocument();
+
+    expect(sentBody?.title).toBe('Updated title');
   });
 });

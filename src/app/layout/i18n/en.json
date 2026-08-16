@@ -3,6 +3,8 @@
     "dashboard": "Dashboard",
     "courses": "Courses",
     "review": "Review",
+    "planner": "Planner",
+    "knowledge_base": "Knowledge base",
     "settings": "Settings",
     "logout": "Log out"
   }

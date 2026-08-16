@@ -23,7 +23,12 @@
         "name": "Name",
         "description": "Description",
         "progress": "Progress",
-        "status": "Status",
+        "status": {
+          "title": "Status",
+          "active": "Active",
+          "draft": "Draft",
+          "completed": "Completed"
+        },
         "studyArea": "Study area"
       },
       "emptyList": {

@@ -59,9 +59,10 @@
       }
     }
   },
-  "todaysReview": {
-    "title": "Today's Review",
-    "heading": "You have reviews due today",
+  "currentReview": {
+    "title": "Review now",
+    "heading": "You have reviews now",
+    "done": "You're all caught up",
     "description": "Keep your knowledge fresh and stay on track.",
     "action": "Start Review"
   },

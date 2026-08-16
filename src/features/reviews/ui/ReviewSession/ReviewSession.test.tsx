@@ -1,0 +1,48 @@
+import { describe, expect, it } from 'vitest';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+
+import { CARDS } from '../../test/mocks';
+import { createLocalStorageRepository } from '../../model/repository';
+
+import ReviewSession from './ReviewSession';
+
+const reviewRepository = createLocalStorageRepository();
+
+const renderSession = () => {
+  const user = userEvent.setup();
+
+  render(<ReviewSession initialCards={CARDS} repository={reviewRepository} />);
+
+  return { user };
+};
+
+describe('ReviewSession', () => {
+  it('shows the next card when a grade is given', async () => {
+    const { user } = renderSession();
+
+    expect(screen.getByText(CARDS[0].question.title)).toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: /show answer/i }));
+    expect(screen.getByText(CARDS[0].answer.title)).toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: /good/i }));
+    expect(screen.getByText(CARDS[1].question.title)).toBeInTheDocument();
+    expect(screen.queryByText(CARDS[1].answer.title)).not.toBeInTheDocument();
+  });
+
+  it('shows success message when all cards are graded', async () => {
+    const { user } = renderSession();
+
+    await user.click(screen.getByRole('button', { name: /show answer/i }));
+    await user.click(screen.getByRole('button', { name: /good/i }));
+
+    await user.click(screen.getByRole('button', { name: /show answer/i }));
+    await user.click(screen.getByRole('button', { name: /good/i }));
+
+    expect(screen.getByText(/review is finished/i)).toBeInTheDocument();
+    expect(
+      screen.queryByRole('button', { name: /show answer/i }),
+    ).not.toBeInTheDocument();
+  });
+});

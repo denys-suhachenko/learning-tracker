@@ -5,6 +5,7 @@ import layoutEn from '@/app/layout/i18n/en.json';
 import settingsEn from '@/features/settings/i18n/en.json';
 import coursesEn from '@/features/courses/i18n/en.json';
 import dashboardEn from '@/features/dashboard/i18n/en.json';
+import reviewsEn from '@/features/reviews/i18n/en.json';
 
 declare module 'i18next' {
   interface CustomTypeOptions {
@@ -14,6 +15,7 @@ declare module 'i18next' {
       settings: typeof settingsEn;
       courses: typeof coursesEn;
       dashboard: typeof dashboardEn;
+      reviews: typeof reviewsEn;
     };
   }
 }

@@ -1,0 +1,12 @@
+{
+  "grades": {
+    "again": "Again",
+    "hard": "Hard",
+    "good": "Good",
+    "easy": "Easy"
+  },
+  "sides": {
+    "front": "Question",
+    "back": "Answer"
+  }
+}

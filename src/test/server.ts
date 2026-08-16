@@ -1,5 +1,5 @@
 import { setupServer } from 'msw/node';
 
-import { handlers } from './handlers';
+import { courseHandlers } from '@/features/courses/test/handlers';
 
-export const server = setupServer(...handlers);
+export const server = setupServer(...courseHandlers);
