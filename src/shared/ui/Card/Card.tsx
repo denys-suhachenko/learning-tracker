@@ -15,10 +15,7 @@ export const Card = ({
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) => (
   <div
-    className={clsx(
-      'overflow-hidden rounded-md bg-white shadow-sm dark:bg-gray-800/50 dark:outline dark:outline-white/10',
-      className,
-    )}
+    className={clsx('bg-card overflow-hidden rounded-md shadow-sm', className)}
     {...props}
   />
 );
@@ -31,7 +28,7 @@ export const CardHeader = ({
   <div
     className={clsx(
       'px-6 py-4',
-      bordered && 'border-b border-gray-200 dark:border-gray-700',
+      bordered && 'border-b border-gray-200 dark:border-white/[0.07]',
       className,
     )}
     {...props}
@@ -57,7 +54,7 @@ export const CardFooter = ({
   <div
     className={clsx(
       'px-6 py-4',
-      bordered && 'border-t border-gray-200 dark:border-gray-700',
+      bordered && 'border-t border-gray-200 dark:border-white/[0.07]',
       className,
     )}
     {...props}

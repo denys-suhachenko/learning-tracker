@@ -107,7 +107,7 @@ export const ModulesListItem = ({
           height: panelHeight,
         }}
       >
-        <ul className="divide-y divide-gray-200 border-t border-gray-200/70 bg-gray-50 px-6">
+        <ul className="divide-y divide-gray-200 border-t border-gray-200/70 bg-white px-6 dark:divide-white/[0.07] dark:border-white/15 dark:bg-[#24262c]">
           {module.lessons.length > 0 ? (
             module.lessons.map((lesson) => (
               <li
@@ -117,7 +117,6 @@ export const ModulesListItem = ({
                 <h3 className="text-sm font-medium">
                   <Link
                     to={`/courses/${module.course_id}/lessons/${lesson.id}`}
-                    className="text-gray-600 hover:text-gray-900"
                   >
                     {lesson.order}. {lesson.title}
                   </Link>

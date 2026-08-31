@@ -49,8 +49,9 @@ export const ReviewIntensityRadioGroup = ({
           htmlFor={option.value}
           className={cn(
             'relative flex cursor-pointer flex-col items-center justify-center gap-2 rounded-md border p-4 text-center transition select-none',
-            'hover:bg-slate-50',
-            option.value === value ? 'bg-blue-50' : 'bg-white',
+            option.value === value
+              ? 'dark:bg-accent bg-blue-50'
+              : 'dark:hover:bg-accent hover:bg-slate-50',
           )}
         >
           {option.icon}

@@ -50,8 +50,8 @@ export const ThemeSwitcherRadio = ({
           className={cn(
             'relative flex cursor-pointer flex-col items-center justify-center gap-2 rounded-md border p-4 text-center transition select-none',
             option.value === value
-              ? 'bg-blue-50'
-              : 'bg-white hover:bg-slate-50',
+              ? 'dark:bg-accent bg-blue-50'
+              : 'dark:hover:bg-accent hover:bg-slate-50',
           )}
         >
           {option.icon}

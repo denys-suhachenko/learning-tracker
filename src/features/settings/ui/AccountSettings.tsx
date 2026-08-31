@@ -239,7 +239,7 @@ const AccountSettings = () => {
               handleLanguageChange(value as UserLanguage)
             }
           >
-            <SelectTrigger className="bg-white">
+            <SelectTrigger>
               <SelectValue placeholder="Select preferred language" />
             </SelectTrigger>
             <SelectContent>
@@ -267,7 +267,7 @@ const AccountSettings = () => {
             value={preferences?.timezone ?? 'UTC'}
             onValueChange={handleTimezoneChange}
           >
-            <SelectTrigger className="bg-white">
+            <SelectTrigger>
               <SelectValue placeholder="Select your timezone" />
             </SelectTrigger>
             <SelectContent>

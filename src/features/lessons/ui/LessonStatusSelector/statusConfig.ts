@@ -19,7 +19,8 @@ export const statusConfig: Record<LessonStatus, StatusConfig> = {
   planned: {
     label: 'Start lesson',
     icon: CircleIcon,
-    className: 'bg-white text-gray-900 border border-border hover:bg-gray-50',
+    className:
+      'bg-white dark:bg-transparent text-gray-900 dark:text-white border border-border hover:bg-gray-50 dark:hover:bg-white/5',
     nextStatus: 'in_progress',
   },
   in_progress: {

@@ -18,7 +18,7 @@ export const getColumns = (
     render: (row) => (
       <Link
         to={`/courses/${row.id}`}
-        className="text-sm font-medium text-gray-700 hover:text-gray-900"
+        className="text-sm font-medium text-gray-700 hover:text-gray-900 dark:text-white/75 dark:hover:text-white"
       >
         {row.title}
       </Link>
@@ -30,7 +30,9 @@ export const getColumns = (
     header: t('description'),
     width: '26%',
     render: (row) => (
-      <span className="text-xs text-gray-700">{row.description}</span>
+      <span className="text-xs text-gray-700 dark:text-white/50">
+        {row.description}
+      </span>
     ),
   },
   {

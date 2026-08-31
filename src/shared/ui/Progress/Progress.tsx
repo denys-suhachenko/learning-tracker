@@ -19,20 +19,22 @@ export const Progress = ({
     <div className="flex w-full items-center">
       <div
         className={cn(
-          'w-full flex-1 overflow-hidden rounded-full bg-gray-200',
+          'bg-muted w-full flex-1 overflow-hidden rounded-full',
           className,
         )}
       >
         <div
           className={cn(
-            'shrink-0 rounded-full bg-blue-600 transition-all duration-300',
+            'bg-primary shrink-0 rounded-full transition-all duration-300',
             size === 'small' ? 'h-1.5' : 'h-2',
           )}
           style={{ width: `${progress}%` }}
         />
       </div>
       {label != null && (
-        <div className="ml-2 shrink-0 text-sm text-gray-500">{label}</div>
+        <div className="text-muted-foreground ml-2 shrink-0 text-xs">
+          {label}
+        </div>
       )}
     </div>
   );

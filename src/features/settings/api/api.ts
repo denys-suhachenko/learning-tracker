@@ -8,13 +8,27 @@ const settingsApi = baseApi.injectEndpoints({
       query: () => '/auth/me/settings/',
       providesTags: ['UserSettings'],
     }),
-    updateSettings: create.mutation<UserSettings, UserSettings>({
+    updateSettings: create.mutation<UserSettings, Partial<UserSettings>>({
       query: (body) => ({
         url: '/auth/me/settings/',
         method: 'PATCH',
         body,
       }),
-      invalidatesTags: ['UserSettings'],
+      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+
+          dispatch(
+            settingsApi.util.updateQueryData(
+              'getSettings',
+              undefined,
+              () => data,
+            ),
+          );
+        } catch {
+          // mutation failed - cache do not changed
+        }
+      },
     }),
   }),
 });

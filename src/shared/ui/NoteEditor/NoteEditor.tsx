@@ -80,7 +80,7 @@ export const NoteEditor = ({
               autoFocus={autoFocus}
               placeholder="Enter text..."
               spellCheck={false}
-              className="bg-editor h-full min-h-80 w-full resize-none px-6 py-4 text-[15px] leading-relaxed font-medium text-neutral-900 caret-neutral-800 outline-none selection:bg-neutral-300/60"
+              className="bg-editor dark:bg-paper-dark h-full min-h-80 w-full resize-none px-6 py-4 text-[15px] leading-relaxed font-medium text-neutral-900 caret-neutral-800 outline-none selection:bg-neutral-300/60 dark:text-white"
               onChange={(e) => onChange?.(e.target.value)}
             />
           </div>
@@ -88,7 +88,7 @@ export const NoteEditor = ({
         {mode !== 'edit' && (
           <div
             ref={contentRef}
-            className="md-editor overflow-auto bg-white px-6 py-4 text-[15px] leading-relaxed text-neutral-800"
+            className="md-editor bg-card overflow-auto px-6 py-4 text-[15px] leading-relaxed dark:border dark:border-white/[0.07]"
           >
             <ReactMarkdown
               remarkPlugins={[remarkMath]}

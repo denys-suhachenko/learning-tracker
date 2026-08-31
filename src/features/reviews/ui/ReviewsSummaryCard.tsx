@@ -13,7 +13,7 @@ const ReviewsSummaryCard = ({ summary }: ReviewsSummaryCardProps) => {
   const navigate = useNavigate();
 
   return (
-    <div className="overflow-hidden rounded-md bg-white px-6 py-4 text-sm shadow-sm">
+    <div className="bg-card overflow-hidden rounded-md px-6 py-4 text-sm shadow-sm">
       <h3 className="mb-4 text-lg font-medium">Today's Summary</h3>
 
       <ul className="space-y-1">

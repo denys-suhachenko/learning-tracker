@@ -51,7 +51,7 @@ export const PageHeader = ({
               <h1 className="text-3xl font-semibold tracking-tight">{title}</h1>
 
               {description ? (
-                <p className="text mt-1 leading-6 text-gray-600">
+                <p className="text mt-1 leading-6 text-gray-600 dark:text-gray-400">
                   {description}
                 </p>
               ) : null}

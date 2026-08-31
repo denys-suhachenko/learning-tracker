@@ -1,39 +1,43 @@
-import { useEffect, useState } from 'react';
-import { ThemeContext } from './ThemeContext';
+import { useEffect } from 'react';
 
-type Theme = 'light' | 'dark' | 'system';
-
-const getInitialTheme = (): Theme => {
-  const theme = localStorage.getItem('theme') as Theme | null;
-
-  if (theme === 'light' || theme === 'dark') {
-    return theme;
-  }
-
-  return window.matchMedia('(prefers-color-scheme: dark)').matches
-    ? 'dark'
-    : 'light';
-};
+import { useGetSettingsQuery } from '@/features/settings/api/api';
+import type { UserTheme } from '@/features/settings/model/types';
 
 export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
-  const [theme, setThemeState] = useState<Theme>(getInitialTheme);
+  const { data: settings } = useGetSettingsQuery();
 
-  const setTheme = (theme: Theme) => {
-    setThemeState(theme);
-  };
-
-  const toggleTheme = () => {
-    setThemeState((prev) => (prev === 'light' ? 'dark' : 'light'));
-  };
+  const theme: UserTheme = settings?.theme ?? 'system';
 
   useEffect(() => {
-    document.documentElement.dataset.theme = theme;
-    localStorage.setItem('theme', theme);
+    if (!settings?.theme) {
+      return;
+    }
+
+    localStorage.setItem('theme', settings.theme);
+  }, [settings?.theme]);
+
+  useEffect(() => {
+    const media = window.matchMedia('(prefers-color-scheme: dark)');
+
+    const applyTheme = () => {
+      const resolvedTheme =
+        theme === 'system' ? (media.matches ? 'dark' : 'light') : theme;
+
+      document.documentElement.dataset.theme = resolvedTheme;
+    };
+
+    applyTheme();
+
+    if (theme !== 'system') {
+      return;
+    }
+
+    media.addEventListener('change', applyTheme);
+
+    return () => {
+      media.removeEventListener('change', applyTheme);
+    };
   }, [theme]);
 
-  return (
-    <ThemeContext.Provider value={{ theme, setTheme, toggleTheme }}>
-      {children}
-    </ThemeContext.Provider>
-  );
+  return children;
 };

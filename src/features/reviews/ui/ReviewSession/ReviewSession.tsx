@@ -48,9 +48,9 @@ const ReviewSession = ({
 
   if (finished) {
     return (
-      <div className="flex flex-col items-center overflow-hidden rounded-md border bg-white p-8 shadow-xs">
+      <div className="bg-card flex flex-col items-center overflow-hidden rounded-md border p-8 shadow-xs">
         <h3 className="text-2xl font-semibold">Review is finished for today</h3>
-        <p className="mt-4 text-lg font-medium text-gray-500">
+        <p className="text-muted-foreground mt-4 text-lg font-medium">
           Come back tomorrow and these names will start to feel like your own.
         </p>
         <SquareCheckBigIcon className="mt-6 size-14 text-green-600" />
@@ -64,7 +64,7 @@ const ReviewSession = ({
 
   return (
     <>
-      <div className="mb-4 rounded-md border bg-white p-6 shadow-xs">
+      <div className="bg-card mb-4 rounded-md border p-6 shadow-xs">
         <SessionProgress completed={currentIndex} total={initialCards.length} />
       </div>
 

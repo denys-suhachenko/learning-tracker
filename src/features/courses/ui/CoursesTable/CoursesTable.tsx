@@ -77,7 +77,7 @@ const CoursesTable = () => {
     <div>
       <div className="mb-4 flex items-center gap-x-4">
         <Select defaultValue="name">
-          <SelectTrigger className="bg-white">
+          <SelectTrigger>
             <span className="font-medium">{t('filter.sortBy.label')}:</span>{' '}
             <SelectValue placeholder={t('filter.sortBy.placeholder')} />
           </SelectTrigger>

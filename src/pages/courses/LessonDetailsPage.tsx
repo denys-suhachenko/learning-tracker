@@ -71,7 +71,7 @@ const LessonDetailsPage = () => {
 
       <div className="grid grid-cols-[3fr_1fr] gap-x-6">
         {isLoading ? (
-          <div className="overflow-hidden rounded-md bg-white px-6 py-4 text-sm shadow-sm">
+          <div className="overflow-hidden rounded-md bg-white px-6 py-4 text-sm shadow-sm dark:bg-[#1b1c20]">
             <Skeleton className="mb-4 h-12 w-full" />
             <Separator />
             <Skeleton className="mt-4 h-6 w-1/3" />
@@ -96,7 +96,7 @@ const LessonDetailsPage = () => {
         )}
 
         <aside className="sticky top-6 space-y-6 self-start">
-          <div className="overflow-hidden rounded-md bg-white px-6 py-4 text-sm shadow-sm">
+          <div className="bg-card overflow-hidden rounded-md px-6 py-4 text-sm shadow-sm">
             <h3 className="mb-4 text-lg font-medium">Table of contents</h3>
             {tableOfContents.length ? (
               <ol className="space-y-1">
@@ -106,7 +106,7 @@ const LessonDetailsPage = () => {
                     style={{
                       paddingLeft: `${(item.level - 1) * 12}px`,
                     }}
-                    className="cursor-pointer text-sm font-medium text-gray-500 hover:text-gray-900"
+                    className="dark:text-foreground dark:hover:text-foreground/80 cursor-pointer text-sm font-medium text-gray-500 hover:text-gray-900"
                   >
                     <a href={`#${item.id}`}>{item.text}</a>
                   </li>
@@ -119,7 +119,7 @@ const LessonDetailsPage = () => {
             )}
           </div>
 
-          <div className="overflow-hidden rounded-md bg-white px-6 py-4 shadow-sm">
+          <div className="bg-card overflow-hidden rounded-md px-6 py-4 shadow-sm">
             <h3 className="mb-4 text-lg font-medium">Lesson info</h3>
             <ul className="space-y-3">
               <li className="flex items-center gap-4">

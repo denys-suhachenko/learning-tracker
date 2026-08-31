@@ -59,7 +59,7 @@ export const Sidebar = ({
       )}
       style={{ width }}
     >
-      <div className="flex grow flex-col gap-y-4 overflow-y-auto bg-white px-6">
+      <div className="dark:bg-sidebar flex grow flex-col gap-y-4 overflow-y-auto bg-white px-6">
         <div
           className={cn(
             'flex h-16 items-center border-b',

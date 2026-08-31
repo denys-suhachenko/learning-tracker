@@ -55,6 +55,11 @@ pre {
   border-color: #ccc;
 }
 
+:root[data-theme='dark'] .md-editor hr {
+  margin: 16px 0;
+  border-color: #38393e;
+}
+
 .md-editor ul {
   margin: 8px 0;
   padding-left: 22px;

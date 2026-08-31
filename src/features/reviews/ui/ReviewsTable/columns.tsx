@@ -21,7 +21,7 @@ export const getColumns = (): TableColumn<ReviewCardApi>[] => [
     key: 'question',
     header: 'Name',
     render: (row: ReviewCardApi) => (
-      <span className="text-sm font-medium text-gray-700 hover:text-gray-900">
+      <span className="text-sm font-medium text-gray-700 hover:text-gray-900 dark:text-white/75 dark:hover:text-white">
         {row.question}
       </span>
     ),
@@ -31,7 +31,9 @@ export const getColumns = (): TableColumn<ReviewCardApi>[] => [
     key: 'deck_name',
     header: 'Deck',
     width: '26%',
-    render: (row: ReviewCardApi) => <span>{row.deck_name}</span>,
+    render: (row: ReviewCardApi) => (
+      <span className="text-gray-700 dark:text-white/50">{row.deck_name}</span>
+    ),
   },
   {
     key: 'status',

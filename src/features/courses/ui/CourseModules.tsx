@@ -168,20 +168,20 @@ const CourseModules = ({ courseId, modules }: CourseModulesProps) => {
       </AlertDialog>
 
       {isEditMode && (
-        <div className="mt-6 rounded-md border bg-white px-6 py-4 shadow-sm">
+        <div className="bg-card mt-6 rounded-md border px-6 py-4 shadow-sm">
           <div className="mb-4 font-medium">{t('createModule.header')}</div>
 
           <Input
             value={newModuleTitle}
             placeholder={t('createModule.title')}
-            className="mb-4 bg-white"
+            className="mb-4"
             onChange={(e) => setNewModuleTitle(e.target.value)}
           />
 
           <Input
             value={newModuleDescription}
             placeholder={t('createModule.description')}
-            className="mb-4 bg-white"
+            className="mb-4"
             onChange={(e) => setNewModuleDescription(e.target.value)}
           />
 

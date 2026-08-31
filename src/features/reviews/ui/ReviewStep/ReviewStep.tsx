@@ -37,7 +37,7 @@ const ReviewStep = ({
       <ReviewCard
         side="front"
         metadata={card.metadata}
-        className="min-h-60 bg-white"
+        className="bg-card min-h-60"
       >
         <div className="max-w-2/3">
           <div className="mb-4 text-3xl font-semibold">
@@ -45,7 +45,7 @@ const ReviewStep = ({
           </div>
 
           {card.question.description && (
-            <div className="text-xl font-medium text-gray-500">
+            <div className="text-muted-foreground text-xl font-medium">
               {card.question.description}
             </div>
           )}
@@ -54,28 +54,28 @@ const ReviewStep = ({
 
       {isRevealed ? (
         <div>
-          <ReviewCard side="back" className="min-h-50 border-t bg-gray-50">
+          <ReviewCard side="back" className="bg-card min-h-50 border-t">
             <div className="max-w-2/3">
               <div className="text-2xl font-semibold">{card.answer.title}</div>
 
               {card.answer.description && (
-                <div className="mt-6 text-gray-500">
+                <div className="text-muted-foreground mt-6">
                   {card.answer.description}
                 </div>
               )}
             </div>
           </ReviewCard>
 
-          <div className="border-t bg-white px-8 py-4">
+          <div className="bg-card border-t px-8 py-4">
             <GradeButtonGroup onGrade={onGrade} />
           </div>
         </div>
       ) : (
-        <div className="flex items-center justify-center gap-x-4 border-t bg-white px-8 py-4 text-center">
+        <div className="bg-card flex items-center justify-center gap-x-4 border-t px-8 py-4 text-center">
           <Button role="button" size="lg" onClick={onReveal}>
             <EyeIcon /> Show answer
           </Button>
-          <span className="text-sm text-gray-600">or press Space</span>
+          <span className="text-muted-foreground text-sm">or press Space</span>
         </div>
       )}
     </div>

@@ -110,7 +110,7 @@ const ReviewCreatePage = () => {
             setDeck('');
           }}
         >
-          <SelectTrigger className="w-full max-w-3xs bg-white">
+          <SelectTrigger className="w-full max-w-3xs">
             <SelectValue placeholder="Select a topic" />
           </SelectTrigger>
 
@@ -124,7 +124,7 @@ const ReviewCreatePage = () => {
         </Select>
 
         <Select value={deck} onValueChange={setDeck} disabled={!topic}>
-          <SelectTrigger className="w-full max-w-3xs bg-white">
+          <SelectTrigger className="w-full max-w-3xs">
             <SelectValue placeholder="Select a deck" />
           </SelectTrigger>
 
@@ -155,7 +155,7 @@ const ReviewCreatePage = () => {
         </TabsList>
       </Tabs>
 
-      <div className="grid grid-cols-[3fr_2fr] gap-x-6 overflow-hidden rounded-md bg-white p-6 text-sm shadow-sm">
+      <div className="bg-card grid grid-cols-[3fr_2fr] gap-x-6 overflow-hidden rounded-md p-6 text-sm shadow-sm">
         <div className="space-y-6">
           <Field>
             <FieldLabel htmlFor="front-side">Question / Front side</FieldLabel>
@@ -261,8 +261,8 @@ const ReviewCreatePage = () => {
         <aside className="space-y-6">
           <Field>
             <FieldLabel>Live preview</FieldLabel>
-            <div className="overflow-hidden rounded-md border bg-gray-50 p-4 shadow-sm">
-              <div className="rounded-md border bg-white p-2 shadow-lg">
+            <div className="overflow-hidden rounded-md border bg-gray-50 p-4 shadow-sm dark:bg-[#212227]">
+              <div className="bg-card rounded-md border p-2 shadow-lg">
                 <div className="p-4">
                   <div className="mb-4">
                     <Badge>Front</Badge>

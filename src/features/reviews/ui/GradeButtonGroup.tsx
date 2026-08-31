@@ -22,25 +22,25 @@ const GRADES_UI = {
   again: {
     label: 'Again',
     icon: RefreshCcwIcon,
-    color: 'text-red-600',
+    color: 'text-red-600 dark:text-red-400',
     interval: '< 1 min',
   },
   hard: {
     label: 'Hard',
     icon: ZapIcon,
-    color: 'text-orange-600',
+    color: 'text-orange-600 dark:text-orange-400',
     interval: '8 min',
   },
   good: {
     label: 'Good',
     icon: SmileIcon,
-    color: 'text-green-600',
+    color: 'text-green-600 dark:text-green-400',
     interval: '4 days',
   },
   easy: {
     label: 'Easy',
     icon: ThumbsUpIcon,
-    color: 'text-blue-600',
+    color: 'text-blue-600 dark:text-blue-400',
     interval: '9 days',
   },
 } satisfies Record<

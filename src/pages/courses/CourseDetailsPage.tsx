@@ -159,7 +159,7 @@ const CourseDetailsPage = () => {
                     </div>
                     <Link
                       to={`lessons/${nextLesson.id}`}
-                      className="mt-3 flex flex-nowrap items-center gap-x-1 text-sm font-medium text-blue-600"
+                      className="mt-3 flex flex-nowrap items-center gap-x-1 text-sm font-medium"
                     >
                       {t('sidebar.nextLesson.action')}
                       <ArrowRightIcon className="size-4" />

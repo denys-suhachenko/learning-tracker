@@ -45,8 +45,8 @@ export const SidebarBehaviorRadio = ({
           className={cn(
             'relative flex cursor-pointer items-start gap-3 rounded-md border p-4 transition select-none',
             option.value === value
-              ? 'bg-blue-50'
-              : 'bg-white hover:bg-slate-50',
+              ? 'dark:bg-accent bg-blue-50'
+              : 'dark:hover:bg-accent hover:bg-slate-50',
           )}
         >
           <div className="flex flex-1 gap-3 leading-snug">

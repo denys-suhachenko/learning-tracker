@@ -79,7 +79,7 @@ const ReviewCardsPage = () => {
         <div>
           <div className="mb-4 flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <InputGroup className="min-w-3xs bg-white">
+              <InputGroup className="min-w-3xs">
                 <InputGroupInput
                   placeholder="Search cards..."
                   value={search}
@@ -93,7 +93,7 @@ const ReviewCardsPage = () => {
               </InputGroup>
 
               <Select value={deck} onValueChange={setDeck}>
-                <SelectTrigger className="w-full max-w-48 bg-white">
+                <SelectTrigger className="w-full max-w-48">
                   <SelectValue placeholder="Select a deck" />
                 </SelectTrigger>
 
@@ -115,7 +115,7 @@ const ReviewCardsPage = () => {
                   setDeck('all');
                 }}
               >
-                <SelectTrigger className="w-full max-w-48 bg-white">
+                <SelectTrigger className="w-full max-w-48">
                   <SelectValue placeholder="Select a topic" />
                 </SelectTrigger>
 

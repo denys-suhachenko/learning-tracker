@@ -14,7 +14,7 @@ const SessionProgress = ({ completed, total }: SessionProgressProps) => {
 
   return (
     <div className="flex items-center gap-x-6">
-      <div className="shrink-0 text-sm font-medium text-gray-500">
+      <div className="text-muted-foreground shrink-0 text-sm font-medium">
         Card {completed} of {total}
       </div>
       <div className="w-full">

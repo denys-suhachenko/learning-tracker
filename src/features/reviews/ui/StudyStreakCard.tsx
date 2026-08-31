@@ -16,7 +16,7 @@ const StudyStreakCard = ({
   weekActivity,
 }: StudyStreakCardProps) => {
   return (
-    <div className="overflow-hidden rounded-md bg-white px-6 py-4 shadow-sm">
+    <div className="bg-card overflow-hidden rounded-md px-6 py-4 shadow-sm">
       <h3 className="mb-4 text-lg font-medium">Study Streak</h3>
 
       <div className="mb-6 flex items-center gap-x-2">
@@ -34,14 +34,17 @@ const StudyStreakCard = ({
       <div className="flex justify-between">
         {weekActivity.map((day, index) => (
           <div key={day.date} className="flex flex-col items-center gap-2">
-            <span className="text-sm">{WEEK_LABELS[index]}</span>
+            <span className="text-xs">{WEEK_LABELS[index]}</span>
 
             <div
               className={cn(
-                'flex size-8 items-center justify-center rounded-full',
-                day.is_active && 'bg-green-300',
-                !day.is_active && !day.is_future && 'bg-gray-300',
-                day.is_future && 'bg-gray-200',
+                'flex size-6 items-center justify-center rounded-full',
+                day.is_active &&
+                  'bg-green-300 dark:bg-green-500 dark:text-gray-900',
+                !day.is_active &&
+                  !day.is_future &&
+                  'bg-gray-300 dark:bg-gray-600',
+                day.is_future && 'bg-gray-200 dark:bg-gray-700',
               )}
             >
               {day.is_active && <CheckIcon className="size-4" />}

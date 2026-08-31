@@ -200,7 +200,7 @@ const ReviewSettings = () => {
           onChange={(val) => setReviewIntensity(val)}
         />
 
-        <div className="mt-4 flex flex-nowrap items-center gap-x-2 rounded-md bg-blue-50 px-3 py-2 text-xs font-medium text-blue-500">
+        <div className="dark:text-muted-foreground mt-4 flex flex-nowrap items-center gap-x-2 rounded-md bg-blue-50 px-3 py-2 text-xs font-medium text-blue-500 dark:bg-white/5">
           <InfoIcon className="size-4" />
           {t('intensity.info')}
         </div>
