@@ -18,7 +18,7 @@ import { Separator } from '@/shared/ui/separator';
 import { Button } from '@/shared/ui/button';
 import { Progress } from '@/shared/ui/progress';
 import { useTranslation } from 'react-i18next';
-import NotificationsWidget from '@/features/dashboard/ui/NotificationsWidget';
+import NotificationsWidget from '@/features/notifications/ui/NotificationsWidget';
 import { useGetReviewSummaryQuery } from '@/features/reviews/api/api';
 import { Skeleton } from '@/shared/ui/skeleton';
 import DashboardSkeleton from '@/features/dashboard/ui/DashboardSkeleton';

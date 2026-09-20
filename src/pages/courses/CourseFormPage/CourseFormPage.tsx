@@ -194,7 +194,7 @@ const CourseFormPage = () => {
                   </ul>
 
                   <div className="bg-muted flex items-center gap-4 rounded-md border p-2">
-                    <div className="text-blue-00 rounded-md border border-blue-200 bg-blue-100 p-2">
+                    <div className="rounded-md border border-blue-200 bg-blue-100 p-2 text-blue-600">
                       <LightbulbIcon />
                     </div>
                     <div className="text-muted-foreground text-xs font-medium">

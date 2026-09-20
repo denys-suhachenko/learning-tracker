@@ -4,8 +4,8 @@ import type { CreateLesson, Lesson } from '../model/types';
 
 const lessonsApi = baseApi.injectEndpoints({
   endpoints: (create) => ({
-    getLesson: create.query<Lesson, string>({
-      query: (lessonId) => `/lessons/${lessonId}`,
+    getLesson: create.query<Lesson, Lesson['id']>({
+      query: (id) => `/lessons/${id}`,
       providesTags: (_, __, id) => [{ type: 'Lessons', id }],
     }),
     createLesson: create.mutation<Lesson, CreateLesson>({
@@ -29,7 +29,29 @@ const lessonsApi = baseApi.injectEndpoints({
         ],
       },
     ),
-    removeLesson: create.mutation<void, string>({
+    setBookmark: create.mutation<void, Pick<Lesson, 'id' | 'is_bookmarked'>>({
+      query: ({ id, is_bookmarked }) => ({
+        url: `/lessons/${id}/bookmark/`,
+        method: is_bookmarked ? 'PUT' : 'DELETE',
+      }),
+      onQueryStarted: async (
+        { id, is_bookmarked },
+        { dispatch, queryFulfilled },
+      ) => {
+        const res = dispatch(
+          lessonsApi.util.updateQueryData('getLesson', id, (draft) => {
+            draft.is_bookmarked = is_bookmarked;
+          }),
+        );
+
+        try {
+          await queryFulfilled;
+        } catch {
+          res.undo();
+        }
+      },
+    }),
+    removeLesson: create.mutation<void, Lesson['id']>({
       query: (id) => ({
         url: `/lessons/${id}/`,
         method: 'DELETE',
@@ -45,4 +67,5 @@ export const {
   useCreateLessonMutation,
   useUpdateLessonMutation,
   useRemoveLessonMutation,
+  useSetBookmarkMutation,
 } = lessonsApi;

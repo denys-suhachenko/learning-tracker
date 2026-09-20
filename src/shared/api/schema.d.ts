@@ -140,6 +140,38 @@ export interface paths {
         patch: operations["courses_partial_update"];
         trace?: never;
     };
+    "/api/courses/continue-learning/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["courses_continue_learning_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/courses/summary/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["courses_summary_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/lessons/": {
         parameters: {
             query?: never;
@@ -172,6 +204,38 @@ export interface paths {
         patch: operations["lessons_partial_update"];
         trace?: never;
     };
+    "/api/lessons/{id}/bookmark/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put: operations["lessons_bookmark_update"];
+        post?: never;
+        delete: operations["lessons_bookmark_destroy"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/lessons/bookmarked/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["lessons_bookmarked_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/modules/": {
         parameters: {
             query?: never;
@@ -202,6 +266,246 @@ export interface paths {
         options?: never;
         head?: never;
         patch: operations["modules_partial_update"];
+        trace?: never;
+    };
+    "/api/notifications/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["notifications_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/notifications/{id}/read/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["notifications_read_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/notifications/read-all/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["notifications_read_all_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/notifications/unread-count/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["notifications_unread_count_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/review-cards/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["review_cards_list"];
+        put?: never;
+        post: operations["review_cards_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/review-cards/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["review_cards_retrieve"];
+        put: operations["review_cards_update"];
+        post?: never;
+        delete: operations["review_cards_destroy"];
+        options?: never;
+        head?: never;
+        patch: operations["review_cards_partial_update"];
+        trace?: never;
+    };
+    "/api/review-cards/{id}/review/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["review_cards_review_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/review-cards/due/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["review_cards_due_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/review-cards/summary/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["review_cards_summary_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/review-decks/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["review_decks_list"];
+        put?: never;
+        post: operations["review_decks_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/review-decks/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["review_decks_retrieve"];
+        put: operations["review_decks_update"];
+        post?: never;
+        delete: operations["review_decks_destroy"];
+        options?: never;
+        head?: never;
+        patch: operations["review_decks_partial_update"];
+        trace?: never;
+    };
+    "/api/review-logs/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["review_logs_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/review-logs/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["review_logs_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/review-topics/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["review_topics_list"];
+        put?: never;
+        post: operations["review_topics_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/review-topics/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["review_topics_retrieve"];
+        put: operations["review_topics_update"];
+        post?: never;
+        delete: operations["review_topics_destroy"];
+        options?: never;
+        head?: never;
+        patch: operations["review_topics_partial_update"];
         trace?: never;
     };
     "/api/study-areas/": {
@@ -251,6 +555,14 @@ export interface components {
          * @enum {string}
          */
         AccentColorEnum: "purple" | "blue" | "cyan" | "green" | "orange" | "red" | "pink";
+        /**
+         * @description * `basic` - Basic
+         *     * `cloze` - Cloze
+         *     * `image_occlusion` - Image occlusion
+         *     * `qa` - Q&A
+         * @enum {string}
+         */
+        CardTypeEnum: "basic" | "cloze" | "image_occlusion" | "qa";
         Course: {
             /** Format: uuid */
             readonly id: string;
@@ -259,7 +571,7 @@ export interface components {
             description?: string;
             /** Format: uuid */
             study_area: string | null;
-            status?: components["schemas"]["CourseStatusEnum"];
+            status?: components["schemas"]["Status4baEnum"];
             readonly progress: number;
             /** Format: date-time */
             readonly created_at: string;
@@ -272,7 +584,7 @@ export interface components {
             title: string;
             slug: string;
             description?: string;
-            status?: components["schemas"]["CourseStatusEnum"];
+            status?: components["schemas"]["Status4baEnum"];
             study_area: components["schemas"]["StudyArea"];
             readonly progress: number;
             modules: components["schemas"]["ModuleDetail"][];
@@ -288,7 +600,7 @@ export interface components {
             slug: string;
             description?: string;
             study_area: components["schemas"]["StudyArea"];
-            status?: components["schemas"]["CourseStatusEnum"];
+            status?: components["schemas"]["Status4baEnum"];
             readonly progress: number;
             /** Format: date-time */
             readonly created_at: string;
@@ -296,17 +608,26 @@ export interface components {
             readonly updated_at: string;
         };
         /**
-         * @description * `draft` - Draft
-         *     * `active` - Active
-         * @enum {string}
-         */
-        CourseStatusEnum: "draft" | "active";
-        /**
          * @description * `comfortable` - Comfortable
          *     * `compact` - Compact
          * @enum {string}
          */
         DensityEnum: "comfortable" | "compact";
+        /**
+         * @description * `easy` - Easy
+         *     * `medium` - Medium
+         *     * `hard` - Hard
+         * @enum {string}
+         */
+        DifficultyEnum: "easy" | "medium" | "hard";
+        /**
+         * @description * `again` - Again
+         *     * `hard` - Hard
+         *     * `good` - Good
+         *     * `easy` - Easy
+         * @enum {string}
+         */
+        GradeEnum: "again" | "hard" | "good" | "easy";
         /**
          * @description * `en` - English
          *     * `uk` - Ukrainian
@@ -325,6 +646,7 @@ export interface components {
             order?: number | null;
             estimated_minutes?: number;
             status?: components["schemas"]["LessonStatusEnum"];
+            is_bookmarked?: boolean;
         };
         LessonNested: {
             /** Format: uuid */
@@ -338,6 +660,7 @@ export interface components {
             order?: number | null;
             estimated_minutes?: number;
             status?: components["schemas"]["LessonStatusEnum"];
+            is_bookmarked?: boolean;
         };
         /**
          * @description * `planned` - Planned
@@ -373,6 +696,33 @@ export interface components {
             id: string;
             title: string;
         };
+        Notification: {
+            /** Format: uuid */
+            readonly id: string;
+            readonly kind: string;
+            readonly title: string;
+            readonly message: string;
+            readonly data: unknown;
+            /** Format: date-time */
+            readonly created_at: string;
+            /** Format: date-time */
+            readonly read_at: string | null;
+        };
+        PaginatedNotificationList: {
+            /** @example 123 */
+            count: number;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=4
+             */
+            next?: string | null;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null;
+            results: components["schemas"]["Notification"][];
+        };
         PatchedCourse: {
             /** Format: uuid */
             readonly id?: string;
@@ -381,7 +731,7 @@ export interface components {
             description?: string;
             /** Format: uuid */
             study_area?: string | null;
-            status?: components["schemas"]["CourseStatusEnum"];
+            status?: components["schemas"]["Status4baEnum"];
             readonly progress?: number;
             /** Format: date-time */
             readonly created_at?: string;
@@ -400,6 +750,7 @@ export interface components {
             order?: number | null;
             estimated_minutes?: number;
             status?: components["schemas"]["LessonStatusEnum"];
+            is_bookmarked?: boolean;
         };
         PatchedModule: {
             /** Format: uuid */
@@ -409,6 +760,58 @@ export interface components {
             title?: string;
             description?: string;
             order?: number | null;
+        };
+        PatchedReviewCard: {
+            /** Format: uuid */
+            readonly id?: string;
+            /** Format: uuid */
+            deck_id?: string;
+            readonly deck_name?: string;
+            /** Format: uuid */
+            readonly topic_id?: string;
+            readonly topic_name?: string;
+            card_type?: components["schemas"]["CardTypeEnum"];
+            question?: string;
+            question_description?: string;
+            answer?: string;
+            answer_description?: string;
+            hint?: string;
+            difficulty?: components["schemas"]["DifficultyEnum"];
+            /** @default false */
+            review_next_session: boolean;
+            readonly status?: string;
+            readonly is_due?: string;
+            readonly interval_minutes?: number;
+            readonly repetitions?: number;
+            /** Format: double */
+            readonly ease_factor?: number;
+            readonly lapses?: number;
+            /** Format: date-time */
+            readonly due_at?: string | null;
+            /** Format: date-time */
+            readonly created_at?: string;
+            /** Format: date-time */
+            readonly updated_at?: string;
+        };
+        PatchedReviewDeck: {
+            /** Format: uuid */
+            readonly id?: string;
+            /** Format: uuid */
+            topic_id?: string;
+            name?: string;
+            /** Format: date-time */
+            readonly created_at?: string;
+            /** Format: date-time */
+            readonly updated_at?: string;
+        };
+        PatchedReviewTopic: {
+            /** Format: uuid */
+            readonly id?: string;
+            name?: string;
+            /** Format: date-time */
+            readonly created_at?: string;
+            /** Format: date-time */
+            readonly updated_at?: string;
         };
         PatchedStudyArea: {
             /** Format: uuid */
@@ -432,6 +835,11 @@ export interface components {
             sidebar_behavior?: components["schemas"]["SidebarBehaviorEnum"];
             animations_enabled?: boolean;
         };
+        ReadAllResponse: {
+            readonly updated_count: number;
+            /** Format: date-time */
+            readonly read_at: string;
+        };
         Register: {
             /** Format: email */
             email: string;
@@ -439,12 +847,82 @@ export interface components {
             first_name?: string;
             last_name?: string;
         };
+        ReviewCard: {
+            /** Format: uuid */
+            readonly id: string;
+            /** Format: uuid */
+            deck_id: string;
+            readonly deck_name: string;
+            /** Format: uuid */
+            readonly topic_id: string;
+            readonly topic_name: string;
+            card_type?: components["schemas"]["CardTypeEnum"];
+            question: string;
+            question_description?: string;
+            answer: string;
+            answer_description?: string;
+            hint?: string;
+            difficulty?: components["schemas"]["DifficultyEnum"];
+            /** @default false */
+            review_next_session: boolean;
+            readonly status: string;
+            readonly is_due: string;
+            readonly interval_minutes: number;
+            readonly repetitions: number;
+            /** Format: double */
+            readonly ease_factor: number;
+            readonly lapses: number;
+            /** Format: date-time */
+            readonly due_at: string | null;
+            /** Format: date-time */
+            readonly created_at: string;
+            /** Format: date-time */
+            readonly updated_at: string;
+        };
+        ReviewDeck: {
+            /** Format: uuid */
+            readonly id: string;
+            /** Format: uuid */
+            topic_id: string;
+            name: string;
+            /** Format: date-time */
+            readonly created_at: string;
+            /** Format: date-time */
+            readonly updated_at: string;
+        };
+        ReviewLog: {
+            /** Format: uuid */
+            readonly id: string;
+            /** Format: uuid */
+            readonly card: string;
+            readonly grade: components["schemas"]["GradeEnum"];
+            /** Format: date-time */
+            readonly reviewed_at: string;
+            readonly interval_before: number;
+            readonly interval_after: number;
+        };
+        ReviewTopic: {
+            /** Format: uuid */
+            readonly id: string;
+            name: string;
+            /** Format: date-time */
+            readonly created_at: string;
+            /** Format: date-time */
+            readonly updated_at: string;
+        };
         /**
          * @description * `expanded` - Expanded
          *     * `collapsed` - Collapsed
          * @enum {string}
          */
         SidebarBehaviorEnum: "expanded" | "collapsed";
+        /**
+         * @description * `draft` - Draft
+         *     * `active` - Active
+         *     * `completed` - Completed
+         * @enum {string}
+         */
+        Status4baEnum: "draft" | "active" | "completed";
         StudyArea: {
             /** Format: uuid */
             readonly id: string;
@@ -467,6 +945,9 @@ export interface components {
         TokenRefresh: {
             readonly access: string;
             refresh: string;
+        };
+        UnreadCount: {
+            readonly count: number;
         };
         User: {
             readonly id: number;
@@ -864,6 +1345,44 @@ export interface operations {
             };
         };
     };
+    courses_continue_learning_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Course"];
+                };
+            };
+        };
+    };
+    courses_summary_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Course"];
+                };
+            };
+        };
+    };
     lessons_list: {
         parameters: {
             query?: never;
@@ -992,6 +1511,72 @@ export interface operations {
                 "multipart/form-data": components["schemas"]["PatchedLesson"];
             };
         };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Lesson"];
+                };
+            };
+        };
+    };
+    lessons_bookmark_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["Lesson"];
+                "application/x-www-form-urlencoded": components["schemas"]["Lesson"];
+                "multipart/form-data": components["schemas"]["Lesson"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Lesson"];
+                };
+            };
+        };
+    };
+    lessons_bookmark_destroy: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No response body */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    lessons_bookmarked_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
         responses: {
             200: {
                 headers: {
@@ -1138,6 +1723,610 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Module"];
+                };
+            };
+        };
+    };
+    notifications_list: {
+        parameters: {
+            query?: {
+                /** @description A page number within the paginated result set. */
+                page?: number;
+                unread?: boolean;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedNotificationList"];
+                };
+            };
+        };
+    };
+    notifications_read_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Notification"];
+                };
+            };
+        };
+    };
+    notifications_read_all_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReadAllResponse"];
+                };
+            };
+        };
+    };
+    notifications_unread_count_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UnreadCount"];
+                };
+            };
+        };
+    };
+    review_cards_list: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReviewCard"][];
+                };
+            };
+        };
+    };
+    review_cards_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReviewCard"];
+                "application/x-www-form-urlencoded": components["schemas"]["ReviewCard"];
+                "multipart/form-data": components["schemas"]["ReviewCard"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReviewCard"];
+                };
+            };
+        };
+    };
+    review_cards_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReviewCard"];
+                };
+            };
+        };
+    };
+    review_cards_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReviewCard"];
+                "application/x-www-form-urlencoded": components["schemas"]["ReviewCard"];
+                "multipart/form-data": components["schemas"]["ReviewCard"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReviewCard"];
+                };
+            };
+        };
+    };
+    review_cards_destroy: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No response body */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    review_cards_partial_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["PatchedReviewCard"];
+                "application/x-www-form-urlencoded": components["schemas"]["PatchedReviewCard"];
+                "multipart/form-data": components["schemas"]["PatchedReviewCard"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReviewCard"];
+                };
+            };
+        };
+    };
+    review_cards_review_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReviewCard"];
+                "application/x-www-form-urlencoded": components["schemas"]["ReviewCard"];
+                "multipart/form-data": components["schemas"]["ReviewCard"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReviewCard"];
+                };
+            };
+        };
+    };
+    review_cards_due_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReviewCard"];
+                };
+            };
+        };
+    };
+    review_cards_summary_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReviewCard"];
+                };
+            };
+        };
+    };
+    review_decks_list: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReviewDeck"][];
+                };
+            };
+        };
+    };
+    review_decks_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReviewDeck"];
+                "application/x-www-form-urlencoded": components["schemas"]["ReviewDeck"];
+                "multipart/form-data": components["schemas"]["ReviewDeck"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReviewDeck"];
+                };
+            };
+        };
+    };
+    review_decks_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReviewDeck"];
+                };
+            };
+        };
+    };
+    review_decks_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReviewDeck"];
+                "application/x-www-form-urlencoded": components["schemas"]["ReviewDeck"];
+                "multipart/form-data": components["schemas"]["ReviewDeck"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReviewDeck"];
+                };
+            };
+        };
+    };
+    review_decks_destroy: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No response body */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    review_decks_partial_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["PatchedReviewDeck"];
+                "application/x-www-form-urlencoded": components["schemas"]["PatchedReviewDeck"];
+                "multipart/form-data": components["schemas"]["PatchedReviewDeck"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReviewDeck"];
+                };
+            };
+        };
+    };
+    review_logs_list: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReviewLog"][];
+                };
+            };
+        };
+    };
+    review_logs_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReviewLog"];
+                };
+            };
+        };
+    };
+    review_topics_list: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReviewTopic"][];
+                };
+            };
+        };
+    };
+    review_topics_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReviewTopic"];
+                "application/x-www-form-urlencoded": components["schemas"]["ReviewTopic"];
+                "multipart/form-data": components["schemas"]["ReviewTopic"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReviewTopic"];
+                };
+            };
+        };
+    };
+    review_topics_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReviewTopic"];
+                };
+            };
+        };
+    };
+    review_topics_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReviewTopic"];
+                "application/x-www-form-urlencoded": components["schemas"]["ReviewTopic"];
+                "multipart/form-data": components["schemas"]["ReviewTopic"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReviewTopic"];
+                };
+            };
+        };
+    };
+    review_topics_destroy: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No response body */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    review_topics_partial_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["PatchedReviewTopic"];
+                "application/x-www-form-urlencoded": components["schemas"]["PatchedReviewTopic"];
+                "multipart/form-data": components["schemas"]["PatchedReviewTopic"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReviewTopic"];
                 };
             };
         };

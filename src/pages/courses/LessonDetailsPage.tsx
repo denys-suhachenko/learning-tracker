@@ -2,13 +2,19 @@ import { useState } from 'react';
 import { Link, useParams } from 'react-router';
 import { skipToken } from '@reduxjs/toolkit/query';
 import { toast } from 'sonner';
-import { ClockIcon, NotebookIcon, PencilIcon } from 'lucide-react';
+import {
+  BookmarkIcon,
+  ClockIcon,
+  NotebookIcon,
+  PencilIcon,
+} from 'lucide-react';
 
 import { PageHeader, NoteEditor, type TocItem } from '@/shared/ui';
 import { Container } from '@/shared/ui/Container';
 import {
   useUpdateLessonMutation,
   useGetLessonQuery,
+  useSetBookmarkMutation,
 } from '@/features/lessons/api/api';
 import { Button } from '@/shared/ui/button';
 import { getErrorMessage } from '@/shared/lib/getErrorMessage';
@@ -23,6 +29,7 @@ const LessonDetailsPage = () => {
   const { lessonId } = useParams();
   const { data: lesson, isLoading } = useGetLessonQuery(lessonId ?? skipToken);
   const [updateLesson, { isLoading: isUpdating }] = useUpdateLessonMutation();
+  const [setBookmark] = useSetBookmarkMutation();
 
   const updateStatus = async (status: LessonStatus) => {
     if (isUpdating || !lesson) {
@@ -40,6 +47,21 @@ const LessonDetailsPage = () => {
     }
   };
 
+  const toggleBookmark = async () => {
+    if (isUpdating || !lesson) {
+      return;
+    }
+
+    try {
+      await setBookmark({
+        id: lesson.id,
+        is_bookmarked: !lesson.is_bookmarked,
+      }).unwrap();
+    } catch (err) {
+      toast.error(getErrorMessage(err, 'Failed to update bookmark status'));
+    }
+  };
+
   return (
     <Container>
       <PageHeader
@@ -49,6 +71,20 @@ const LessonDetailsPage = () => {
         className="mb-8"
         actions={
           <div className="flex items-center gap-x-4">
+            <Button
+              variant="outline"
+              data-icon="inline-start"
+              className="bg-white"
+              onClick={toggleBookmark}
+            >
+              {lesson?.is_bookmarked ? (
+                <BookmarkIcon fill="white" />
+              ) : (
+                <BookmarkIcon />
+              )}{' '}
+              Add to bookmark
+            </Button>
+
             <Button
               asChild
               variant="outline"

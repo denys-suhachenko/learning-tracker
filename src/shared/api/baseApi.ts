@@ -67,6 +67,14 @@ const baseQueryWithAuth: BaseQueryFn<
 
 export const baseApi = createApi({
   baseQuery: baseQueryWithAuth,
-  tagTypes: ['Courses', 'Lessons', 'Reviews', 'Me', 'UserSettings'],
+  tagTypes: [
+    'Courses',
+    'Lessons',
+    'Reviews',
+    'Me',
+    'UserSettings',
+    'Notifications',
+    'NotificationUnreadCount',
+  ],
   endpoints: () => ({}),
 });
