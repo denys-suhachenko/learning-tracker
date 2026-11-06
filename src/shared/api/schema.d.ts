@@ -4,6 +4,22 @@
  */
 
 export interface paths {
+    "/api/auth/google/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["auth_google_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/auth/login/": {
         parameters: {
             query?: never;
@@ -555,6 +571,10 @@ export interface components {
          * @enum {string}
          */
         AccentColorEnum: "purple" | "blue" | "cyan" | "green" | "orange" | "red" | "pink";
+        AuthTokens: {
+            access: string;
+            refresh: string;
+        };
         /**
          * @description * `basic` - Basic
          *     * `cloze` - Cloze
@@ -620,6 +640,9 @@ export interface components {
          * @enum {string}
          */
         DifficultyEnum: "easy" | "medium" | "hard";
+        GoogleSignIn: {
+            credential: string;
+        };
         /**
          * @description * `again` - Again
          *     * `hard` - Hard
@@ -722,6 +745,21 @@ export interface components {
              */
             previous?: string | null;
             results: components["schemas"]["Notification"][];
+        };
+        PaginatedReviewCardList: {
+            /** @example 123 */
+            count: number;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=4
+             */
+            next?: string | null;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null;
+            results: components["schemas"]["ReviewCard"][];
         };
         PatchedCourse: {
             /** Format: uuid */
@@ -974,6 +1012,31 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
+    auth_google_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["GoogleSignIn"];
+                "application/x-www-form-urlencoded": components["schemas"]["GoogleSignIn"];
+                "multipart/form-data": components["schemas"]["GoogleSignIn"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AuthTokens"];
+                };
+            };
+        };
+    };
     auth_login_create: {
         parameters: {
             query?: never;
@@ -1811,7 +1874,12 @@ export interface operations {
     };
     review_cards_list: {
         parameters: {
-            query?: never;
+            query?: {
+                /** @description Which field to use when ordering the results. */
+                ordering?: string;
+                /** @description A page number within the paginated result set. */
+                page?: number;
+            };
             header?: never;
             path?: never;
             cookie?: never;
@@ -1823,7 +1891,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["ReviewCard"][];
+                    "application/json": components["schemas"]["PaginatedReviewCardList"];
                 };
             };
         };

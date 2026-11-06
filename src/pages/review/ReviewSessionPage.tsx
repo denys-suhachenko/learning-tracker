@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useMemo } from 'react';
 import { useNavigate } from 'react-router';
 
 import { Button } from '@/shared/ui/button';
@@ -38,18 +38,15 @@ const mapApiCardToCard = (card: ReviewCardApi): Card => ({
     easeFactor: card.ease_factor,
     lapses: card.lapses,
 
-    dueDate: card.due_at ?? new Date().toISOString(),
+    dueAt: card.due_at ?? undefined,
   },
 });
 
 const ReviewSessionPage = () => {
   const navigate = useNavigate();
 
-  const [sessionCards, setSessionCards] = useState<Card[] | null>(null);
-
   const {
     data: dueCards = [],
-    isLoading,
     isFetching,
     isSuccess,
   } = useGetDueReviewCardsQuery(undefined, {
@@ -57,11 +54,10 @@ const ReviewSessionPage = () => {
   });
   const [reviewCard] = useReviewCardMutation();
 
-  useEffect(() => {
-    if (sessionCards === null && isSuccess && !isFetching) {
-      setSessionCards(dueCards.map(mapApiCardToCard));
-    }
-  }, [dueCards, isSuccess, isFetching, sessionCards]);
+  const sessionCards = useMemo(
+    () => (isSuccess && !isFetching ? dueCards.map(mapApiCardToCard) : null),
+    [dueCards, isSuccess, isFetching],
+  );
 
   const handleGrade = async (cardId: string, grade: Grade) => {
     await reviewCard({

@@ -1,3 +1,5 @@
+import type { Schemas } from '@/shared/api/types';
+
 export type Grade = 'again' | 'hard' | 'good' | 'easy';
 
 export type CardStatus = 'new' | 'learning' | 'review' | 'mastered';
@@ -33,7 +35,6 @@ export type CardSchedule = {
   repetitions: number;
   easeFactor: number;
   dueAt?: string;
-  dueDate: string;
   lastReviewedAt?: string;
   lapses: number;
 };
@@ -78,6 +79,13 @@ export type ReviewCardApi = {
 
   created_at: string;
   updated_at: string;
+};
+
+export type ReviewCardList = Omit<
+  Schemas['PaginatedReviewCardList'],
+  'results'
+> & {
+  results: ReviewCardApi[];
 };
 
 export type ReviewTopic = {

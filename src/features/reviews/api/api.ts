@@ -4,12 +4,14 @@ import type {
   CreateReviewCardRequest,
   Grade,
   ReviewCardApi,
+  ReviewCardList,
   ReviewDeck,
   ReviewSummary,
   ReviewTopic,
 } from '../model/types';
 
 export type ReviewCardsQueryParams = {
+  page?: number;
   status?: 'new' | 'learning' | 'review' | 'mastered';
   due?: boolean;
   topic?: string;
@@ -23,10 +25,11 @@ export type UpdateReviewCardRequest = Partial<
 
 const reviewsApi = baseApi.injectEndpoints({
   endpoints: (create) => ({
-    getReviewCards: create.query<ReviewCardApi[], ReviewCardsQueryParams>({
-      query: ({ status, due, topic, deck, search }) => ({
+    getReviewCards: create.query<ReviewCardList, ReviewCardsQueryParams>({
+      query: ({ page, status, due, topic, deck, search }) => ({
         url: '/review-cards/',
         params: {
+          ...(page !== undefined && { page }),
           ...(status && { status }),
           ...(due && { due: 'true' }),
           ...(topic && { topic }),
@@ -37,7 +40,6 @@ const reviewsApi = baseApi.injectEndpoints({
 
       providesTags: ['Reviews'],
     }),
-
     getReviewCard: create.query<ReviewCardApi, string>({
       query: (cardId) => `/review-cards/${cardId}/`,
       providesTags: ['Reviews'],

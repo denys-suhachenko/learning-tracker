@@ -1,10 +1,4 @@
-import {
-  RefreshCcwIcon,
-  CalendarIcon,
-  LibraryBigIcon,
-  BookAIcon,
-  HouseIcon,
-} from 'lucide-react';
+import { RefreshCcwIcon, BookAIcon, HouseIcon } from 'lucide-react';
 
 export const navItems = [
   {

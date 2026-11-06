@@ -178,6 +178,7 @@ const SignInPage = () => {
             className="flex h-11 w-full items-center justify-center gap-x-3 bg-white"
             variant="outline"
             size="lg"
+            disabled
           >
             <AppleIcon />
             <span className="text-sm font-semibold">Apple</span>

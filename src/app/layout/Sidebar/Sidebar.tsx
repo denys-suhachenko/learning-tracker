@@ -1,12 +1,5 @@
 import { Link, NavLink, useNavigate } from 'react-router';
-import {
-  BrainCircuitIcon,
-  ChevronLeftIcon,
-  ChevronRight,
-  ChevronRightIcon,
-  LogOutIcon,
-  SettingsIcon,
-} from 'lucide-react';
+import { BrainCircuitIcon, LogOutIcon, SettingsIcon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 import { cn } from '@/shared/lib/utils';
