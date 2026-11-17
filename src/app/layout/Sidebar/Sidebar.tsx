@@ -31,7 +31,6 @@ export const Sidebar = ({
   width = 256,
   collapsed = false,
   user = null,
-  toggle,
 }: SidebarProps) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();

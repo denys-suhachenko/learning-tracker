@@ -1,4 +1,3 @@
-import { Link } from 'react-router';
 import { EllipsisVerticalIcon, PencilIcon, TrashIcon } from 'lucide-react';
 
 import { type TableColumn } from '@/shared/ui';

@@ -1,14 +1,11 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router';
 import {
-  AtomIcon,
   BookOpenIcon,
   CalendarClockIcon,
-  ChartNoAxesCombinedIcon,
   CircleCheck,
   ClockIcon,
   FlameIcon,
-  SigmaIcon,
 } from 'lucide-react';
 
 import { cn } from '@/shared/lib/utils';
@@ -35,8 +32,6 @@ type MetricKey =
   | 'lessonsCompleted'
   | 'studyStreak'
   | 'reviewsDueToday';
-
-type CourseKey = 'classicalMechanics' | 'microeconomics' | 'linearAlgebra';
 
 const metrics: {
   id: string;
@@ -83,51 +78,12 @@ const metrics: {
   },
 ];
 
-const continueLearning: {
-  id: number;
-  key: CourseKey;
-  progress: number;
-  completed: number;
-  total: number;
-  bgClass: string;
-  icon: React.ReactNode;
-}[] = [
-  {
-    id: 1,
-    key: 'classicalMechanics',
-    progress: 67,
-    completed: 12,
-    total: 18,
-    bgClass: 'bg-violet-100',
-    icon: <AtomIcon className="text-violet-600" />,
-  },
-  {
-    id: 2,
-    key: 'microeconomics',
-    progress: 42,
-    completed: 8,
-    total: 19,
-    bgClass: 'bg-green-100',
-    icon: <ChartNoAxesCombinedIcon className="text-green-600" />,
-  },
-  {
-    id: 3,
-    key: 'linearAlgebra',
-    progress: 25,
-    completed: 5,
-    total: 20,
-    bgClass: 'bg-orange-100',
-    icon: <SigmaIcon className="text-orange-600" />,
-  },
-];
-
 const DashboardPage = () => {
   const { data: reviewSummary, isLoading: isReviewSummaryLoading } =
     useGetReviewSummaryQuery();
   const { data: continueLearning = [], isLoading: isContinueLearningLoading } =
     useGetContinueLearningQuery();
-  const { data: courseSummary, isLoading: isCourseSummaryLoading } =
-    useGetCourseSummaryQuery();
+  const { data: courseSummary } = useGetCourseSummaryQuery();
 
   const { user } = useCurrentUser();
   const { t } = useTranslation('dashboard');

@@ -30,7 +30,7 @@ const ReviewStep = ({
     window.addEventListener('keydown', handleSpace);
 
     return () => window.removeEventListener('keydown', handleSpace);
-  }, []);
+  }, [onReveal]);
 
   return (
     <div className="overflow-hidden rounded-md border shadow-xs">
