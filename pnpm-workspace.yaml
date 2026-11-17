@@ -1,3 +1,6 @@
+ignoredBuiltDependencies:
+  - msw
+
 onlyBuiltDependencies:
   - '@sentry/cli'
   - esbuild
