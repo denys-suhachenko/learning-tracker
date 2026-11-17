@@ -4,3 +4,6 @@ ignoredBuiltDependencies:
 onlyBuiltDependencies:
   - '@sentry/cli'
   - esbuild
+
+overrides:
+  katex: 0.19.1
