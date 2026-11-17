@@ -1,6 +1,6 @@
 import type { Schemas } from '@/shared/api/types';
 
-export type CourseStatus = Schemas['CourseStatusEnum'];
+export type CourseStatus = NonNullable<Schemas['Course']['status']>;
 export type LessonStatus = Schemas['LessonStatusEnum'];
 
 export type StudyArea = Schemas['StudyArea'];

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useLayoutEffect } from 'react';
+import { useRef, useState, useLayoutEffect } from 'react';
 import { Link } from 'react-router';
 import clsx from 'clsx';
 import {
@@ -44,16 +44,17 @@ export const ModulesListItem = ({
   onRequestDelete,
   onRequestDeleteLesson,
 }: ModulesListitemProps) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(editable);
+  const [prevEditable, setPrevEditable] = useState(editable);
+
   const [panelHeight, setPanelHeight] = useState<number>(0);
   const panelRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
+  if (editable !== prevEditable) {
+    setPrevEditable(editable);
     setIsOpen(editable);
-  }, [editable]);
+  }
 
-  // Use useLayoutEffect to correctly measure the panel after render,
-  // and avoid accessing panelRef.current during render.
   useLayoutEffect(() => {
     if (isOpen && panelRef.current) {
       setPanelHeight(panelRef.current.scrollHeight);

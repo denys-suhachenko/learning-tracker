@@ -32,6 +32,7 @@ export default defineConfig({
           auto: true,
         },
       },
+      telemetry: false,
     }),
   ],
 
@@ -44,7 +45,7 @@ export default defineConfig({
 
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, 'src'),
+      '@': path.resolve(import.meta.dirname, 'src'),
     },
   },
 

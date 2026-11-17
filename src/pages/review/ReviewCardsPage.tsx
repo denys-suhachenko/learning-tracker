@@ -28,6 +28,14 @@ import {
   useGetReviewSummaryQuery,
   useGetReviewTopicsQuery,
 } from '@/features/reviews/api/api';
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from '@/shared/ui/pagination';
 
 type Tab = 'all' | 'due' | 'new' | 'learning' | 'review' | 'mastered';
 
@@ -38,15 +46,17 @@ const ReviewCardsPage = () => {
   const [topic, setTopic] = useState('all');
   const [deck, setDeck] = useState('all');
   const [tab, setTab] = useState<Tab>('all');
+  const [page, setPage] = useState(1);
 
-  const { data: cards = [], isLoading: isCardsLoading } =
-    useGetReviewCardsQuery({
-      search: search || undefined,
-      topic: topic === 'all' ? undefined : topic,
-      deck: deck === 'all' ? undefined : deck,
-      due: tab === 'due' ? true : undefined,
-      status: tab !== 'all' && tab !== 'due' ? tab : undefined,
-    });
+  const { data: cardsPage } = useGetReviewCardsQuery({
+    page,
+    search: search || undefined,
+    topic: topic === 'all' ? undefined : topic,
+    deck: deck === 'all' ? undefined : deck,
+    due: tab === 'due' ? true : undefined,
+    status: tab !== 'all' && tab !== 'due' ? tab : undefined,
+  });
+  const cards = cardsPage?.results ?? [];
 
   const { data: topics = [] } = useGetReviewTopicsQuery();
   const { data: decks = [] } = useGetReviewDecksQuery();
@@ -85,6 +95,7 @@ const ReviewCardsPage = () => {
                   value={search}
                   onChange={(event) => {
                     setSearch(event.target.value);
+                    setPage(1);
                   }}
                 />
                 <InputGroupAddon align="inline-end">
@@ -92,7 +103,13 @@ const ReviewCardsPage = () => {
                 </InputGroupAddon>
               </InputGroup>
 
-              <Select value={deck} onValueChange={setDeck}>
+              <Select
+                value={deck}
+                onValueChange={(value) => {
+                  setDeck(value);
+                  setPage(1);
+                }}
+              >
                 <SelectTrigger className="w-full max-w-48">
                   <SelectValue placeholder="Select a deck" />
                 </SelectTrigger>
@@ -113,6 +130,7 @@ const ReviewCardsPage = () => {
                 onValueChange={(value) => {
                   setTopic(value);
                   setDeck('all');
+                  setPage(1);
                 }}
               >
                 <SelectTrigger className="w-full max-w-48">
@@ -141,6 +159,7 @@ const ReviewCardsPage = () => {
               value={tab}
               onValueChange={(value) => {
                 setTab(value as Tab);
+                setPage(1);
               }}
             >
               <TabsList variant="line">
@@ -154,7 +173,45 @@ const ReviewCardsPage = () => {
             </Tabs>
           </div>
 
-          <ReviewsListTable data={cards} />
+          <div>
+            <ReviewsListTable data={cards} />
+
+            <Pagination className="mt-6">
+              <PaginationContent>
+                <PaginationItem>
+                  <PaginationPrevious
+                    href="#"
+                    aria-disabled={!cardsPage?.previous}
+                    onClick={(event) => {
+                      event.preventDefault();
+
+                      if (cardsPage?.previous) {
+                        setPage((current) => Math.max(1, current - 1));
+                      }
+                    }}
+                  />
+                </PaginationItem>
+                <PaginationItem>
+                  <PaginationLink href="#" isActive>
+                    {page}
+                  </PaginationLink>
+                </PaginationItem>
+                <PaginationItem>
+                  <PaginationNext
+                    href="#"
+                    aria-disabled={!cardsPage?.next}
+                    onClick={(event) => {
+                      event.preventDefault();
+
+                      if (cardsPage?.next) {
+                        setPage((current) => current + 1);
+                      }
+                    }}
+                  />
+                </PaginationItem>
+              </PaginationContent>
+            </Pagination>
+          </div>
         </div>
 
         <aside className="sticky top-6 space-y-6 self-start">
