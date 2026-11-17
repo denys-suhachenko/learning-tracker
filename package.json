@@ -17,7 +17,7 @@
   "dependencies": {
     "@fontsource-variable/ibm-plex-sans": "^5.2.8",
     "@reduxjs/toolkit": "^2.11.2",
-    "@sentry/react": "^10.47.0",
+    "@sentry/react": "^11.14.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "concurrently": "^10.0.3",
@@ -44,7 +44,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
-    "@sentry/vite-plugin": "^5.1.1",
+    "@sentry/vite-plugin": "^11.14.0",
     "@tailwindcss/vite": "^4.3.5",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
