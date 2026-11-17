@@ -31,7 +31,10 @@ const formatSignedCount = (count: number) =>
   count > 0 ? `+${count}` : `${count}`;
 
 type MetricKey =
-  'activeCourses' | 'lessonsCompleted' | 'studyStreak' | 'reviewsDueToday';
+  | 'activeCourses'
+  | 'lessonsCompleted'
+  | 'studyStreak'
+  | 'reviewsDueToday';
 
 type CourseKey = 'classicalMechanics' | 'microeconomics' | 'linearAlgebra';
 
