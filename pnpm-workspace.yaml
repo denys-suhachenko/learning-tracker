@@ -7,3 +7,6 @@ onlyBuiltDependencies:
 
 overrides:
   katex: 0.19.1
+  'eslint-plugin-react>minimatch': 3.1.5
+  'flat-cache>flatted': 3.4.2
+  '@babel/helper-compilation-targets>browserslist': 4.28.7
